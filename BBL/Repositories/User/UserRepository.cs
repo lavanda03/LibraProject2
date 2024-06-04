@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataAccessLayer;
 using DataAccessLayer.Entities;
+using BBL.Repositories.User;
 
 namespace BBL.Repositories
 {
-	public class UserRepository
+    public class UserRepository : IUserRepository
 	{
-
 		private readonly ApplicationDbContext _context;
 
-		public UserRepository()
+		public UserRepository(ApplicationDbContext _context)
 		{
-			_context = new ApplicationDbContext();	
+		   this._context = _context;
 		}
 
 		public int AddUser(UsersEntity usersEntity)

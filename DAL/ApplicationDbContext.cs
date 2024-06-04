@@ -1,24 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataAccessLayer.Entities;
 
 
 namespace DataAccessLayer
 {
-	public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext
 	{
 
 
-		public ApplicationDbContext() : base("name=MyDbContext")
+        public ApplicationDbContext(string connectionString) : base(connectionString)
+        {
+        }
+
+        public ApplicationDbContext() : base("name=MyDbContext")
 		{
 
 		}
 
-		public DbSet<CitiesEntity> Cities => Set<CitiesEntity>();
+        public DbSet<CitiesEntity> Cities => Set<CitiesEntity>();
 		public DbSet<ConnectionTypesEntity> ConnectionTypes => Set<ConnectionTypesEntity>();
 		public DbSet<IssuesEntity> Issues => Set<IssuesEntity>();
 		public DbSet<IssuesTypesEntity> IssuesType => Set<IssuesTypesEntity>();
