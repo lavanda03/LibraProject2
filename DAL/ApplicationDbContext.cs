@@ -34,7 +34,7 @@ namespace DataAccessLayer
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			//User
-			modelBuilder.Entity<UsersEntity>().HasRequired(u => u.UserType).WithMany(c => c.Users);//sau one to one
+			modelBuilder.Entity<UsersEntity>().HasRequired(u => u.UserType).WithRequiredPrincipal(c => c.Users);//sau one to one
 
 			//Pos
 			modelBuilder.Entity<PosEntity>().HasRequired(u => u.Cities).WithMany(c => c.Pos);

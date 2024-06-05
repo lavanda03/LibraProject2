@@ -18,7 +18,7 @@ namespace WebApp.Controllers
 
         public ActionResult Index()
 		{
-			userService.AddUser();
+			//userService.AddUser();
 			return View();
 		}
 

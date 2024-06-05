@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BBL.Services.User.Models
 {
-	internal class AddUserCommand
+	public class AddUserCommand
 	{
 		public string Name { get; set; }
 		public string Email { get; set; }
