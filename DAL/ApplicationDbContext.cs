@@ -20,13 +20,13 @@ namespace DataAccessLayer
 		}
 
         public DbSet<CitiesEntity> Cities => Set<CitiesEntity>();
-		public DbSet<ConnectionTypesEntity> ConnectionTypes => Set<ConnectionTypesEntity>();
-		public DbSet<IssuesEntity> Issues => Set<IssuesEntity>();
-		public DbSet<IssuesTypesEntity> IssuesType => Set<IssuesTypesEntity>();
-		public DbSet<LogsEntity> Logs => Set<LogsEntity>();
+		public DbSet<ConnectionTypeEntity> ConnectionTypes => Set<ConnectionTypeEntity>();
+		public DbSet<IssueEntity> Issues => Set<IssueEntity>();
+		public DbSet<IssuesTypeEntity> IssuesType => Set<IssuesTypeEntity>();
+		public DbSet<LogEntity> Logs => Set<LogEntity>();
 		public DbSet<PosEntity> Pos => Set<PosEntity>();
-		public DbSet<StatusesEntity> Statuses => Set<StatusesEntity>();
-		public DbSet<UsersEntity> Users => Set<UsersEntity>();
+		public DbSet<StatusEntity> Statuses => Set<StatusEntity>();
+		public DbSet<UserEntity> Users => Set<UserEntity>();
 		public DbSet<UserTypeEntity> UserTypes => Set<UserTypeEntity>();
 
 
@@ -34,21 +34,23 @@ namespace DataAccessLayer
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			//User
-			modelBuilder.Entity<UsersEntity>().HasRequired(u => u.UserType).WithRequiredPrincipal(c => c.Users);//sau one to one
+			modelBuilder.Entity<UserEntity>().HasRequired(u => u.UserType).WithRequiredPrincipal(c => c.Users);
+
 
 			//Pos
-			modelBuilder.Entity<PosEntity>().HasRequired(u => u.Cities).WithMany(c => c.Pos);
-			modelBuilder.Entity<PosEntity>().HasRequired(u => u.ConnectionType).WithMany(c => c.Pos);
+			modelBuilder.Entity<PosEntity>().HasRequired(u => u.Cities).WithMany(c => c.Pos).HasForeignKey(u => u.IdCity);
+			modelBuilder.Entity<PosEntity>().HasRequired(u => u.ConnectionType).WithMany(c => c.Pos).HasForeignKey(u => u.IdConnType);
 
 			//Logs
-			modelBuilder.Entity<LogsEntity>().HasRequired(u => u.User).WithMany(c => c.Logs);
-			modelBuilder.Entity<LogsEntity>().HasRequired(u => u.Issues).WithMany(c => c.Logs);
+			modelBuilder.Entity<LogEntity>().HasRequired(u => u.User).WithMany(c => c.Logs).HasForeignKey(u => u.IdUser);
+			modelBuilder.Entity<LogEntity>().HasRequired(u => u.Issues).WithMany(c => c.Logs).HasForeignKey(u=>u.IdIssue);
 
 
 			//Issues
-			modelBuilder.Entity<IssuesEntity>().HasRequired(u => u.Pos).WithMany(c => c.Issues);
-			modelBuilder.Entity<IssuesEntity>().HasRequired(u => u.User).WithMany(c => c.Issues);
-			modelBuilder.Entity<IssuesEntity>().HasRequired(u => u.UserType).WithMany(c => c.Issues);
+			modelBuilder.Entity<IssueEntity>().HasRequired(u => u.Pos).WithMany(c => c.Issues).HasForeignKey(u => u.IdPos);
+			modelBuilder.Entity<IssueEntity>().HasRequired(u => u.User).WithMany(c => c.Issues).HasForeignKey(u => u.IdUserCreated);
+			modelBuilder.Entity<IssueEntity>().HasRequired(u => u.UserType).WithMany(c => c.Issues).HasForeignKey(u => u.IdUserType);
+			
 
 		}
 

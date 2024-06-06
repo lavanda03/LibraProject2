@@ -17,15 +17,21 @@ namespace BBL.Services.User
 	    
 		public int AddUser(AddUserCommand command)
 		{
-			var userEntity = userRepository.AddUser(new UsersEntity
+			var userEntity = userRepository.AddUser(new UserEntity
 			{
+				//Name = "Julia",
+				//Email = "dd.dd@.com",
+				//Password = "1234",
+				//Login = "crme155",
+				//Telephone = "060594313",
+				//IdUserType = 1
 				Name = command.Name,
 				Email = command.Email,
 				Password = command.Password,
 				Login = command.Login,
 				Telephone = command.Telephone,
 				IdUserType = command.IdUserType
-			}) ;
+			});
 			return userEntity;
 		}
 

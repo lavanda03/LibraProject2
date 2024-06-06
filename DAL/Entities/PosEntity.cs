@@ -19,14 +19,14 @@ namespace DataAccessLayer.Entities
 		public string Model { get; set; }
 		public string Brand { get; set;}
 		public int IdConnType { get; set; }	
-	    public ConnectionTypesEntity ConnectionType {get;set;}//+
+	    public ConnectionTypeEntity ConnectionType {get;set;}//+
 		public string MorningOperning {  get; set; }	
 		public string MorningClosing { get; set; }
 		public string AfternoonOpening { get; set; }
 		public string AfternonClosing { get; set; }
 		public string DaysClosed { get; set; }
 		public long InsertDate { get; set; }
-		public List<IssuesEntity> Issues { get; set; }//+
+		public List<IssueEntity> Issues { get; set; }//+
 
 
 	}

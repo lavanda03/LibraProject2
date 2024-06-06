@@ -15,36 +15,36 @@ namespace BBL.Repositories
 		   this._context = _context;
 		}
 
-		public int AddUser(UsersEntity usersEntity)
+		public int AddUser(UserEntity usersEntity)
 		{
 			_context.Users.Add(usersEntity);
 			_context.SaveChanges();	
 			return usersEntity.Id;	
 		}
 
-		public List<UsersEntity> GetAllUsers() 
+		public List<UserEntity> GetAllUsers() 
 		{
 			return _context.Users.ToList();
 		}
 
-		public UsersEntity GetUserById(int id)
+		public UserEntity GetUserById(int id)
 		{
 			return _context.Users.FirstOrDefault(u => u.Id == id);
 		}
 
-		public void UpdateUser(UsersEntity usersEntity) 
+		public void UpdateUser(UserEntity usersEntity) 
 		{
 			_context.Entry(usersEntity).State = System.Data.Entity.EntityState.Modified;
 			_context.SaveChanges();
 		}
 
-		public void DeleteUser(UsersEntity users)
+		public void DeleteUser(UserEntity users)
 		{
 			_context.Users.Remove(users);	
 			_context.SaveChanges();
 		}
 		
-		public UsersEntity LoginUser(string Login,string Password)
+		public UserEntity LoginUser(string Login,string Password)
 		{
 			return _context.Users.FirstOrDefault(u => u.Login.ToLower() == Login.ToLower() && u.Password.ToLower() == Password.ToLower());
 		}
