@@ -9,7 +9,8 @@
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+			AutomaticMigrationsEnabled = true;
+			AutomaticMigrationDataLossAllowed = false; 
         }
 
         protected override void Seed(DataAccessLayer.ApplicationDbContext context)

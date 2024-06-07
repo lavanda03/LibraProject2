@@ -47,5 +47,6 @@ namespace WebApp
         {
             builder.RegisterControllers(typeof(HomeController).Assembly);
         }
+        
     }
 }

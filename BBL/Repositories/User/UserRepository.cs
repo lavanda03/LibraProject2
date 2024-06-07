@@ -3,6 +3,7 @@ using System.Linq;
 using DataAccessLayer;
 using DataAccessLayer.Entities;
 using BBL.Repositories.User;
+using System.Text.RegularExpressions;
 
 namespace BBL.Repositories
 {
@@ -47,6 +48,11 @@ namespace BBL.Repositories
 		public UserEntity LoginUser(string Login,string Password)
 		{
 			return _context.Users.FirstOrDefault(u => u.Login.ToLower() == Login.ToLower() && u.Password.ToLower() == Password.ToLower());
+		}
+		public bool ExistUserByEmail(string email)
+		{
+			return _context.Users.Any(u => u.Email.ToLower() == email.ToLower());
+			
 		}
 	}
 }

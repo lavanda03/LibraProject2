@@ -2,6 +2,7 @@
 using BBL.Services.User.Models;
 using DataAccessLayer.Entities;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace BBL.Repositories.User
 {
@@ -13,5 +14,8 @@ namespace BBL.Repositories.User
         void UpdateUser(UserEntity userEntity);    
         void DeleteUser(UserEntity users);
         UserEntity LoginUser(string Login, string Password);
-   }
+        bool ExistUserByEmail(string email);
+		
+
+	}
 }

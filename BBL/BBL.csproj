@@ -66,9 +66,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorHandlerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Issue\IIssueRepository.cs" />
+    <Compile Include="Repositories\Issue\IssueRepository.cs" />
+    <Compile Include="Repositories\Pos\IPosRepository.cs" />
+    <Compile Include="Repositories\Pos\PosRepository.cs" />
     <Compile Include="Repositories\User\IUserRepository.cs" />
     <Compile Include="Repositories\User\UserRepository.cs" />
+    <Compile Include="Services\Issue\Models\AddIssuesCommand.cs" />
+    <Compile Include="Services\Issue\Models\GetIssueResult.cs" />
+    <Compile Include="Services\Issue\Models\UpdateIssueCommand.cs" />
+    <Compile Include="Services\Pos\IPosInterface.cs" />
+    <Compile Include="Services\Pos\Models\AddPosCommand.cs" />
+    <Compile Include="Services\Pos\Models\GetPosResul.cs" />
+    <Compile Include="Services\Pos\Models\IssueData.cs" />
+    <Compile Include="Services\Pos\Models\UpdatePosCommnad.cs" />
+    <Compile Include="Services\Pos\PosService.cs" />
     <Compile Include="Services\User\IUserService.cs" />
     <Compile Include="Services\User\Models\AddUserCommand.cs" />
     <Compile Include="Services\User\Models\GetUserResult.cs" />
@@ -85,6 +99,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

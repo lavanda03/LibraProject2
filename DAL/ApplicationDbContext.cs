@@ -19,7 +19,7 @@ namespace DataAccessLayer
 
 		}
 
-        public DbSet<CitiesEntity> Cities => Set<CitiesEntity>();
+        public DbSet<CityEntity> Cities => Set<CityEntity>();
 		public DbSet<ConnectionTypeEntity> ConnectionTypes => Set<ConnectionTypeEntity>();
 		public DbSet<IssueEntity> Issues => Set<IssueEntity>();
 		public DbSet<IssuesTypeEntity> IssuesType => Set<IssuesTypeEntity>();
@@ -38,8 +38,8 @@ namespace DataAccessLayer
 
 
 			//Pos
-			modelBuilder.Entity<PosEntity>().HasRequired(u => u.Cities).WithMany(c => c.Pos).HasForeignKey(u => u.IdCity);
-			modelBuilder.Entity<PosEntity>().HasRequired(u => u.ConnectionType).WithMany(c => c.Pos).HasForeignKey(u => u.IdConnType);
+			modelBuilder.Entity<PosEntity>().HasRequired(u => u.Cities).WithMany(c => c.Pos).HasForeignKey(u => u.City_Id).WillCascadeOnDelete(false);
+			modelBuilder.Entity<PosEntity>().HasRequired(u => u.ConnectionType).WithMany(c => c.Pos).HasForeignKey(u => u.ConnType_Id);
 
 			//Logs
 			modelBuilder.Entity<LogEntity>().HasRequired(u => u.User).WithMany(c => c.Logs).HasForeignKey(u => u.IdUser);

@@ -45,5 +45,10 @@ namespace WebApp.Controllers
             }
             return View(model);
         }
+        public ActionResult LogOff()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Authority");
+        }
     }
 }
