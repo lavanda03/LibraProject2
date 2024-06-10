@@ -24,9 +24,10 @@ namespace DataAccessLayer.Entities
 		public string Password { get; set; }
 		public string Login { get; set; }
 		public string Telephone { get; set; }	
-		public int IdUserType { get; set; }	
+		public int UserTypeId { get; set; }	
 		public UserTypeEntity UserType { get; set; }//+
 		public List <IssueEntity> Issues { get; set; }//+
 		public List<LogEntity> Logs { get; set; }//+
+		public long? DeleteAt { get; set; }
 	}
 }

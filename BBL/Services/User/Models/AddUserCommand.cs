@@ -15,6 +15,6 @@ namespace BBL.Services.User.Models
 		public string Password { get; set; }
 		public string Login { get; set; }
 		public string Telephone { get; set; }
-		public int IdUserType { get; set; }
+		public int UserTypeId { get; set; }
 	}
 }

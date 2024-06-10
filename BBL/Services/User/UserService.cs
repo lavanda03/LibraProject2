@@ -65,7 +65,7 @@ namespace BBL.Services.User
 				Password = command.Password,
 				Login = command.Login,
 				Telephone = command.Telephone,
-				IdUserType = command.IdUserType
+				UserTypeId = command.UserTypeId
 			});
 			return userEntity;
 		}
@@ -84,7 +84,7 @@ namespace BBL.Services.User
 					Email= c.Email,	
 					Login= c.Login,
 					Telephone=c.Telephone,
-					IdUserType = c.IdUserType	
+					UserTypeId = c.UserTypeId
 					
 				});
             }
@@ -109,7 +109,7 @@ namespace BBL.Services.User
 				Email = userEntity.Email,
 				Login = userEntity.Login,
 				Telephone = userEntity.Telephone,
-				IdUserType = userEntity.IdUserType
+				UserTypeId = userEntity.UserTypeId	
 			};
 			return result;
 		}
@@ -147,8 +147,8 @@ namespace BBL.Services.User
 			if (command.Email != userEntity.Email)
 				userEntity.Email = command.Email;
 
-			if (command.IdUserType != userEntity.IdUserType)
-				userEntity.IdUserType = command.IdUserType;
+			if (command.IdUserType != userEntity.UserTypeId)
+				userEntity.UserTypeId = command.IdUserType;
 
 
 			userRepository.UpdateUser(userEntity);
@@ -164,7 +164,7 @@ namespace BBL.Services.User
 			if (userEntity == null)
 				throw new Exception(ErrorHandlerService.ParameterNotFoundError("User"));
 
-			userRepository.DeleteUser(userEntity);
+			userRepository.DeleteUser(userEntity.Id);
 		}
 
 		public GetUserResult LoginUser(string Login, string password)
@@ -182,7 +182,7 @@ namespace BBL.Services.User
 				Name = userResult.Name,
 				Email = userResult.Email,
 				Login = userResult.Login,
-				IdUserType = userResult.IdUserType,
+				UserTypeId = userResult.UserTypeId,
 				Telephone = userResult.Telephone,	
 
 			};

@@ -19,7 +19,7 @@ namespace DataAccessLayer.Entities
 		//public IdProblemEntity
 		public string Priority { get; set; }
 		public int IdStatus { get; set; }
-		public StatusEntity Statuses { get; set; } //-
+		public StatusEntity Status { get; set; } //-
 		public string Memo { get; set; }
         public int IdUserCreated { get; set; }
 		public UserEntity User { get; set; }//+
@@ -31,6 +31,7 @@ namespace DataAccessLayer.Entities
 		public long ModifDate{ get; set; }
 		public string Solotion { get; set; }
 		public List<LogEntity> Logs { get; set; }//+
+		public long? DeleteAt { get; set; }	
 
 	}
 }

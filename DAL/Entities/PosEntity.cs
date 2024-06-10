@@ -27,7 +27,8 @@ namespace DataAccessLayer.Entities
 		public string DaysClosed { get; set; }
 		public long InsertDate { get; set; }
 		public List<IssueEntity> Issues { get; set; }//+
-		public IssueEntity issue { get; set; }	
+		public long? DeleteAt { get; set; }
+
 
 
 	}

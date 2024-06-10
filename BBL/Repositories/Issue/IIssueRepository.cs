@@ -13,7 +13,7 @@ namespace BBL.Repositories.Issue
 		IssueEntity GetIssueById(int id);
 		List<IssueEntity> GetAllIssues();
 		void UpdateIssue(IssueEntity issue);	
-		void DeleteIssue(IssueEntity issue);	
-
+		void DeleteIssue(int id);
+		IQueryable<IssueEntity> GetValidIssues();
 	}
 }

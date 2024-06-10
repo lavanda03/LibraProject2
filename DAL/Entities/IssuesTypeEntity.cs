@@ -13,5 +13,6 @@ namespace DataAccessLayer.Entities
 		public string ParentIssues {  get; set; }	
 		public string Name { get; set; }
 		public long InsertDate { get; set; }
+		public List<IssueEntity> Issues { get; set; }
 	}
 }

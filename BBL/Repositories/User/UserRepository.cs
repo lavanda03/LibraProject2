@@ -4,6 +4,7 @@ using DataAccessLayer;
 using DataAccessLayer.Entities;
 using BBL.Repositories.User;
 using System.Text.RegularExpressions;
+using System;
 
 namespace BBL.Repositories
 {
@@ -39,15 +40,28 @@ namespace BBL.Repositories
 			_context.SaveChanges();
 		}
 
-		public void DeleteUser(UserEntity users)
+		public void DeleteUser(int id)
 		{
-			_context.Users.Remove(users);	
+			var user = _context.Users.FirstOrDefault(x => x.Id == id);
+
+			if (user == null) 
+			{
+				return;
+			}
+
+			user.DeleteAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+
+			_context.Entry(user).State = System.Data.Entity.EntityState.Modified;
 			_context.SaveChanges();
+		}
+		public IQueryable<UserEntity> GetValidUser()
+		{
+			return _context.Users.Where(x => x.DeleteAt == null);
 		}
 		
 		public UserEntity LoginUser(string Login,string Password)
 		{
-			return _context.Users.FirstOrDefault(u => u.Login.ToLower() == Login.ToLower() && u.Password.ToLower() == Password.ToLower());
+			return _context.Users.FirstOrDefault(u => u.Login.ToLower() == Login.ToLower() && u.Password == Password);
 		}
 		public bool ExistUserByEmail(string email)
 		{

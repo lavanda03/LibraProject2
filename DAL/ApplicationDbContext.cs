@@ -34,7 +34,7 @@ namespace DataAccessLayer
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			//User
-			modelBuilder.Entity<UserEntity>().HasRequired(u => u.UserType).WithRequiredPrincipal(c => c.Users);
+			modelBuilder.Entity<UserEntity>().HasRequired(u => u.UserType).WithMany(c => c.Users).HasForeignKey(u => u.UserTypeId);
 
 
 			//Pos
@@ -50,8 +50,11 @@ namespace DataAccessLayer
 			modelBuilder.Entity<IssueEntity>().HasRequired(u => u.Pos).WithMany(c => c.Issues).HasForeignKey(u => u.IdPos);
 			modelBuilder.Entity<IssueEntity>().HasRequired(u => u.User).WithMany(c => c.Issues).HasForeignKey(u => u.IdUserCreated);
 			modelBuilder.Entity<IssueEntity>().HasRequired(u => u.UserType).WithMany(c => c.Issues).HasForeignKey(u => u.IdUserType);
+			modelBuilder.Entity<IssueEntity>().HasRequired(u => u.IssuesType).WithMany(c => c.Issues).HasForeignKey(u => u.IdType);
+			modelBuilder.Entity<IssueEntity>().HasRequired(u => u.Status).WithMany(c => c.Issues).HasForeignKey(u => u.IdStatus);
 			
-
+			
+           
 		}
 
 

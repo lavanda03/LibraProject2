@@ -10,7 +10,7 @@ namespace DataAccessLayer.Entities
 	{
        public int Id { get; set; }	
 	   public string UserType { get; set; }
-	   public UserEntity Users { get; set; }	//+
+	   public List<UserEntity> Users { get; set; }	//+
 	   public List<IssueEntity> Issues { get; set; }//+
 
 

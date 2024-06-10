@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace WebApp.Controllers
 {
+	[Authorize]
 	public class HomeController : Controller
 	{
 		private readonly IUserService userService;

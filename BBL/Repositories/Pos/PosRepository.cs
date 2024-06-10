@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
@@ -41,10 +42,23 @@ namespace BBL.Repositories.Pos
 			_dbContext.SaveChanges();
 		}
 
-		public void DeletePos(PosEntity pos) 
+		public void DeletePos(int id) 
 		{
-			_dbContext.Pos.Remove(pos);
-		    _dbContext.SaveChanges();	
+			var pos = _dbContext.Pos.FirstOrDefault(x=>x.Id==id);
+
+			if (pos == null)
+			{
+				return;
+			}
+			pos.DeleteAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+
+			_dbContext.Entry(pos).State = System.Data.Entity.EntityState.Modified;
+			_dbContext.SaveChanges();	
+		}
+
+		public IQueryable<PosEntity> GetValidPos() 
+		{
+			return _dbContext.Pos.Where(x => x.DeleteAt == null);
 		}
 	}
 }

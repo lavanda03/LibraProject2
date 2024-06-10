@@ -67,10 +67,7 @@ namespace BBL.Services.Pos
 					Telephone = i.Telephone,
 					Address = i.Address,
 					issueData = new IssueData()
-					{
-						Id = i.issue.Id,
-						StatusID = i.issue.IdStatus,
-					}
+					
 				});
 
 
@@ -143,7 +140,7 @@ namespace BBL.Services.Pos
 		{
 			var posEntity = posRepository.GetPosById(id);
 
-			posRepository.DeletePos(posEntity);
+			posRepository.DeletePos(posEntity.Id);
 
 		}
 			

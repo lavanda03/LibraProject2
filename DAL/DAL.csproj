@@ -79,9 +79,9 @@
     <Compile Include="Entities\StatusEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Entities\UserTypeEntity.cs" />
-    <Compile Include="Migrations\202406070706450_FirstMigration.cs" />
-    <Compile Include="Migrations\202406070706450_FirstMigration.Designer.cs">
-      <DependentUpon>202406070706450_FirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202406101233328_FirstMigration.cs" />
+    <Compile Include="Migrations\202406101233328_FirstMigration.Designer.cs">
+      <DependentUpon>202406101233328_FirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,8 +91,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202406070706450_FirstMigration.resx">
-      <DependentUpon>202406070706450_FirstMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202406101233328_FirstMigration.resx">
+      <DependentUpon>202406101233328_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

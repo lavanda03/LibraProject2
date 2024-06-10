@@ -42,10 +42,23 @@ namespace BBL.Repositories.Issue
 			_dbContext.SaveChanges();
 		}
 
-		public void DeleteIssue(IssueEntity issue) 
+		public void DeleteIssue(int id) 
 		{
-			_dbContext.Issues.Remove(issue);
+			var issue = _dbContext.Issues.FirstOrDefault(x=>x.Id == id);	
+
+			if (issue == null)
+			{
+				return;
+			}
+
+			issue.DeleteAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+			_dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
 			_dbContext.SaveChanges();
+		}
+
+		public IQueryable<IssueEntity> GetValidIssues()
+		{
+			return _dbContext.Issues.Where(x => x.DeleteAt == null);
 		}
 
 	}

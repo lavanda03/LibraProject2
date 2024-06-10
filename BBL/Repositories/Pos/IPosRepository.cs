@@ -14,7 +14,9 @@ namespace BBL.Repositories.Pos
 		PosEntity GetPosById(int id);
         List<PosEntity> GetAllPos();
 		void UpdatePos(PosEntity pos);
-		void DeletePos(PosEntity pos);
+		void DeletePos(int Id);
+		IQueryable<PosEntity> GetValidPos();
 		
+
 	}
 }

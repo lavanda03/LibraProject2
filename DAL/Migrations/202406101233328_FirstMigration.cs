@@ -35,6 +35,7 @@
                         AfternonClosing = c.String(),
                         DaysClosed = c.String(),
                         InsertDate = c.Long(nullable: false),
+                        DeleteAt = c.Long(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.CityEntities", t => t.City_Id)
@@ -70,20 +71,19 @@
                         CreationDate = c.Long(nullable: false),
                         ModifDate = c.Long(nullable: false),
                         Solotion = c.String(),
-                        IssuesType_Id = c.Int(),
-                        Statuses_Id = c.Int(),
+                        DeleteAt = c.Long(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.IssuesTypeEntities", t => t.IssuesType_Id)
+                .ForeignKey("dbo.IssuesTypeEntities", t => t.IdType, cascadeDelete: true)
                 .ForeignKey("dbo.PosEntities", t => t.IdPos, cascadeDelete: true)
-                .ForeignKey("dbo.StatusEntities", t => t.Statuses_Id)
+                .ForeignKey("dbo.StatusEntities", t => t.IdStatus, cascadeDelete: true)
                 .ForeignKey("dbo.UserEntities", t => t.IdUserCreated, cascadeDelete: true)
                 .ForeignKey("dbo.UserTypeEntities", t => t.IdUserType, cascadeDelete: true)
                 .Index(t => t.IdPos)
+                .Index(t => t.IdType)
+                .Index(t => t.IdStatus)
                 .Index(t => t.IdUserCreated)
-                .Index(t => t.IdUserType)
-                .Index(t => t.IssuesType_Id)
-                .Index(t => t.Statuses_Id);
+                .Index(t => t.IdUserType);
             
             CreateTable(
                 "dbo.IssuesTypeEntities",
@@ -124,23 +124,24 @@
                         Password = c.String(),
                         Login = c.String(),
                         Telephone = c.String(),
-                        IdUserType = c.Int(nullable: false),
+                        UserTypeId = c.Int(nullable: false),
+                        DeleteAt = c.Long(),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.UserTypeEntities", t => t.UserTypeId, cascadeDelete: false)
                 .Index(t => t.Id, unique: true, name: "Email")
                 .Index(t => t.Id, unique: true, name: "Login")
-                .Index(t => t.Id, unique: true, name: "Telephone");
+                .Index(t => t.Id, unique: true, name: "Telephone")
+                .Index(t => t.UserTypeId);
             
             CreateTable(
                 "dbo.UserTypeEntities",
                 c => new
                     {
-                        Id = c.Int(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
                         UserType = c.String(),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.UserEntities", t => t.Id)
-                .Index(t => t.Id);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.StatusEntities",
@@ -157,24 +158,24 @@
         {
             DropForeignKey("dbo.IssueEntities", "IdUserType", "dbo.UserTypeEntities");
             DropForeignKey("dbo.IssueEntities", "IdUserCreated", "dbo.UserEntities");
-            DropForeignKey("dbo.IssueEntities", "Statuses_Id", "dbo.StatusEntities");
+            DropForeignKey("dbo.IssueEntities", "IdStatus", "dbo.StatusEntities");
             DropForeignKey("dbo.IssueEntities", "IdPos", "dbo.PosEntities");
             DropForeignKey("dbo.LogEntities", "IdUser", "dbo.UserEntities");
-            DropForeignKey("dbo.UserTypeEntities", "Id", "dbo.UserEntities");
+            DropForeignKey("dbo.UserEntities", "UserTypeId", "dbo.UserTypeEntities");
             DropForeignKey("dbo.LogEntities", "IdIssue", "dbo.IssueEntities");
-            DropForeignKey("dbo.IssueEntities", "IssuesType_Id", "dbo.IssuesTypeEntities");
+            DropForeignKey("dbo.IssueEntities", "IdType", "dbo.IssuesTypeEntities");
             DropForeignKey("dbo.PosEntities", "ConnType_Id", "dbo.ConnectionTypeEntities");
             DropForeignKey("dbo.PosEntities", "City_Id", "dbo.CityEntities");
-            DropIndex("dbo.UserTypeEntities", new[] { "Id" });
+            DropIndex("dbo.UserEntities", new[] { "UserTypeId" });
             DropIndex("dbo.UserEntities", "Telephone");
             DropIndex("dbo.UserEntities", "Login");
             DropIndex("dbo.UserEntities", "Email");
             DropIndex("dbo.LogEntities", new[] { "IdUser" });
             DropIndex("dbo.LogEntities", new[] { "IdIssue" });
-            DropIndex("dbo.IssueEntities", new[] { "Statuses_Id" });
-            DropIndex("dbo.IssueEntities", new[] { "IssuesType_Id" });
             DropIndex("dbo.IssueEntities", new[] { "IdUserType" });
             DropIndex("dbo.IssueEntities", new[] { "IdUserCreated" });
+            DropIndex("dbo.IssueEntities", new[] { "IdStatus" });
+            DropIndex("dbo.IssueEntities", new[] { "IdType" });
             DropIndex("dbo.IssueEntities", new[] { "IdPos" });
             DropIndex("dbo.PosEntities", new[] { "ConnType_Id" });
             DropIndex("dbo.PosEntities", new[] { "City_Id" });
