@@ -1,13 +1,13 @@
-﻿using DataAccessLayer.Entities;
+﻿using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BBL.Services.Pos.Models
+namespace BLL.DTO.PosDTO
 {
-	public class GetPosResul
+	public class GetPosDTO
 	{
 
 		public int Id { get; set; }
@@ -15,6 +15,7 @@ namespace BBL.Services.Pos.Models
 		public string Telephone { get; set; }
 		public string Address { get; set; }
         public int IssuesId { get; set; }
-		public IssueData issueData { get; set; }	
+		//public IssueData issueData { get; set; }	
+		public string Status { get; set; }	
 	}
 }

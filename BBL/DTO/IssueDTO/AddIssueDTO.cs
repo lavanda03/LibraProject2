@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Entities;
 
-
-namespace DAL.Entities
+namespace BLL.DTO.IssueDTO
 {
-	public class IssueEntity
+	public class AddIssuesDTO
 	{
-		public int Id { get; set; }	
+		
 		public int IdPos { get; set; }	
 		public PosEntity Pos { get; set; }//+
 		public int IdType { get; set; }	
@@ -20,7 +20,7 @@ namespace DAL.Entities
 		//public IdProblemEntity
 		public string Priority { get; set; }
 		public int IdStatus { get; set; }
-		public StatusEntity Status { get; set; } //-
+		public StatusEntity Statuses { get; set; } //-
 		public string Memo { get; set; }
         public int IdUserCreated { get; set; }
 		public UserEntity User { get; set; }//+
@@ -31,8 +31,7 @@ namespace DAL.Entities
 		public long CreationDate { get; set;}
 		public long ModifDate{ get; set; }
 		public string Solotion { get; set; }
-		public List<LogEntity> Logs { get; set; }//+
-		public long? DeleteAt { get; set; }	
+		
 
 	}
 }

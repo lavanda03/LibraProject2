@@ -66,6 +66,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\IssueDTO\AddIssueDTO.cs" />
+    <Compile Include="DTO\IssueDTO\GetIssuesDTO.cs" />
+    <Compile Include="DTO\IssueDTO\UpdateIssuesDTO.cs" />
+    <Compile Include="DTO\PosDTO\AddPosDTO.cs" />
+    <Compile Include="DTO\PosDTO\GetPosDTO.cs" />
+    <Compile Include="DTO\PosDTO\UpdatePosDTO.cs" />
+    <Compile Include="DTO\UserDTO\AddUserDTO.cs" />
+    <Compile Include="DTO\UserDTO\GetUserDTO.cs" />
+    <Compile Include="DTO\UserDTO\UpdateUserDTO.cs" />
     <Compile Include="ErrorHandlerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Issue\IIssueRepository.cs" />
@@ -74,32 +83,18 @@
     <Compile Include="Repositories\Pos\PosRepository.cs" />
     <Compile Include="Repositories\User\IUserRepository.cs" />
     <Compile Include="Repositories\User\UserRepository.cs" />
-    <Compile Include="Services\Issue\Models\AddIssuesCommand.cs" />
-    <Compile Include="Services\Issue\Models\GetIssueResult.cs" />
-    <Compile Include="Services\Issue\Models\UpdateIssueCommand.cs" />
-    <Compile Include="Services\Pos\IPosInterface.cs" />
-    <Compile Include="Services\Pos\Models\AddPosCommand.cs" />
-    <Compile Include="Services\Pos\Models\GetPosResul.cs" />
-    <Compile Include="Services\Pos\Models\IssueData.cs" />
-    <Compile Include="Services\Pos\Models\UpdatePosCommnad.cs" />
-    <Compile Include="Services\Pos\PosService.cs" />
-    <Compile Include="Services\User\IUserService.cs" />
-    <Compile Include="Services\User\Models\AddUserCommand.cs" />
-    <Compile Include="Services\User\Models\GetUserResult.cs" />
-    <Compile Include="Services\User\Models\UpdateUserCommand.cs" />
-    <Compile Include="Services\User\UserService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{8bd8654e-c2ce-465f-b34a-01ddd3c5873f}</Project>
-      <Name>DAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{8bd8654e-c2ce-465f-b34a-01ddd3c5873f}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

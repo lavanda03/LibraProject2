@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DataAccessLayer;
-using DataAccessLayer.Entities;
-using BBL.Repositories.User;
+using DAL.Entities;
+using BLL.Repositories.User;
 using System.Text.RegularExpressions;
 using System;
+using BLL.DTO.UserDTO;
+using DAL.Common;
 
-namespace BBL.Repositories
+
+namespace BLL.Repositories
 {
     public class UserRepository : IUserRepository
 	{
@@ -17,26 +20,62 @@ namespace BBL.Repositories
 		   this._context = _context;
 		}
 
-		public int AddUser(UserEntity usersEntity)
+		public int AddUser(AddUserDTO command)
 		{
-			_context.Users.Add(usersEntity);
+			var userEntity = new UserEntity()
+			{
+				Name = command.Name,
+				Email= command.Email,
+				Password = command.Password,	
+				Login=command.Login,
+				Telephone=command.Telephone,	
+				UserTypeId = command.UserTypeId,	
+			};
+			_context.Users.Add(userEntity);
 			_context.SaveChanges();	
-			return usersEntity.Id;	
+			return userEntity.Id;	
 		}
 
-		public List<UserEntity> GetAllUsers() 
+		public List<GetUserDTO> GetAllUsers() 
 		{
-			return _context.Users.ToList();
+			var result = new List<GetUserDTO>();
+		    var usersEntity=_context.Users.ToList();
+
+			foreach(var x in usersEntity)
+			{
+				result.Add(new GetUserDTO
+				{
+					Id = x.Id,
+					Name = x.Name,
+					Email = x.Email,
+					Login = x.Login,
+					Telephone = x.Telephone,
+					UserTypeId = x.UserTypeId
+				}); 
+			}
+
+			return result;
 		}
 
-		public UserEntity GetUserById(int id)
+		public GetUserDTO GetUserById(int id)
 		{
-			return _context.Users.FirstOrDefault(u => u.Id == id);
+			var userEntity=_context.Users.FirstOrDefault(u => u.Id == id);
+			//verificare null?
+			var result = new GetUserDTO()
+			{
+				Name = userEntity.Name,
+				Email = userEntity.Email,
+				Login = userEntity.Login,
+				Telephone = userEntity.Telephone,
+				UserTypeId= userEntity.UserTypeId
+			};
+
+			return result;
 		}
 
-		public void UpdateUser(UserEntity usersEntity) 
+		public void UpdateUser(UpdateUserDTO updateUser) 
 		{
-			_context.Entry(usersEntity).State = System.Data.Entity.EntityState.Modified;
+			_context.Entry(updateUser).State = System.Data.Entity.EntityState.Modified;
 			_context.SaveChanges();
 		}
 
@@ -59,9 +98,21 @@ namespace BBL.Repositories
 			return _context.Users.Where(x => x.DeleteAt == null);
 		}
 		
-		public UserEntity LoginUser(string Login,string Password)
+		public GetUserDTO LoginUser(string Login,string Password)
 		{
-			return _context.Users.FirstOrDefault(u => u.Login.ToLower() == Login.ToLower() && u.Password == Password);
+			string hashedPassword = PasswordHasher.ComputeSHA256Hash(Password);
+			var userEntity = _context.Users.FirstOrDefault(u => u.Login.ToLower() == Login.ToLower() && u.Password == hashedPassword);
+
+			var result = new GetUserDTO()
+			{
+				Id = userEntity.Id,
+				Name = userEntity.Name,
+				Email = userEntity.Email,
+				Login = userEntity.Login,
+				UserTypeId = userEntity.UserTypeId,
+				Telephone = userEntity.Telephone
+			};
+			return result;
 		}
 		public bool ExistUserByEmail(string email)
 		{

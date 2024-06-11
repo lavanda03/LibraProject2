@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Entities
+
+namespace Domain.Entities
 {
-	public class StatusEntity
+	public class CityEntity
 	{
 		public int Id { get; set; }
-		public string Status { get; set; }
-		public List<IssueEntity> Issues { get; set; }	
+		public string CityName { get; set; }
+		public List<PosEntity> Pos { get; set; }	//+
 	}
 }

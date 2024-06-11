@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Common;
 using System.Data.Entity;
-using DataAccessLayer.Entities;
+using DAL.Entities;
 
 
 namespace DataAccessLayer

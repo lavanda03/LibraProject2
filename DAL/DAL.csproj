@@ -70,6 +70,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="Common\PasswordHasher.cs" />
+    <Compile Include="Common\Seed.cs" />
     <Compile Include="Entities\CityEntity.cs" />
     <Compile Include="Entities\ConnectionTypeEntity.cs" />
     <Compile Include="Entities\IssueEntity.cs" />
@@ -83,6 +85,10 @@
     <Compile Include="Migrations\202406101233328_FirstMigration.Designer.cs">
       <DependentUpon>202406101233328_FirstMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202406111410039_ChangeStructureDAL.cs" />
+    <Compile Include="Migrations\202406111410039_ChangeStructureDAL.Designer.cs">
+      <DependentUpon>202406111410039_ChangeStructureDAL.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -93,6 +99,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202406101233328_FirstMigration.resx">
       <DependentUpon>202406101233328_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406111410039_ChangeStructureDAL.resx">
+      <DependentUpon>202406111410039_ChangeStructureDAL.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

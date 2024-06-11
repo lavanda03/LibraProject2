@@ -1,4 +1,4 @@
-﻿using BBL.Services.User;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +10,11 @@ namespace WebApp.Controllers
 	[Authorize]
 	public class HomeController : Controller
 	{
-		private readonly IUserService userService;
+		
 
-        public HomeController(IUserService userService)
+        public HomeController()
         {
-            this.userService = userService;
+           
         }
 
         public ActionResult Index()

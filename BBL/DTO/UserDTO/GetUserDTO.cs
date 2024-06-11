@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BBL.Services.User.Models
+namespace BLL.DTO.UserDTO
 {
-	public class GetUserResult
+	public class GetUserDTO
 	{
 		public int Id { get; set; }	
 		public string Name { get; set; }

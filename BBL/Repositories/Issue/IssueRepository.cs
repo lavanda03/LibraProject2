@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using BLL.DTO.IssueDTO;
 using DataAccessLayer;
-using DataAccessLayer.Entities;
+using DAL.Entities;
 
-namespace BBL.Repositories.Issue
+
+namespace BLL.Repositories.Issue
 {
 	public class IssueRepository:IIssueRepository
 	{
@@ -15,30 +18,58 @@ namespace BBL.Repositories.Issue
 		public IssueRepository(ApplicationDbContext _dbContext)
 		{
 			this._dbContext = _dbContext;
-		}	
+		}
 
-		public int AddIssue(IssueEntity issue)
+		public int AddIssue(AddIssuesDTO issue)
 		{
-			_dbContext.Issues.Add(issue);
+			var issueEntity = new IssueEntity()
+			{
+				IdType = issue.IssuesType.Id,
+				IdSubType = issue.IssuesType.Id,
+				IdProblem = issue.IssuesType.Id,
+				Priority = issue.Priority,
+				IdStatus = issue.Statuses.Id,
+				Description = issue.Description,
+				Solotion = issue.Solotion,
+				Memo = issue.Memo
+				//assigned
+
+			};
+
+			_dbContext.Issues.Add(issueEntity);
 			_dbContext.SaveChanges();
-			return issue.Id;
+			return issueEntity.Id;
 		}
 
-		public IssueEntity GetIssueById(int id) 
+		public GetIssuesDTO GetIssueById(int id)
 		{
-			return _dbContext.Issues.FirstOrDefault(u=>u.Id == id);	
 
+			var issueEntity = _dbContext.Issues.FirstOrDefault(u => u.Id == id);
+			var result = new GetIssuesDTO()
+			{
+				IdPos = issueEntity.Pos.Id,
+				PosName = issueEntity.Pos.Name,
+				IdUserCreated = issueEntity.User.Id,
+				CreationDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+				IdType = issueEntity.IssuesType.Id,
+				IdStatus = issueEntity.Status.Id,
+				//AssignedTo = issueEntity.User.UserType.UserType
+
+			};
+			return result;
 		}
 
-		public List<IssueEntity> GetAllIssues()
+		public List<GetIssuesDTO> GetAllIssues()
 		{
-			return _dbContext.Issues.ToList();	
+
+			_dbContext.Issues.ToList();
+			return new List<GetIssuesDTO>();
+			//need to change the logic
 		}
-
-		public void UpdateIssue(IssueEntity issues)
+		public void UpdateIssue(UpdateIssuesDTO updateIssue)
 		{
 
-			_dbContext.Entry(issues).State = System.Data.Entity.EntityState.Modified;
+			_dbContext.Entry(updateIssue).State = System.Data.Entity.EntityState.Modified;
 			_dbContext.SaveChanges();
 		}
 

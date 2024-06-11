@@ -1,8 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
-using BBL.Repositories;
-using BBL.Repositories.User;
-using BBL.Services.User;
+using BLL.Repositories;
+using BLL.Repositories.User;
 using DataAccessLayer;
 using WebApp.Controllers;
 
@@ -25,7 +24,7 @@ namespace WebApp
             RegisterRepositories(builder);
 
             // Registering Services
-            RegisterServices(builder);
+           
 
             // Registering Controllers
             RegisterControllers(builder);
@@ -38,10 +37,6 @@ namespace WebApp
             builder.RegisterType<UserRepository>().As<IUserRepository>();
         }
 
-        public static void RegisterServices(ContainerBuilder builder)
-        {
-            builder.RegisterType<UserService>().As<IUserService>();
-        }
 
         public static void RegisterControllers(ContainerBuilder builder)
         {

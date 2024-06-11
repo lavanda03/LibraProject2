@@ -1,13 +1,13 @@
-﻿using DataAccessLayer.Entities;
+﻿using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BBL.Services.Pos.Models
-{
-	public class UpdatePosCommnad
+namespace BLL.DTO.PosDTO
+{ 
+	public class UpdatePosDTO
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }

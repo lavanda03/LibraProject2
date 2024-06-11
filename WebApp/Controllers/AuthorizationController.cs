@@ -1,4 +1,4 @@
-﻿using BBL.Services.User;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +8,23 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.Services;
 using WebApp.Models;
+using BLL.Repositories;
+using BLL.Repositories.User;
+using DAL.Common;
 
 namespace WebApp.Controllers
 {
 	[Authorize]
-	public class AuthorityController : Controller
+	public class AuthorizationController : Controller
     {
-      private readonly IUserService userService;
-      public AuthorityController(IUserService userService)
-      {
-         this.userService= userService; 
+     
+       private readonly IUserRepository userRepository;
+        public AuthorizationController(IUserRepository userRepository)
+        {
+      
+           this.userRepository = userRepository;
 
-      }
+        }
 
 		[AllowAnonymous]
 		public ActionResult Login()
@@ -34,8 +39,9 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid) 
             {
+                string hashedPassword = PasswordHasher.ComputeSHA256Hash(model.Password);  
                 //var user = await serService.LoginUser(model.Login ,model.Password);
-				var user = userService.LoginUser(model.Login, model.Password);
+				var user = userRepository.LoginUser(model.Login, hashedPassword);
            
 				if (user != null) 
                 {
@@ -55,7 +61,7 @@ namespace WebApp.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "Authority");
+            return RedirectToAction("Login", "Authorization");
         }
     }
 }

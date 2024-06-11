@@ -8,7 +8,7 @@
 
 <h1>Welcome to Libra</h1>
 
-@using (Html.BeginForm("Login", "Authority", FormMethod.Post, new { id = "login-form", @class = "login-form" }))
+@using (Html.BeginForm("Login", "Authorization", FormMethod.Post, new { id = "login-form", @class = "login-form" }))
 {
     @Html.AntiForgeryToken()
 
