@@ -39,9 +39,8 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid) 
             {
-                string hashedPassword = PasswordHasher.ComputeSHA256Hash(model.Password);  
                 //var user = await serService.LoginUser(model.Login ,model.Password);
-				var user = userRepository.LoginUser(model.Login, hashedPassword);
+				var user = userRepository.LoginUser(model.Login, model.Password);
            
 				if (user != null) 
                 {

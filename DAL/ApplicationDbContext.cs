@@ -10,9 +10,9 @@ namespace DataAccessLayer
 	{
 
 
-        public ApplicationDbContext(string connectionString) : base(connectionString)
-        {
-        }
+        //public ApplicationDbContext(string connectionString) : base(connectionString)
+        //{
+        //}
 
         public ApplicationDbContext() : base("name=MyDbContext")
 		{

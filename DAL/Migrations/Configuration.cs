@@ -1,11 +1,14 @@
 ﻿namespace DAL.Migrations
 {
-    using System;
+	using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+	using System.Runtime.Remoting.Contexts;
+	using DAL.Common;
+	using DAL.Entities;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DataAccessLayer.ApplicationDbContext>
+	internal sealed class Configuration : DbMigrationsConfiguration<DataAccessLayer.ApplicationDbContext>
     {
         public Configuration()
         {
@@ -15,10 +18,34 @@
 
         protected override void Seed(DataAccessLayer.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+			string password = "1234";
+			byte[] salt = PasswordHasher.GenerateSalt();
+			byte[] encryptedStrig = PasswordHasher.HashPassword(password, salt);
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
-            //  to avoid creating duplicate seed data.
-        }
+
+
+			context.UserTypes.AddOrUpdate(u => u.UserType,
+				new Entities.UserTypeEntity
+				{
+					UserType = "admin"
+				});
+			context.SaveChanges();
+
+
+			context.Users.AddOrUpdate(u => u.Name,
+				new Entities.UserEntity
+				{
+					Name = "crme1",
+					Email = "crme1@gmail.com",
+					PasswordHash = encryptedStrig,
+					Login = "crme1",
+					Telephone = "55424525",
+					UserTypeId = 1,
+					Salt= salt
+					
+				});
+
+		
+		}
     }
 }

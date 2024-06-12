@@ -22,11 +22,15 @@ namespace BLL.Repositories
 
 		public int AddUser(AddUserDTO command)
 		{
+			byte[] salt = PasswordHasher.GenerateSalt();
+			byte[] hash = PasswordHasher.HashPassword(command.Password, salt);
+
 			var userEntity = new UserEntity()
 			{
 				Name = command.Name,
 				Email= command.Email,
-				Password = command.Password,	
+				Salt = salt,
+				PasswordHash = hash,
 				Login=command.Login,
 				Telephone=command.Telephone,	
 				UserTypeId = command.UserTypeId,	
@@ -97,27 +101,40 @@ namespace BLL.Repositories
 		{
 			return _context.Users.Where(x => x.DeleteAt == null);
 		}
-		
+
 		public GetUserDTO LoginUser(string Login,string Password)
 		{
-			string hashedPassword = PasswordHasher.ComputeSHA256Hash(Password);
-			var userEntity = _context.Users.FirstOrDefault(u => u.Login.ToLower() == Login.ToLower() && u.Password == hashedPassword);
+			var userEntity = _context.Users.FirstOrDefault(u => u.Login == Login);
 
-			var result = new GetUserDTO()
+			if (userEntity != null)
 			{
-				Id = userEntity.Id,
-				Name = userEntity.Name,
-				Email = userEntity.Email,
-				Login = userEntity.Login,
-				UserTypeId = userEntity.UserTypeId,
-				Telephone = userEntity.Telephone
-			};
-			return result;
+				if (PasswordHasher.VerifyPassword(Password, userEntity.Salt, userEntity.PasswordHash))
+				{
+
+					return new GetUserDTO
+					{
+						Id = userEntity.Id,
+						Name = userEntity.Name,
+						Email = userEntity.Email,
+						Login = userEntity.Login,
+						UserTypeId = userEntity.UserTypeId,
+						Telephone = userEntity.Telephone
+					};
+				}
+
+			}
+
+
+			return null;
 		}
 		public bool ExistUserByEmail(string email)
 		{
 			return _context.Users.Any(u => u.Email.ToLower() == email.ToLower());
 			
+		}
+		public bool ExistLogin(string login)
+		{
+			return !_context.Users.Any(x => x.Login == login);
 		}
 	}
 }

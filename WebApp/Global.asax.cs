@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using FluentValidation;
+using FluentValidation.Mvc;
 
 namespace WebApp
 {
@@ -13,6 +15,7 @@ namespace WebApp
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
+			FluentValidationModelValidatorProvider.Configure();
 
 			var container = DIConfiguration.Configure();
 

@@ -17,9 +17,10 @@ namespace BLL.Repositories.User
         GetUserDTO LoginUser(string Login, string Password);
         bool ExistUserByEmail(string email);
         IQueryable<UserEntity> GetValidUser();
+        bool ExistLogin(string login);
 
 
 
 
-    }
+	}
 }

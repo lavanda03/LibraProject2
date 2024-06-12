@@ -2,16 +2,18 @@
 
 @{
     ViewBag.Title = "Registration";
+    Layout = null;
 }
 
 
 
-<h1>Welcome to Libra</h1>
+
 
 @using (Html.BeginForm("Login", "Authorization", FormMethod.Post, new { id = "login-form", @class = "login-form" }))
 {
     @Html.AntiForgeryToken()
 
+    <h3>Welcome to Libra</h3>
     <div class="form-group">
         @Html.LabelFor(model => model.Login, new { @class = "control-label" })
         @Html.EditorFor(model => model.Login)
@@ -42,7 +44,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        align-items: center; 
+        align-items: center;
         background: #f4f4f4;
     }
 
