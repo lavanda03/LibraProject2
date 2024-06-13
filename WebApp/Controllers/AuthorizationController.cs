@@ -11,6 +11,8 @@ using WebApp.Models;
 using BLL.Repositories;
 using BLL.Repositories.User;
 using DAL.Common;
+using System.Web.UI;
+using FluentValidation;
 
 namespace WebApp.Controllers
 {
@@ -19,10 +21,12 @@ namespace WebApp.Controllers
     {
      
        private readonly IUserRepository userRepository;
+    
         public AuthorizationController(IUserRepository userRepository)
         {
       
            this.userRepository = userRepository;
+      
 
         }
 
@@ -37,7 +41,8 @@ namespace WebApp.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid) 
+		    
+			if (ModelState.IsValid) 
             {
                 //var user = await serService.LoginUser(model.Login ,model.Password);
 				var user = userRepository.LoginUser(model.Login, model.Password);

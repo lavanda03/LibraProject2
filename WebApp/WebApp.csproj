@@ -192,6 +192,7 @@
     </Compile>
     <Compile Include="ViewModels\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -205,6 +206,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Views\Authorization\Login.cshtml" />
+    <None Include="App_Start\.editorconfig" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />
@@ -242,6 +244,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_Start\App_LocalResources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

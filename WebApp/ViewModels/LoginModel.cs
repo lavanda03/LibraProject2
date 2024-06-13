@@ -12,7 +12,7 @@ namespace WebApp.Models
 	[FluentValidation.Attributes.Validator(typeof(LoginModelValidator))]
 	public class LoginModel
 	{
-	
+	    public LoginModel() { }
 		public string Login { get; set; }
 
 		[DataType(DataType.Password)]

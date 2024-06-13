@@ -1,5 +1,124 @@
-﻿
-@{
-    ViewBag.Title = "Home Page";
-}
-<h1>Welcome to the main Menu</h1
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar cu Side Navigation</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        /* Stiluri CSS suplimentare */
+        body {
+            margin-top: 50px;
+        }
+
+        .side-nav {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 225px;
+            border: none;
+            border-radius: 0;
+            border-top: 1px rgba(0,0,0,.5) solid;
+            overflow-y: auto;
+            background-color: #222;
+            bottom: 0;
+            overflow-x: hidden;
+            padding-bottom: 40px;
+        }
+
+            .side-nav > li > a {
+                width: 225px;
+                border-bottom: 1px rgba(0,0,0,.3) solid;
+                color: #fff; /* Culoarea textului este albă */
+                text-align: center; /* Aliniază textul în centru */
+            }
+
+            .side-nav li a:hover,
+            .side-nav li a:focus {
+                outline: none;
+                background-color: #1a242f !important; /* Culoarea de fundal la hover este #1a242f */
+            }
+
+            .side-nav li a i {
+                color: #fff; /* Asigură că icoanele sunt și ele albe */
+            }
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+        <!-- Navigation -->
+        <!-- Top Menu Items -->
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+        </div>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li>
+                    <a href="investigaciones/favoritas"><i class="fa fa-fw fa-user-plus"></i> Dashboard</a>
+                    <li class="nav-item">@Html.ActionLink("Logout", "LogOff", "Authorization", null, new { @class = "nav-link btn btn-danger" })</li>
+
+                </li>
+                <li>
+                    <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> POS <b class="caret"></b></a>
+                    <ul id="submenu-1" class="collapse">
+                        <li><a href="#"><i class="fa fa-angle-double-right"></i> Add POS</a></li>
+                        <li><a href="#"><i class="fa fa-angle-double-right"></i> Browse POS</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-star"></i>  Issues <b class="caret"></b></a>
+                    <ul id="submenu-2" class="collapse">
+                        <li><a href="#"><i class="fa fa-angle-double-right"></i> Add Issue</a></li>
+                        <li><a href="#"><i class="fa fa-angle-double-right"></i> Browse issue</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" data-toggle="collapse" data-target="#submenu-3"><i class="fa fa-fw fa-star"></i>  Users <b class="caret"></b></a>
+                    <ul id="submenu-3" class="collapse">
+                        <li><a href="#"><i class="fa fa-angle-double-right"></i> Add User</a></li>
+                        <li><a href="#"><i class="fa fa-angle-double-right"></i> Browse User</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="main-3">
+           <div class = " text-center">
+               <h1>Welcome</h1>
+           </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+    <!-- Include jQuery and Bootstrap JS at the end of the file to speed up loading -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Gestionarea evenimentului de click pentru elementele care declanșează collapse-ul
+            $('.nav-link').click(function () {
+                var targetCollapse = $(this).attr('href'); // Afișează target-ul de collapse
+                var caretIcon = $(this).find('.fa-caret-right'); // Ia iconul caret din interiorul elementului apăsat
+
+                // Toggle collapse-ul țintă
+                $(targetCollapse).collapse('toggle');
+
+                // Schimbă iconul caret în funcție de starea collapse-ului
+                if ($(targetCollapse).hasClass('show')) {
+                    caretIcon.removeClass('fa-caret-right').addClass('fa-caret-down');
+                } else {
+                    caretIcon.removeClass('fa-caret-down').addClass('fa-caret-right');
+                }
+            });
+        });
+    </script>
+
+
+</body>
+</html>

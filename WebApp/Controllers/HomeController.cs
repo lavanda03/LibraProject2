@@ -13,13 +13,11 @@ namespace WebApp.Controllers
 		
 
         public HomeController()
-        {
-           
+        {  
         }
 
         public ActionResult Index()
 		{
-			//userService.AddUser();
 			return View();
 		}
 

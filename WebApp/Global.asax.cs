@@ -4,6 +4,10 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using FluentValidation;
 using FluentValidation.Mvc;
+using Autofac;
+using System;
+using System.Web;
+
 
 namespace WebApp
 {
@@ -16,10 +20,14 @@ namespace WebApp
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 			FluentValidationModelValidatorProvider.Configure();
+		
 
 			var container = DIConfiguration.Configure();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-        }
+
+			
+		}
     }
+
 }

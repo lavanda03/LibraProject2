@@ -3,7 +3,11 @@ using Autofac.Integration.Mvc;
 using BLL.Repositories;
 using BLL.Repositories.User;
 using DataAccessLayer;
+using FluentValidation;
+using System.Web.UI;
 using WebApp.Controllers;
+using WebApp.Fluent_Validation.LoginValidation;
+using WebApp.Models;
 
 
 namespace WebApp
@@ -23,12 +27,14 @@ namespace WebApp
             // Registering Repositories 
             RegisterRepositories(builder);
 
-            // Registering Services
-           
+            // Registering Validators
+            RegisterValidators(builder);
 
             // Registering Controllers
             RegisterControllers(builder);
 
+           
+            
             return builder.Build();
         }
 
@@ -42,6 +48,13 @@ namespace WebApp
         {
             builder.RegisterControllers(typeof(HomeController).Assembly);
         }
+        public static void RegisterValidators(ContainerBuilder builder) 
+        {
+			builder.RegisterAssemblyTypes(typeof(LoginModelValidator).Assembly)
+		   .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
+		   .AsImplementedInterfaces()
+		   .InstancePerLifetimeScope();
+		}
         
     }
 }
