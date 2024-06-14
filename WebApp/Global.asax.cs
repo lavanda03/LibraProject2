@@ -20,7 +20,7 @@ namespace WebApp
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 			FluentValidationModelValidatorProvider.Configure();
-		
+		    
 
 			var container = DIConfiguration.Configure();
 
