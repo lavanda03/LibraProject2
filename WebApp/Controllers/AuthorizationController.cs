@@ -1,18 +1,14 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Web.Services;
-using WebApp.Models;
-using BLL.Repositories;
 using BLL.Repositories.User;
-using DAL.Common;
-using System.Web.UI;
-using FluentValidation;
+using System.Security.Claims;
+
+
 
 namespace WebApp.Controllers
 {
@@ -30,6 +26,7 @@ namespace WebApp.Controllers
 
         }
 
+        [Authorize(Roles ="admin")]
 		[AllowAnonymous]
 		public ActionResult Login()
         {
@@ -39,25 +36,37 @@ namespace WebApp.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Login(LoginModel model)
+		public async Task<ActionResult> Login(BLL.DTO.UserDTO.GetUserDTO model)
         {
 		    
 			if (ModelState.IsValid) 
             {
+
                 //var user = await serService.LoginUser(model.Login ,model.Password);
 				var user = userRepository.LoginUser(model.Login, model.Password);
-           
-				if (user != null) 
-                {
-                    FormsAuthentication.SetAuthCookie(model.Login, true);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-					ModelState.AddModelError("", "Пользователя с таким логином и паролем нет");
-				}
 
-            }
+                var userClaim = new List<Claim>
+                {
+                    new Claim (ClaimTypes.NameIdentifier,user.Id.ToString()),
+                    new Claim (ClaimTypes.Name ,user.Name),
+                    new Claim ("Login" ,user.Login),
+                    new Claim (ClaimTypes.Email,user.Email),
+                    new Claim (ClaimTypes.Role,user.UserType),
+
+                };
+
+
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(userClaim, System.Web.Security.FormsAuthentication.FormsCookieName);
+                var principal = new ClaimsPrincipal(claimsIdentity);
+
+                System.Web.HttpContext.Current.User = principal;
+
+				FormsAuthentication.SetAuthCookie("admin", false);
+              
+
+				return RedirectToAction("Index", "Home");
+
+			}
             return View(model);
         }
 

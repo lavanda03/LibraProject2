@@ -31,6 +31,12 @@
 				});
 			context.SaveChanges();
 
+			context.UserTypes.AddOrUpdate(u => u.UserType,
+				new Entities.UserTypeEntity
+				{
+					UserType = "tehnical group"
+				});
+
 
 			context.Users.AddOrUpdate(u => u.Name,
 				new Entities.UserEntity

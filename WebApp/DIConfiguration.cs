@@ -6,8 +6,8 @@ using DataAccessLayer;
 using FluentValidation;
 using System.Web.UI;
 using WebApp.Controllers;
-using WebApp.Fluent_Validation.LoginValidation;
-using WebApp.Models;
+using BLL.DTO.UserDTO;
+
 
 
 namespace WebApp
@@ -33,7 +33,7 @@ namespace WebApp
             // Registering Controllers
             RegisterControllers(builder);
 
-           
+          
             
             return builder.Build();
         }

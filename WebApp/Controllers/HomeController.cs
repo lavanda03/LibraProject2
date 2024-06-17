@@ -16,6 +16,7 @@ namespace WebApp.Controllers
         {  
         }
 
+		[Authorize()]
         public ActionResult Index()
 		{
 			return View();

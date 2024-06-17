@@ -1,9 +1,10 @@
-﻿using FluentValidation;
-using WebApp.Models;
+﻿using BLL.DTO.UserDTO;
+using FluentValidation;
 
-namespace WebApp.Fluent_Validation.LoginValidation
+
+namespace BLL.DTO.UserDTO
 {
-    public class LoginModelValidator:AbstractValidator<LoginModel>
+    public class LoginModelValidator:AbstractValidator<GetUserDTO>
 	{
 		public LoginModelValidator()
 		{

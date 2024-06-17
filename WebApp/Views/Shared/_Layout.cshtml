@@ -1,4 +1,5 @@
-﻿@model  WebApp.ViewModels.UserViewModel.GetUserViewModel
+﻿ @model BLL.DTO.UserDTO.GetUserDTO
+ @using System.Security.Claims; 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <title>Gentelella Alela! | </title>
+    <title>Libra ! | </title>
 
     <!-- Bootstrap -->
     <link href="~/Content/bootstrap.min.css" rel="stylesheet"> <!--++-->
@@ -26,7 +27,7 @@
 
 </head>
 
-<body class="nav-md">
+  <body class="nav-md">
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col menu_fixed">
@@ -34,7 +35,7 @@
                     <div class="navbar nav_title" style="border: 0;">
                         <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Libra Dashboard!</span></a>
                     </div>
-
+                     
                     <div class="clearfix"></div>
 
                     <!-- menu profile quick info -->
@@ -43,7 +44,7 @@
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>John Doe</h2>
+                            <h2>@User.Identity.Name </h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -73,19 +74,21 @@
 
                                     </ul>
                                 </li>
+                                @if (HttpContext.Current.User.IsInRole("admin"))
+                                {
                                 <li>
+                                    <p>A trecut</p>
                                     <a><i class="fa fa-table"></i> Users<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="tables.html">Add Users</a></li>
                                         <li><a href="tables_dynamic.html">Browse Users</a></li>
                                     </ul>
                                 </li>
+                                }
                             </ul>
                         </div>
                     </div>
-                    <!-- /sidebar menu -->
-                    <!-- /menu footer buttons -->
-                    <!-- /menu footer buttons -->
+              
                 </div>
             </div>
 
@@ -100,7 +103,7 @@
                             <li class="nav-item dropdown open" style="padding-left: 690px;">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
 
-                                    @Html.BeginForm("Login")
+                                   @User.Identity.Name
                                 </a>
                                 <span style="margin-left :10px;"></span>
                                 @Html.ActionLink("Logout", "LogOff", "Authorization", null, new { @class = "nav-link" })
@@ -110,7 +113,7 @@
                     </nav>
                 </div>
             </div>
-            <!-- /top navigation -->
+   
             <!-- page content -->
             <div class="right_col" role="main">
                 <div class="">
@@ -122,8 +125,7 @@
                 </div>
             </div>
             <!-- /page content -->
-            <!-- footer content -->
-            <!-- /footer content -->
+      
         </div>
     </div>
 

@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System;
 using BLL.DTO.UserDTO;
 using DAL.Common;
+using System.Data.Entity;
 
 
 namespace BLL.Repositories
@@ -54,7 +55,8 @@ namespace BLL.Repositories
 					Email = x.Email,
 					Login = x.Login,
 					Telephone = x.Telephone,
-					UserTypeId = x.UserTypeId
+					UserTypeId = x.UserTypeId,
+					
 				}); 
 			}
 
@@ -71,7 +73,8 @@ namespace BLL.Repositories
 				Email = userEntity.Email,
 				Login = userEntity.Login,
 				Telephone = userEntity.Telephone,
-				UserTypeId= userEntity.UserTypeId
+				UserTypeId= userEntity.UserTypeId,
+				UserType = userEntity.UserType.UserType
 			};
 
 			return result;
@@ -104,7 +107,9 @@ namespace BLL.Repositories
 
 		public GetUserDTO LoginUser(string Login,string Password)
 		{
-			var userEntity = _context.Users.FirstOrDefault(u => u.Login == Login);
+			//var userEntity = _context.Users.FirstOrDefault(u => u.Login == Login);
+
+			var userEntity = _context.Users.Include(u => u.UserType).FirstOrDefault(u => u.Login == Login);
 
 			if (userEntity != null)
 			{
@@ -118,7 +123,8 @@ namespace BLL.Repositories
 						Email = userEntity.Email,
 						Login = userEntity.Login,
 						UserTypeId = userEntity.UserTypeId,
-						Telephone = userEntity.Telephone
+						Telephone = userEntity.Telephone,
+						UserType = userEntity.UserType.UserType
 					};
 				}
 

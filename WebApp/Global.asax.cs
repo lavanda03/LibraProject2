@@ -7,6 +7,7 @@ using FluentValidation.Mvc;
 using Autofac;
 using System;
 using System.Web;
+using System.Web.Security;
 
 
 namespace WebApp
@@ -21,6 +22,10 @@ namespace WebApp
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 			FluentValidationModelValidatorProvider.Configure();
 		    
+
+		
+
+
 
 			var container = DIConfiguration.Configure();
 
