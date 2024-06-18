@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Web.Security;
 using BLL.Repositories.User;
 using System.Security.Claims;
+using BLL.DTO.UserDTO;
+using Newtonsoft.Json;
 
 
 
@@ -42,27 +44,15 @@ namespace WebApp.Controllers
 			if (ModelState.IsValid) 
             {
 
-                //var user = await serService.LoginUser(model.Login ,model.Password);
 				var user = userRepository.LoginUser(model.Login, model.Password);
 
-                var userClaim = new List<Claim>
-                {
-                    new Claim (ClaimTypes.NameIdentifier,user.Id.ToString()),
-                    new Claim (ClaimTypes.Name ,user.Name),
-                    new Claim ("Login" ,user.Login),
-                    new Claim (ClaimTypes.Email,user.Email),
-                    new Claim (ClaimTypes.Role,user.UserType),
+                string userData = JsonConvert.SerializeObject(user);
 
-                };
+                var authTicket = new FormsAuthenticationTicket(1, user.Login, DateTime.Now, DateTime.Now.AddDays(15), false, userData);
 
-
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(userClaim, System.Web.Security.FormsAuthentication.FormsCookieName);
-                var principal = new ClaimsPrincipal(claimsIdentity);
-
-                System.Web.HttpContext.Current.User = principal;
-
-				FormsAuthentication.SetAuthCookie("admin", false);
-              
+                string encTicket = FormsAuthentication.Encrypt(authTicket);
+                var faCookie = new HttpCookie(FormsAuthentication.FormsCookieName,encTicket);
+                Response.Cookies.Add(faCookie);
 
 				return RedirectToAction("Index", "Home");
 
