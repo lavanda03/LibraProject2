@@ -197,8 +197,20 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\datatable\css\datatable-bootstrap.css" />
+    <Content Include="Content\datatable\css\datatable-bootstrap.min.css" />
+    <Content Include="Content\datatable\css\datatable.css" />
+    <Content Include="Content\datatable\css\datatable.min.css" />
+    <Content Include="Content\datatable\img\sort_asc.png" />
+    <Content Include="Content\datatable\img\sort_both.png" />
+    <Content Include="Content\datatable\img\sort_desc.png" />
+    <Content Include="Scripts\datatable.jquery.js" />
+    <Content Include="Scripts\datatable.jquery.min.js" />
+    <Content Include="Scripts\datatable.js" />
+    <Content Include="Scripts\datatable.min.js" />
+    <Content Include="Content\font-awesome.css" />
     <Content Include="Css\custom.min.css" />
-    <Content Include="Css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Css\jquery.mCustomScrollbar.min.css" />
     <Content Include="Css\nprogress.css" />
     <Content Include="favicon.ico" />
@@ -209,6 +221,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\custom.min.js" />
+    <Content Include="Scripts\dataTables.bootstrap4.js" />
     <Content Include="Scripts\fastclick.js" />
     <Content Include="Scripts\jquery.mCustomScrollbar.concat.min.js" />
     <Content Include="Scripts\jquery.min.js" />
@@ -216,6 +229,7 @@
     <Content Include="Views\Authorization\Login.cshtml" />
     <None Include="App_Start\.editorconfig" />
     <Content Include="Views\User\Browse.cshtml" />
+    <Content Include="libman.json" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />

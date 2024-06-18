@@ -1,7 +1,4 @@
-﻿ @model BLL.DTO.UserDTO.GetUserDTO
- @using System.Security.Claims; 
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,13 +13,12 @@
     <!-- Bootstrap -->
     <link href="~/Content/bootstrap.min.css" rel="stylesheet"> <!--++-->
     <!-- Font Awesome -->
-    <link href="/Css/font-awesome.min.css" rel="stylesheet"> <!--++-->
+    <link href="~/Content/font-awesome.css" rel="stylesheet"> <!--++-->
+    <link href="~/Content/datatable/css/datatable-bootstrap.css" rel="stylesheet"> <!--++-->
     <!-- NProgress -->
-    <link href="~/Css/nprogress.css" rel="stylesheet">  <!--+-->
+    <link href="~/css/nprogress.css" rel="stylesheet">  +
     <!-- jQuery custom content scroller -->
     <link href="~/Css/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="~/Css/custom.min.css" rel="stylesheet"> <!--++-->
 
@@ -68,7 +64,9 @@
 
                             <ul class="nav side-menu">
                                 <li>
-                                    <a href="#"><i class="fa fa-home"></i> Dashboard <span class="fa fa-chevron-down"></span></a>
+                                    <a href="#">
+                                        <i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard <span class="fa fa-chevron-down"></span>
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="#"><i class="fa fa-edit"></i> POS <span class="fa fa-chevron-down"></span></a>
@@ -111,9 +109,9 @@
                     <div class="nav toggle">
                         <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                     </div>
-                    <nav class="nav navbar-nav">
+                    <nav class="nav navbar-na pull-right">
                         <ul class=" navbar-right">
-                            <li class="nav-item dropdown open" style="padding-left: 690px;">
+                            <li class="nav-item dropdown open">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
 
                                    @User.Identity.Name
@@ -149,11 +147,11 @@
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     <!-- FastClick -->
     <script src="~/Scripts/fastclick.js"></script>
+    <script src="~/Scripts/datatable.jquery.js"></script>
     <!-- NProgress -->
     <script src="~/Scripts/nprogress.js"></script>
     <!-- jQuery custom content scroller -->
     <script src="~/Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-
     <!-- Custom Theme Scripts -->
     <script src="~/Scripts/custom.min.js"></script>
 
