@@ -215,6 +215,7 @@
     <Content Include="Scripts\nprogress.js" />
     <Content Include="Views\Authorization\Login.cshtml" />
     <None Include="App_Start\.editorconfig" />
+    <Content Include="Views\User\Browse.cshtml" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />
@@ -253,7 +254,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="App_Start\App_LocalResources\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -41,14 +41,17 @@ namespace BLL.Repositories
 			return userEntity.Id;	
 		}
 
-		public List<GetUserDTO> GetAllUsers() 
+		public GetUsersDTO GetAllUsers() 
 		{
-			var result = new List<GetUserDTO>();
-		    var usersEntity=_context.Users.ToList();
+			var result = new GetUsersDTO
+			{
+				UserDTO = new List<GetUserDTO>()
+			};
+			var usersEntity=_context.Users.ToList();
 
 			foreach(var x in usersEntity)
 			{
-				result.Add(new GetUserDTO
+				result.UserDTO.Add(new GetUserDTO
 				{
 					Id = x.Id,
 					Name = x.Name,
@@ -129,8 +132,6 @@ namespace BLL.Repositories
 				}
 
 			}
-
-
 			return null;
 		}
 		public bool ExistUserByEmail(string email)

@@ -28,7 +28,6 @@ namespace WebApp.Controllers
 
         }
 
-        [Authorize(Roles ="admin")]
 		[AllowAnonymous]
 		public ActionResult Login()
         {
@@ -37,30 +36,43 @@ namespace WebApp.Controllers
 
 		[HttpPost]
 		[AllowAnonymous]
-		[ValidateAntiForgeryToken]
+		
 		public async Task<ActionResult> Login(BLL.DTO.UserDTO.GetUserDTO model)
-        {
-		    
-			if (ModelState.IsValid) 
-            {
+		{
+
+			if (ModelState.IsValid)
+			{
 
 				var user = userRepository.LoginUser(model.Login, model.Password);
 
-                string userData = JsonConvert.SerializeObject(user);
+				if (user == null)
+				{
+					ModelState.AddModelError("login", "not valid user");
+					
+				}
 
-                var authTicket = new FormsAuthenticationTicket(1, user.Login, DateTime.Now, DateTime.Now.AddDays(15), false, userData);
+				else
+				{
+					string userData = JsonConvert.SerializeObject(user);
 
-                string encTicket = FormsAuthentication.Encrypt(authTicket);
-                var faCookie = new HttpCookie(FormsAuthentication.FormsCookieName,encTicket);
-                Response.Cookies.Add(faCookie);
+					var authTicket = new FormsAuthenticationTicket(1, user.Login, DateTime.Now, DateTime.Now.AddDays(15), false, userData);
 
-				return RedirectToAction("Index", "Home");
+					string encTicket = FormsAuthentication.Encrypt(authTicket);
+					var faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+					Response.Cookies.Add(faCookie);
 
+					return RedirectToAction("Index", "Home");
+
+				}
 			}
-            return View(model);
-        }
+			return View(model);
+		}
 
-        [HttpGet]
+
+
+
+
+		[HttpGet]
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();

@@ -10,7 +10,7 @@ namespace BLL.Repositories.User
     public interface IUserRepository
     {
         int AddUser(AddUserDTO addUser);
-        List<GetUserDTO> GetAllUsers();
+        GetUsersDTO GetAllUsers();
         GetUserDTO GetUserById(int id);
         void UpdateUser(UpdateUserDTO updateUser);
         void DeleteUser(int Id);

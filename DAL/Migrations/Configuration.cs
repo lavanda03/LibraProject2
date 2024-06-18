@@ -51,6 +51,17 @@
 					
 				});
 
+			context.Users.AddOrUpdate(u => u.Name,
+				new Entities.UserEntity
+				{
+					Name = "crme2",
+					Email = "crme2@gmail.com",
+					PasswordHash = encryptedStrig,
+					Login = "crme2",
+					Telephone = "5542425",
+					UserTypeId = 2,
+					Salt = salt
+				});
 		
 		}
     }

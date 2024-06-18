@@ -17,13 +17,10 @@ namespace WebApp
 				name: "Default",
 				url: "{controller}/{action}/{id}",
 				defaults: new { controller = "Authorization", action = "Login", id = UrlParameter.Optional }
-				);
+				); 
 
-			routes.MapRoute(
-				 name: "Main menu",
-				 url: "menu",
-				 defaults: new { controller = "Home", action = "About" }
-			 );
+			
+			 
 		}
 	}
 }

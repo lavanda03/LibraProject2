@@ -11,20 +11,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <title>Libra ! | </title>
+    <title>Libra!</title>
 
     <!-- Bootstrap -->
     <link href="~/Content/bootstrap.min.css" rel="stylesheet"> <!--++-->
     <!-- Font Awesome -->
-    <link href="~/Css/font-awesome.min.css" rel="stylesheet"> <!--++-->
+    <link href="/Css/font-awesome.min.css" rel="stylesheet"> <!--++-->
     <!-- NProgress -->
     <link href="~/Css/nprogress.css" rel="stylesheet">  <!--+-->
     <!-- jQuery custom content scroller -->
     <link href="~/Css/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="~/Css/custom.min.css" rel="stylesheet"> <!--++-->
 
+    <style>
 
+        body {
+            background-color: #FFFFFF;
+        }
+
+        .nav-md .container.body .main_container {
+            background-color: #FFFFFF;
+        }
+    </style>
 </head>
 
   <body class="nav-md">
@@ -57,10 +68,10 @@
 
                             <ul class="nav side-menu">
                                 <li>
-                                    <a><i class="fa fa-home"></i> Dashboard <span class="fa fa-chevron-down"></span></a>
+                                    <a href="#"><i class="fa fa-home"></i> Dashboard <span class="fa fa-chevron-down"></span></a>
                                 </li>
                                 <li>
-                                    <a><i class="fa fa-edit"></i> POS <span class="fa fa-chevron-down"></span></a>
+                                    <a href="#"><i class="fa fa-edit"></i> POS <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="form.html">Add POS</a></li>
                                         <li><a href="form_advanced.html">Browse POS</a></li>
@@ -74,15 +85,17 @@
 
                                     </ul>
                                 </li>
-                                @if (HttpContext.Current.User.IsInRole("admin"))
-                                {
                                 <li>
-                                    <p>A trecut</p>
+                                      @if (User.IsInRole("admin"))
+                                      {
                                     <a><i class="fa fa-table"></i> Users<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="tables.html">Add Users</a></li>
-                                        <li><a href="tables_dynamic.html">Browse Users</a></li>
+                                        <li>
+                                            @Html.ActionLink("Browse User", "Browse", "User", null, new { @class = "nav-link" })
+                                        </li>
                                     </ul>
+                                      }
                                 </li>
                                 }
                             </ul>
@@ -120,6 +133,7 @@
                     <div class="page-title">
                         <div class="title_left">
                             <h3>Dashboard </h3>
+                            @RenderBody()
                         </div>
                     </div>
                 </div>
@@ -143,14 +157,9 @@
     <!-- Custom Theme Scripts -->
     <script src="~/Scripts/custom.min.js"></script>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
+   
+     
+       
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

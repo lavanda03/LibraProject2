@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL.Repositories.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,20 @@ namespace WebApp.Controllers
 {
     public class UserController : Controller
     {
-        // GET: User
-        public ActionResult Index()
+
+		private readonly IUserRepository userRepository;
+
+		public UserController(IUserRepository userRepository)
+		{
+
+			this.userRepository = userRepository;
+		}
+
+		// GET: User
+		public ActionResult Browse()
         {
-            return View();
+			var users = userRepository.GetAllUsers();
+            return View(users);
         }
     }
 }

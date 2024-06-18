@@ -13,6 +13,7 @@ using BLL.DTO.UserDTO;
 using System.Collections.Generic;
 using System.Security.Claims;
 using BLL.Repositories;
+using System.Web.UI;
 
 
 namespace WebApp
@@ -32,7 +33,7 @@ namespace WebApp
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 		}
 
-		protected void Application_PostAuthenticateRequest(object sender,EventArgs e)
+		protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
 		{
 			HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
 			if (authCookie != null) 
@@ -41,26 +42,29 @@ namespace WebApp
 
 				var user = JsonConvert.DeserializeObject<GetUserDTO>(authTicket.UserData);
 
-
-				var userClaim = new List<Claim>
+				if (user != null)
 				{
+
+					var userClaim = new List<Claim>
+				    {
 					new Claim (ClaimTypes.NameIdentifier,user.Id.ToString()),
 					new Claim (ClaimTypes.Name ,user.Name),
 					new Claim ("Login" ,user.Login),
 					new Claim (ClaimTypes.Email,user.Email),
 					new Claim (ClaimTypes.Role,user.UserType),
 
-				};
+				    };
 
 
-				ClaimsIdentity claimsIdentity = new ClaimsIdentity(userClaim, System.Web.Security.FormsAuthentication.FormsCookieName);
-				var principal = new ClaimsPrincipal(claimsIdentity);
+					ClaimsIdentity claimsIdentity = new ClaimsIdentity(userClaim, System.Web.Security.FormsAuthentication.FormsCookieName);
+					var principal = new ClaimsPrincipal(claimsIdentity);
 
-				HttpContext.Current.User = principal;
+					HttpContext.Current.User = principal;
+				}
 
 			}
 
 		}
-    }
+	}
 
 }
