@@ -8,6 +8,8 @@ using System;
 using BLL.DTO.UserDTO;
 using DAL.Common;
 using System.Data.Entity;
+using BBL.DTO.UserDTO;
+using System.Security.AccessControl;
 
 
 namespace BLL.Repositories
@@ -58,7 +60,7 @@ namespace BLL.Repositories
 					Email = x.Email,
 					Login = x.Login,
 					Telephone = x.Telephone,
-					UserTypeId = x.UserTypeId,
+					UserTypeId = x.UserTypeId
 					
 				}); 
 			}
@@ -142,6 +144,22 @@ namespace BLL.Repositories
 		public bool ExistLogin(string login)
 		{
 			return !_context.Users.Any(x => x.Login == login);
+		}
+
+		public List<GetUsersTypeDTO> GetAllUsersType()
+		{
+			var usersType = _context.UserTypes.ToList();
+			var result = new List<GetUsersTypeDTO>();
+
+			foreach(var user in usersType) 
+			{
+				result.Add(new GetUsersTypeDTO
+				{
+					Id = user.Id,
+					UserType=user.UserType
+				});
+			}
+			return result;
 		}
 	}
 }

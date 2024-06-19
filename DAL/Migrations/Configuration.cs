@@ -36,6 +36,7 @@
 				{
 					UserType = "tehnical group"
 				});
+			context.SaveChanges();
 
 
 			context.Users.AddOrUpdate(u => u.Name,

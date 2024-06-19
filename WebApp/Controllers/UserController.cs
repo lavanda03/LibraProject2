@@ -1,4 +1,5 @@
-﻿using BLL.Repositories.User;
+﻿using BLL.DTO.UserDTO;
+using BLL.Repositories.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,5 +25,25 @@ namespace WebApp.Controllers
 			var users = userRepository.GetAllUsers();
             return View(users);
         }
+
+
+		[HttpGet]
+		public ActionResult CreateUser()
+	{
+			ViewBag.UserTypes = userRepository.GetAllUsersType();
+			return View();
+		}
+		[HttpPost]	
+		public ActionResult CreateUser(AddUserDTO model)
+		{
+			if (ModelState.IsValid)
+			{
+				userRepository.AddUser(model);
+			}
+
+			ViewBag.UserTypes = userRepository.GetAllUsersType();
+			return View();
+		}
+
     }
 }

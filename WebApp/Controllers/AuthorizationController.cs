@@ -21,11 +21,8 @@ namespace WebApp.Controllers
        private readonly IUserRepository userRepository;
     
         public AuthorizationController(IUserRepository userRepository)
-        {
-      
+		{ 
            this.userRepository = userRepository;
-      
-
         }
 
 		[AllowAnonymous]
@@ -34,9 +31,9 @@ namespace WebApp.Controllers
             return View();
         }
 
+
 		[HttpPost]
 		[AllowAnonymous]
-		
 		public async Task<ActionResult> Login(BLL.DTO.UserDTO.GetUserDTO model)
 		{
 
@@ -67,9 +64,6 @@ namespace WebApp.Controllers
 			}
 			return View(model);
 		}
-
-
-
 
 
 		[HttpGet]

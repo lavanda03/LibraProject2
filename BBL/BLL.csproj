@@ -109,6 +109,7 @@
     <Compile Include="DTO\UserDTO\AddUserDTO.cs" />
     <Compile Include="DTO\UserDTO\GetUserDTO.cs" />
     <Compile Include="DTO\UserDTO\GetUsersDTO.cs" />
+    <Compile Include="DTO\UserDTO\GetUsersTypeDTO.cs" />
     <Compile Include="DTO\UserDTO\LoginValidation\LoginModelValidator.cs" />
     <Compile Include="DTO\UserDTO\UpdateUserDTO.cs" />
     <Compile Include="ErrorHandlerService.cs" />

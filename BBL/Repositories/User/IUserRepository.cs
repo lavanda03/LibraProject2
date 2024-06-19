@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using BLL.DTO.UserDTO;
+using BBL.DTO.UserDTO;
 
 namespace BLL.Repositories.User
 {
@@ -18,6 +19,9 @@ namespace BLL.Repositories.User
         bool ExistUserByEmail(string email);
         IQueryable<UserEntity> GetValidUser();
         bool ExistLogin(string login);
+        List<GetUsersTypeDTO> GetAllUsersType();
+
+
 
 
 
