@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.Entities
+
+namespace DAL.Entities
 {
 	public class CityEntity
 	{

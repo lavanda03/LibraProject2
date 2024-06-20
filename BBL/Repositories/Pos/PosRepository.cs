@@ -6,10 +6,12 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer;
-using DataAccessLayer.Entities;
+using DAL.Entities;
+using BLL.DTO.PosDTO;
+using System.Runtime.InteropServices;
 
 
-namespace BBL.Repositories.Pos
+namespace BLL.Repositories.Pos
 {
 	public class PosRepository:IPosRepository
 	{
@@ -19,26 +21,74 @@ namespace BBL.Repositories.Pos
 			this._dbContext = _dbContext;	
 		}
 		
-		public int AddPos(PosEntity posEntity)
+		public int AddPos(AddPosDTO command)
 		{
+			var posEntity = new PosEntity()
+			{
+				Name = command.Name,
+				Telephone = command.Telephone,
+				CellPhone = command.CellPhone,
+				Address = command.Address,
+				City_Id = command.City_Id,
+				Brand = command.Brand,
+				Model = command.Model,
+				ConnType_Id = command.ConnType_Id,
+				MorningClosing = command.MorningClosing,
+				MorningOperning = command.MorningOperning,
+				AfternonClosing = command.AfternonClosing,
+				AfternoonOpening = command.AfternoonOpening,
+				DaysClosed = command.DaysClosed
+			};
+
 			_dbContext.Pos.Add(posEntity);
 			_dbContext.SaveChanges();
 			return posEntity.Id;
 		}
 
-		public PosEntity GetPosById(int id) 
+		public GetPosDTO GetPosById(int id) 
 		{
-			return _dbContext.Pos.FirstOrDefault(u=>u.Id== id);	
+
+		   var posEntity = _dbContext.Pos.FirstOrDefault(u=>u.Id== id);
+
+			var result = new GetPosDTO()
+			{
+				Id = posEntity.Id,
+				Name = posEntity.Name,
+				Telephone = posEntity.Telephone,
+				Address = posEntity.Address,
+			  //status
+
+			};
+
+			return result;
 		}
 
-		public List<PosEntity> GetAllPos()
+		public List<GetPosDTO> GetAllPos()
 		{
-			return _dbContext.Pos.ToList();
+
+		    var posEntities=_dbContext.Pos.ToList();
+			var result = new List<GetPosDTO>();
+			
+		   foreach (var i in posEntities)
+		   {
+
+				result.Add(new GetPosDTO()
+				{
+                    Id = i.Id,
+					Name = i.Name,
+					Telephone= i.Telephone,	
+					Address = i.Address
+					//status
+				});
+
+		   }
+			return result;
 
 		}
-		public void UpdatePos(PosEntity pos)
+
+		public void UpdatePos(UpdatePosDTO updatePos)
 		{
-			_dbContext.Entry(pos).State = System.Data.Entity.EntityState.Modified;
+			_dbContext.Entry(updatePos).State = System.Data.Entity.EntityState.Modified;
 			_dbContext.SaveChanges();
 		}
 

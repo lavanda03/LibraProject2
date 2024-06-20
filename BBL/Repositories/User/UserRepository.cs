@@ -1,12 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DataAccessLayer;
-using DataAccessLayer.Entities;
-using BBL.Repositories.User;
+using DAL.Entities;
+using BLL.Repositories.User;
 using System.Text.RegularExpressions;
 using System;
+using BLL.DTO.UserDTO;
+using DAL.Common;
+using System.Data.Entity;
+using BBL.DTO.UserDTO;
+using System.Security.AccessControl;
 
-namespace BBL.Repositories
+
+namespace BLL.Repositories
 {
     public class UserRepository : IUserRepository
 	{
@@ -17,26 +23,71 @@ namespace BBL.Repositories
 		   this._context = _context;
 		}
 
-		public int AddUser(UserEntity usersEntity)
+		public int AddUser(AddUserDTO command)
 		{
-			_context.Users.Add(usersEntity);
+			byte[] salt = PasswordHasher.GenerateSalt();
+			byte[] hash = PasswordHasher.HashPassword(command.Password, salt);
+
+			var userEntity = new UserEntity()
+			{
+				Name = command.Name,
+				Email= command.Email,
+				Salt = salt,
+				PasswordHash = hash,
+				Login=command.Login,
+				Telephone=command.Telephone,	
+				UserTypeId = command.UserTypeId,	
+			};
+			_context.Users.Add(userEntity);
 			_context.SaveChanges();	
-			return usersEntity.Id;	
+			return userEntity.Id;	
 		}
 
-		public List<UserEntity> GetAllUsers() 
+		public GetUsersDTO GetAllUsers() 
 		{
-			return _context.Users.ToList();
+			var result = new GetUsersDTO
+			{
+				UserDTO = new List<GetUserDTO>()
+			};
+			var usersEntity=_context.Users.ToList();
+
+			foreach(var x in usersEntity)
+			{
+				result.UserDTO.Add(new GetUserDTO
+				{
+					Id = x.Id,
+					Name = x.Name,
+					Email = x.Email,
+					Login = x.Login,
+					Telephone = x.Telephone,
+					UserTypeId = x.UserTypeId
+					
+				}); 
+			}
+
+			return result;
 		}
 
-		public UserEntity GetUserById(int id)
+		public GetUserDTO GetUserById(int id)
 		{
-			return _context.Users.FirstOrDefault(u => u.Id == id);
+			var userEntity=_context.Users.FirstOrDefault(u => u.Id == id);
+			//verificare null?
+			var result = new GetUserDTO()
+			{
+				Name = userEntity.Name,
+				Email = userEntity.Email,
+				Login = userEntity.Login,
+				Telephone = userEntity.Telephone,
+				UserTypeId= userEntity.UserTypeId,
+				UserType = userEntity.UserType.UserType
+			};
+
+			return result;
 		}
 
-		public void UpdateUser(UserEntity usersEntity) 
+		public void UpdateUser(UpdateUserDTO updateUser) 
 		{
-			_context.Entry(usersEntity).State = System.Data.Entity.EntityState.Modified;
+			_context.Entry(updateUser).State = System.Data.Entity.EntityState.Modified;
 			_context.SaveChanges();
 		}
 
@@ -58,15 +109,57 @@ namespace BBL.Repositories
 		{
 			return _context.Users.Where(x => x.DeleteAt == null);
 		}
-		
-		public UserEntity LoginUser(string Login,string Password)
+
+		public GetUserDTO LoginUser(string Login,string Password)
 		{
-			return _context.Users.FirstOrDefault(u => u.Login.ToLower() == Login.ToLower() && u.Password == Password);
+			//var userEntity = _context.Users.FirstOrDefault(u => u.Login == Login);
+
+			var userEntity = _context.Users.Include(u => u.UserType).FirstOrDefault(u => u.Login == Login);
+
+			if (userEntity != null)
+			{
+				if (PasswordHasher.VerifyPassword(Password, userEntity.Salt, userEntity.PasswordHash))
+				{
+
+					return new GetUserDTO
+					{
+						Id = userEntity.Id,
+						Name = userEntity.Name,
+						Email = userEntity.Email,
+						Login = userEntity.Login,
+						UserTypeId = userEntity.UserTypeId,
+						Telephone = userEntity.Telephone,
+						UserType = userEntity.UserType.UserType
+					};
+				}
+
+			}
+			return null;
 		}
 		public bool ExistUserByEmail(string email)
 		{
 			return _context.Users.Any(u => u.Email.ToLower() == email.ToLower());
 			
+		}
+		public bool ExistLogin(string login)
+		{
+			return _context.Users.Any(x => x.Login == login);
+		}
+
+		public List<GetUsersTypeDTO> GetAllUsersType()
+		{
+			var usersType = _context.UserTypes.ToList();
+			var result = new List<GetUsersTypeDTO>();
+
+			foreach(var user in usersType) 
+			{
+				result.Add(new GetUsersTypeDTO
+				{
+					Id = user.Id,
+					UserType=user.UserType
+				});
+			}
+			return result;
 		}
 	}
 }

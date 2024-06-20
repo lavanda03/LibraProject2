@@ -1,19 +1,20 @@
-﻿using DataAccessLayer.Entities;
+﻿using DAL.Entities;
 using DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BLL.DTO.PosDTO;
 
-namespace BBL.Repositories.Pos
+namespace BLL.Repositories.Pos
 {
 	public interface IPosRepository
 	{
-		int AddPos(PosEntity posEntity);
-		PosEntity GetPosById(int id);
-        List<PosEntity> GetAllPos();
-		void UpdatePos(PosEntity pos);
+		int AddPos(AddPosDTO addPos);
+		GetPosDTO GetPosById(int id);
+        List<GetPosDTO> GetAllPos();
+		void UpdatePos(UpdatePosDTO updatePos);
 		void DeletePos(int Id);
 		IQueryable<PosEntity> GetValidPos();
 		

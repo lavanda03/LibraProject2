@@ -1,0 +1,46 @@
+﻿@model  BLL.DTO.UserDTO.GetUsersDTO
+
+@{
+    ViewBag.Title = "Browse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="clearfix"></div>
+
+
+<table id="userTable" class="display">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Login</th>
+            <th>Telephone</th>
+            <th>UserTypeId</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var user in Model.UserDTO)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@user.Login</td>
+                <td>@user.Telephone</td>
+                <td>@user.UserTypeId</td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#userTable').datatable();
+        });
+    </script>
+}

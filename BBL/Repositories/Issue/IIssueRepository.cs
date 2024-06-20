@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataAccessLayer.Entities;
+using BLL.DTO.IssueDTO;
+using DAL.Entities;
 
-namespace BBL.Repositories.Issue
+
+namespace BLL.Repositories.Issue
 {
 	public interface IIssueRepository
 	{
-		 int AddIssue(IssueEntity issue);
-		IssueEntity GetIssueById(int id);
-		List<IssueEntity> GetAllIssues();
-		void UpdateIssue(IssueEntity issue);	
+		 int AddIssue(AddIssuesDTO issue);
+		GetIssuesDTO GetIssueById(int id);
+		List<GetIssuesDTO> GetAllIssues();
+		void UpdateIssue(UpdateIssuesDTO issue);	
 		void DeleteIssue(int id);
 		IQueryable<IssueEntity> GetValidIssues();
 	}

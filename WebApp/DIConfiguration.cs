@@ -1,10 +1,14 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
-using BBL.Repositories;
-using BBL.Repositories.User;
-using BBL.Services.User;
+using BLL.Repositories;
+using BLL.Repositories.User;
 using DataAccessLayer;
+using FluentValidation;
+using System.Web.UI;
 using WebApp.Controllers;
+using BLL.DTO.UserDTO;
+using BBL.DTO.UserDTO.UserValidation;
+
 
 
 namespace WebApp
@@ -24,12 +28,14 @@ namespace WebApp
             // Registering Repositories 
             RegisterRepositories(builder);
 
-            // Registering Services
-            RegisterServices(builder);
+            // Registering Validators
+            RegisterValidators(builder);
 
             // Registering Controllers
             RegisterControllers(builder);
 
+          
+            
             return builder.Build();
         }
 
@@ -38,15 +44,25 @@ namespace WebApp
             builder.RegisterType<UserRepository>().As<IUserRepository>();
         }
 
-        public static void RegisterServices(ContainerBuilder builder)
-        {
-            builder.RegisterType<UserService>().As<IUserService>();
-        }
 
         public static void RegisterControllers(ContainerBuilder builder)
         {
             builder.RegisterControllers(typeof(HomeController).Assembly);
         }
+        public static void RegisterValidators(ContainerBuilder builder) 
+        {
+			builder.RegisterAssemblyTypes(typeof(LoginModelValidator).Assembly)
+		   .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
+		   .AsImplementedInterfaces()
+		   .InstancePerLifetimeScope();
+
+
+
+            builder.RegisterAssemblyTypes(typeof(AddUserValidation).Assembly)
+                .Where(t=>t.IsClosedTypeOf(typeof(IValidator<>)))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();  
+		}
         
     }
 }
