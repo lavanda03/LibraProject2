@@ -9,6 +9,7 @@ using DataAccessLayer;
 using DAL.Entities;
 using BLL.DTO.PosDTO;
 using System.Runtime.InteropServices;
+using BBL.DTO.PosDTO;
 
 
 namespace BLL.Repositories.Pos
@@ -109,6 +110,41 @@ namespace BLL.Repositories.Pos
 		public IQueryable<PosEntity> GetValidPos() 
 		{
 			return _dbContext.Pos.Where(x => x.DeleteAt == null);
+		}
+
+
+		public List<GetCitiesDTO> GetAllCitites()
+		{
+			var cityEntity = _dbContext.Cities.ToList();
+			
+			var listCities = new List<GetCitiesDTO>();	
+
+			foreach(var city in cityEntity)
+			{
+				listCities.Add(new GetCitiesDTO
+				{
+
+					Id = city.Id,
+					Name=city.CityName
+				});
+			}
+			return listCities;
+		}
+
+		public List<GetConnectionsTypeDTO>GetAllConnectionType()
+		{
+			var conType = _dbContext.ConnectionTypes.ToList();
+			var listConType = new List<GetConnectionsTypeDTO>();
+
+			foreach (var type in  conType)
+			{
+				listConType.Add(new GetConnectionsTypeDTO
+				{
+					Id = type.Id,
+					ConectionType=type.ConnectionType
+				});
+			}
+			return listConType;
 		}
 	}
 }

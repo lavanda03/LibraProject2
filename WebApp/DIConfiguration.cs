@@ -8,6 +8,7 @@ using System.Web.UI;
 using WebApp.Controllers;
 using BLL.DTO.UserDTO;
 using BBL.DTO.UserDTO.UserValidation;
+using BLL.Repositories.Pos;
 
 
 
@@ -42,6 +43,7 @@ namespace WebApp
         public static void RegisterRepositories(ContainerBuilder builder)
         {
             builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<PosRepository>().As<IPosRepository>(); 
         }
 
 
@@ -49,6 +51,7 @@ namespace WebApp
         {
             builder.RegisterControllers(typeof(HomeController).Assembly);
         }
+
         public static void RegisterValidators(ContainerBuilder builder) 
         {
 			builder.RegisterAssemblyTypes(typeof(LoginModelValidator).Assembly)

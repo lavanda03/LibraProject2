@@ -1,4 +1,5 @@
 ﻿using BLL.DTO.PosDTO;
+using BLL.Repositories.Pos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,13 @@ namespace WebApp.Controllers
 {
     public class PosController : Controller
     {
+        private readonly IPosRepository posRepository;
+         
+        public PosController(IPosRepository posRepository)
+        {
+            this.posRepository = posRepository;
+        }
+        
         // GET: Pos
         public ActionResult BrowsePos()
         {
@@ -18,12 +26,20 @@ namespace WebApp.Controllers
         [HttpGet]
         public ActionResult CreatePos() 
         {
+            ViewBag.City = posRepository.GetAllCitites();
+            ViewBag.ConType = posRepository.GetAllConnectionType();
             return View();
         }
         [HttpPost]  
-        public ActionResult CreateePos(AddPosDTO model)
+        public ActionResult CreatePos(AddPosDTO model)
         {
-            return View(model);
+            if (ModelState.IsValid)
+            {
+				posRepository.AddPos(model);
+			}
+			ViewBag.City = posRepository.GetAllCitites();
+			ViewBag.ConType = posRepository.GetAllConnectionType();
+			return View();
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLL.DTO.PosDTO;
+using BBL.DTO.PosDTO;
 
 namespace BLL.Repositories.Pos
 {
@@ -17,7 +18,8 @@ namespace BLL.Repositories.Pos
 		void UpdatePos(UpdatePosDTO updatePos);
 		void DeletePos(int Id);
 		IQueryable<PosEntity> GetValidPos();
-		
+		List<GetConnectionsTypeDTO> GetAllConnectionType();
+		List<GetCitiesDTO> GetAllCitites();
 
 	}
 }
