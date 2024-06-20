@@ -7,6 +7,7 @@ using FluentValidation;
 using System.Web.UI;
 using WebApp.Controllers;
 using BLL.DTO.UserDTO;
+using BBL.DTO.UserDTO.UserValidation;
 
 
 
@@ -54,6 +55,13 @@ namespace WebApp
 		   .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
 		   .AsImplementedInterfaces()
 		   .InstancePerLifetimeScope();
+
+
+
+            builder.RegisterAssemblyTypes(typeof(AddUserValidation).Assembly)
+                .Where(t=>t.IsClosedTypeOf(typeof(IValidator<>)))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();  
 		}
         
     }

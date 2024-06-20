@@ -143,7 +143,7 @@ namespace BLL.Repositories
 		}
 		public bool ExistLogin(string login)
 		{
-			return !_context.Users.Any(x => x.Login == login);
+			return _context.Users.Any(x => x.Login == login);
 		}
 
 		public List<GetUsersTypeDTO> GetAllUsersType()

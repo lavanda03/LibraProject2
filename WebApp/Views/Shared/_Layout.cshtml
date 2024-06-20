@@ -71,8 +71,10 @@
                                 <li>
                                     <a href="#"><i class="fa fa-edit"></i> POS <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="form.html">Add POS</a></li>
-                                        <li><a href="form_advanced.html">Browse POS</a></li>
+                                        <li>
+                                        @Html.ActionLink("Add POS", "CreatePos", "Pos", null, new { @class = "nav-link" })    
+                                        </li>
+                                        <li> @Html.ActionLink("Browse", "BrowsePos", "Pos", null, new { @class = "nav-link" }) </li>
                                     </ul>
                                 </li>
                                 <li>
