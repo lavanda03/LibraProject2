@@ -1,4 +1,5 @@
-﻿using BLL.DTO.PosDTO;
+﻿using BBL.DTO.UserDTO.UserValidation;
+using BLL.DTO.PosDTO;
 using BLL.Repositories.Pos;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace WebApp.Controllers
     public class PosController : Controller
     {
         private readonly IPosRepository posRepository;
+       
          
-        public PosController(IPosRepository posRepository)
+        public PosController(IPosRepository posRepository, AddUserValidation validation)
         {
-            this.posRepository = posRepository;
+             this.posRepository = posRepository;
+            
         }
         
         // GET: Pos
@@ -28,6 +31,7 @@ namespace WebApp.Controllers
         {
             ViewBag.City = posRepository.GetAllCitites();
             ViewBag.ConType = posRepository.GetAllConnectionType();
+            ViewBag.WeekDays = posRepository.
             return View();
         }
         [HttpPost]  
@@ -35,6 +39,8 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+
+     
 				posRepository.AddPos(model);
 			}
 			ViewBag.City = posRepository.GetAllCitites();

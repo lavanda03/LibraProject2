@@ -15,7 +15,7 @@ namespace DAL.Common
 		{
 			using (var rng = new RNGCryptoServiceProvider())
 			{
-				byte[] salt = new byte[16];
+				byte[] salt = new byte[16]; 
 				rng.GetBytes(salt);
 				return salt;
 			}

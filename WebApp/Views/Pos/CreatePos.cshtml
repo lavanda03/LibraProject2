@@ -69,7 +69,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         @Html.LabelFor(model => model.City_Id, new { @class = "control-label col-md-3 col-sm-3 col-12" })
-                                        <div class="col-md-9 col-sm-9 col-12">
+                                        <div class="col-md-6 col-sm-6 col-12">
                                             <select id="UserTypeId" name="UserTypeId" class="select2_single form-control">
                                                 <option value="">-- Select User Type --</option>
                                                 @foreach (var city in ViewBag.City)
@@ -105,7 +105,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         @Html.LabelFor(model => model.ConnectionType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
-                                        <div class="col-md-9 col-sm-9 col-12">
+                                        <div class="col-md-6 col-sm-6 col-12">
                                             <select id="UserTypeId" name="UserTypeId" class="select2_single form-control">
                                                 <option value="">-- Select User Type --</option>
                                                 @foreach (var conType in ViewBag.ConType)
@@ -154,6 +154,9 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
 
                                 <div class="ln_solid"></div>
                                 <div class="form-group">

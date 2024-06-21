@@ -146,5 +146,36 @@ namespace BLL.Repositories.Pos
 			}
 			return listConType;
 		}
+
+		//public List <WeekDaysPOS> GetAllWeeKDays()
+		//{
+		//	var weekDays = _dbContext.WeekDaysPOs.ToList();
+		//	var listWeekDays = new List<WeekDaysPOS>();
+
+		//	foreach(var day in weekDays)
+		//	{
+		//		listWeekDays.Add(new WeekDaysPOS
+		//		{
+		//			Id = day.Id,
+		//			WeekDaysId = day.WeekDaysId
+		//		});
+		//	}
+		//	return listWeekDays;
+		//}
+		public List<WeekDays> GetAllWeeKDays()
+		{
+			var weekDays = _dbContext.WeekDays.ToList();
+			var listWeekDays = new List<WeekDays>();
+
+			foreach (var day in weekDays)
+			{
+				listWeekDays.Add(new WeekDays
+				{
+					Id = day.Id,
+					WeekName= day.WeekName	
+				});
+			}
+			return listWeekDays;
+		}
 	}
 }

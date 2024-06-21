@@ -28,6 +28,7 @@ namespace DAL.Entities
 		public long InsertDate { get; set; }
 		public List<IssueEntity> Issues { get; set; }//+
 		public long? DeleteAt { get; set; }
+		public List<WeekDaysPOS> WeekDaysPos { get; set; }
 
 
 

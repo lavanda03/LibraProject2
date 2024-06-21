@@ -27,6 +27,8 @@ namespace DataAccessLayer
         public DbSet<StatusEntity> Statuses => Set<StatusEntity>();
         public DbSet<UserEntity> Users => Set<UserEntity>();
         public DbSet<UserTypeEntity> UserTypes => Set<UserTypeEntity>();
+        public DbSet<WeekDays> WeekDays => Set<WeekDays>();
+        public DbSet<WeekDaysPOS> WeekDaysPOs => Set<WeekDaysPOS>();
 
 
 
@@ -54,6 +56,10 @@ namespace DataAccessLayer
             modelBuilder.Entity<IssueEntity>().HasRequired(u => u.IssuesType).WithMany(c => c.Issues).HasForeignKey(u => u.IdType);
             modelBuilder.Entity<IssueEntity>().HasRequired(u => u.Status).WithMany(c => c.Issues).HasForeignKey(u => u.IdStatus);
 
+            //WeekDaysPos
+            modelBuilder.Entity<WeekDaysPOS>().HasKey(u => new { u.PosId, u.WeekDaysId });
+            modelBuilder.Entity<WeekDaysPOS>().HasRequired(u => u.PosEntity).WithMany(c => c.WeekDaysPos).HasForeignKey(u=>u.PosId);
+            modelBuilder.Entity<WeekDaysPOS>().HasRequired(u => u.WeekDays).WithMany(c => c.WeekDaysPos).HasForeignKey(u=>u.WeekDaysId);
 
 
         }

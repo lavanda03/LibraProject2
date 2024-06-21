@@ -9,8 +9,9 @@ namespace BLL.DTO.UserDTO
 		public LoginModelValidator()
 		{
 
-			RuleFor(x => x.Login).NotNull().WithMessage("test login error");
+			RuleFor(x => x.Login).NotEmpty().WithMessage("test login error");
 			RuleFor(x => x.Password).NotNull().WithMessage("test password error");
+
 		}		
 	}
 
