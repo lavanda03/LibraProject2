@@ -23,8 +23,8 @@ namespace BBL.DTO.UserDTO.UserValidation
 			.EmailAddress().WithMessage("Invalid email format.");
 
 			RuleFor(x => x.Telephone)
-				.NotNull().WithMessage("Phone number is required.")
-				.Matches(@"^\+[1-9]\d{1,14}$").WithMessage("Invalid phone number format.");
+				.NotNull().WithMessage("Phone number is required.");
+				//.Matches(@"^\+[1-9]\d{1,14}$").WithMessage("Invalid phone number format.");
 
 			RuleFor(x => x.Name	).NotNull().WithMessage("Please specify a  name");
 			RuleFor(x => x.UserTypeId).NotNull().WithMessage("Please specify a user type");

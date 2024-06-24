@@ -1,16 +1,12 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using BLL.Repositories.User;
-using System.Security.Claims;
 using BLL.DTO.UserDTO;
 using Newtonsoft.Json;
-using System.Web.UI;
-using BBL.DTO.UserDTO.UserValidation;
 
 
 

@@ -100,6 +100,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\QueryPaginatedRequestDTO.cs" />
     <Compile Include="DTO\IssueDTO\AddIssueDTO.cs" />
     <Compile Include="DTO\IssueDTO\GetIssuesDTO.cs" />
     <Compile Include="DTO\IssueDTO\UpdateIssuesDTO.cs" />
@@ -129,7 +130,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{8bd8654e-c2ce-465f-b34a-01ddd3c5873f}</Project>

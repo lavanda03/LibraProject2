@@ -3,6 +3,7 @@ using DAL.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using BBL.Common;
 using BLL.DTO.UserDTO;
 using BBL.DTO.UserDTO;
 
@@ -20,11 +21,6 @@ namespace BLL.Repositories.User
         IQueryable<UserEntity> GetValidUser();
         bool ExistLogin(string login);
         List<GetUsersTypeDTO> GetAllUsersType();
-
-
-
-
-
-
-	}
+        GetUsersDTO QueryUsers(QueryPaginatedRequestDTO criteria);
+    }
 }

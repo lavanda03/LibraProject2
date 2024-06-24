@@ -1,15 +1,15 @@
 ﻿using BBL.DTO.UserDTO.UserValidation;
 using BLL.DTO.UserDTO;
 using BLL.Repositories.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Newtonsoft.Json;
+using System.Runtime.InteropServices;
 using System.Web.Mvc;
+using WebApp.Helpers;
 
 namespace WebApp.Controllers
 {
-    public class UserController : Controller
+	[Authorize]
+	public class UserController : Controller
     {
 
 		private readonly IUserRepository userRepository;
@@ -23,11 +23,29 @@ namespace WebApp.Controllers
 		}
 
 		// GET: User
+		[HttpGet]
 		public ActionResult Browse()
         {
-			var users = userRepository.GetAllUsers();
-            return View(users);
+            return View();
         }
+
+		[HttpGet]
+		public JsonResult QueryUsers()
+		{
+			var criteria = Request.GetPaginatingCriteria();
+
+			var users = userRepository.QueryUsers(criteria);
+
+			var jsonData = new
+			{
+				draw = Request.QueryString["draw"],
+				recordsTotal = users.Total,
+				recordsFiltered = users.TotalFiltered,
+				data = users.UserDTO
+			};
+
+			return Json(jsonData, JsonRequestBehavior.AllowGet);
+		}
 
 
 		[HttpGet]
@@ -39,7 +57,7 @@ namespace WebApp.Controllers
 		[HttpPost]	
 		public ActionResult CreateUser(AddUserDTO model)
 		{
-			if (!ModelState.IsValid)
+			if (ModelState.IsValid)
 			{
 				var result = validation.Validate(model);
 
@@ -53,14 +71,9 @@ namespace WebApp.Controllers
 					return View(model);
 				}
 
-				var user = userRepository.AddUser(model);
+				userRepository.AddUser(model);
 
-				if (user == null)
-				{
-
-					ModelState.AddModelError("", "Invalid login attempt");
-					return View(model);
-				}
+				return RedirectToAction("Browse");
 			}
 
 			ViewBag.UserTypes = userRepository.GetAllUsersType();
