@@ -10,6 +10,8 @@ using DAL.Entities;
 using BLL.DTO.PosDTO;
 using System.Runtime.InteropServices;
 using BBL.DTO.PosDTO;
+using BBL.Common;
+using BLL.DTO.UserDTO;
 
 
 namespace BLL.Repositories.Pos
@@ -21,6 +23,76 @@ namespace BLL.Repositories.Pos
 		{
 			this._dbContext = _dbContext;	
 		}
+
+
+		public GetPossDTO QyeryPos (QueryPaginatedRequestDTO criteria)
+		{
+			var queryable = GetValidPos();
+
+			if (!string.IsNullOrEmpty(criteria.SearchValue))
+			{
+				var search = criteria.SearchValue.ToLower();
+				queryable = queryable.Where(x => x.Name.ToLower().Contains(search) ||
+												 x.Telephone.ToLower().Contains(search) ||
+												 x.Address.ToLower().Contains(search));
+											
+			}
+			if (!string.IsNullOrEmpty(criteria.OrderBy))
+			{
+				var orderByDesc = !string.IsNullOrEmpty(criteria.Direction) && criteria.Direction.ToLower() == "desc";
+				var orderBy = criteria.OrderBy.ToLower();
+
+				switch (orderBy)
+				{
+					case "id":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Id)
+							: queryable.OrderBy(x => x.Id);
+						break;
+					case "name":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Name)
+							: queryable.OrderBy(x => x.Name);
+						break;
+					case "telephone":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Telephone)
+							: queryable.OrderBy(x => x.Telephone);
+						break;
+					case "address":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Address)
+							: queryable.OrderBy(x => x.Address);
+						break;
+				}
+			}
+
+			var filteredCount = queryable.Count();
+
+			var views = queryable.AsEnumerable().Skip(criteria.Page.Value).Take(criteria.PageSize.Value).ToList();
+
+			var result = new GetPossDTO
+			{
+				Total = GetValidPos().Count(),
+				TotalFiltered = filteredCount,
+				PossDTO = new List<GetPosDTO>(views.Select(x => new GetPosDTO
+				{
+					Id = x.Id,
+					Name = x.Name,
+					Telephone = x.Telephone,
+					Address= x.Address
+					
+				}))
+			};
+
+			return result;
+
+		}
+
+
+
+
+
 
 		//public static string[] WeekDays = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
 
@@ -56,10 +128,10 @@ namespace BLL.Repositories.Pos
 				};
 
 				_dbContext.WeekDaysPOS.Add(weekEntity);
-				_dbContext.SaveChanges();
+				
 			}
-		
-		  return posEntity.Id;
+			_dbContext.SaveChanges();
+			return posEntity.Id;
 
 			
 		}
@@ -165,6 +237,7 @@ namespace BLL.Repositories.Pos
 			return listConType;
 		}
 
+		
 		//public List <WeekDaysPOS> GetAllWeeKDays()
 		//{
 		//	var weekDays = _dbContext.WeekDaysPOs.ToList();

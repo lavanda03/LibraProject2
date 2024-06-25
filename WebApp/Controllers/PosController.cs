@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApp.Helpers;
 
 namespace WebApp.Controllers
 {
@@ -27,6 +28,27 @@ namespace WebApp.Controllers
         {
             return View();
         }
+
+
+        [HttpGet]
+        public JsonResult QuerryPos()
+        {
+            var criteria = Request.GetPaginatingCriteria();
+
+            var pos = posRepository.QyeryPos(criteria);
+
+            var jsonData = new
+            {
+                draw = Request.QueryString["draw"],
+                recordTotal = pos.Total,
+                recordsFiltered = pos.TotalFiltered,
+                data = pos.PossDTO
+             
+            };
+            
+            return Json(jsonData,JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpGet]
         public ActionResult CreatePos() 

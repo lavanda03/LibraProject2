@@ -59,6 +59,7 @@ namespace DataAccessLayer
 
 			modelBuilder.Entity<WeekDaysPos>()
 				.HasKey(w => w.Id);
+            modelBuilder.Entity<WeekDaysPos>().Property(x => x.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
 			modelBuilder.Entity<WeekDaysPos>().HasRequired(u => u.PosEntity).WithMany(c => c.WeekDaysPos).HasForeignKey(u => u.IdPos);
 
 
@@ -66,6 +67,6 @@ namespace DataAccessLayer
 		}
 
 
-    }
+    } 
 
 }

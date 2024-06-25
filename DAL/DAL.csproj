@@ -131,6 +131,10 @@
     <Compile Include="Migrations\202406251126213_ChangeStructureWeekDaysPos.Designer.cs">
       <DependentUpon>202406251126213_ChangeStructureWeekDaysPos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202406251328054_PrimaryKeyIdWeekDaysPosTable.cs" />
+    <Compile Include="Migrations\202406251328054_PrimaryKeyIdWeekDaysPosTable.Designer.cs">
+      <DependentUpon>202406251328054_PrimaryKeyIdWeekDaysPosTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -150,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202406251126213_ChangeStructureWeekDaysPos.resx">
       <DependentUpon>202406251126213_ChangeStructureWeekDaysPos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406251328054_PrimaryKeyIdWeekDaysPosTable.resx">
+      <DependentUpon>202406251328054_PrimaryKeyIdWeekDaysPosTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
