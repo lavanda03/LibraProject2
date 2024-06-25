@@ -104,12 +104,12 @@
     <Compile Include="DTO\IssueDTO\AddIssueDTO.cs" />
     <Compile Include="DTO\IssueDTO\GetIssuesDTO.cs" />
     <Compile Include="DTO\IssueDTO\UpdateIssuesDTO.cs" />
-    <Compile Include="DTO\PosDTO\AddPosDTO.cs" />
+    <Compile Include="DTO\PosDTO\AddPOSDTO.cs" />
     <Compile Include="DTO\PosDTO\GetCitiesDTO.cs" />
     <Compile Include="DTO\PosDTO\GetConnectionsTypeDTO.cs" />
     <Compile Include="DTO\PosDTO\GetPosDTO.cs" />
     <Compile Include="DTO\PosDTO\UpdatePosDTO.cs" />
-    <Compile Include="DTO\PosDTO\WeekDaysPOS.cs" />
+    <Compile Include="DTO\PosDTO\WeekDaysPosDTO.cs" />
     <Compile Include="DTO\UserDTO\AddUserDTO.cs" />
     <Compile Include="DTO\UserDTO\GetUserDTO.cs" />
     <Compile Include="DTO\UserDTO\GetUsersDTO.cs" />

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-	public class WeekDaysPOS
-	{ 
+	public class WeekDaysPos
+	{
 		public int Id { get; set; }
 		public PosEntity PosEntity { get; set; }
-		public int PosId { get; set; }
-		public WeekDays WeekDays { get; set; }	
-		public int WeekDaysId { get; set; }	
+		public int	IdPos { get; set; }
+		public string WeekDays { get; set; }
 	}
 }

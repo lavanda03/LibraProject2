@@ -12,7 +12,7 @@ namespace BLL.Repositories.Pos
 {
 	public interface IPosRepository
 	{
-		int AddPos(AddPosDTO addPos);
+		int AddPos(AddPOSDTO addPos);
 		GetPosDTO GetPosById(int id);
         List<GetPosDTO> GetAllPos();
 		void UpdatePos(UpdatePosDTO updatePos);

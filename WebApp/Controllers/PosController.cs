@@ -20,8 +20,9 @@ namespace WebApp.Controllers
              this.posRepository = posRepository;
             
         }
-        
+
         // GET: Pos
+        [HttpGet]
         public ActionResult BrowsePos()
         {
             return View();
@@ -30,22 +31,27 @@ namespace WebApp.Controllers
         [HttpGet]
         public ActionResult CreatePos() 
         {
+            
             ViewBag.City = posRepository.GetAllCitites();
             ViewBag.ConType = posRepository.GetAllConnectionType();
           //  ViewBag.WeekDays = posRepository.
             return View();
         }
+
         [HttpPost]  
-        public ActionResult CreatePos(AddPosDTO model)
+        public ActionResult CreatePos(AddPOSDTO posModel)
         {
-            
-            
-                posRepository.AddPos(model);
+            if (ModelState.IsValid)
+            {
+                posRepository.AddPos(posModel);
+				return RedirectToAction("BrowsePos");
+			}
             
 		
 			ViewBag.City = posRepository.GetAllCitites();
 			ViewBag.ConType = posRepository.GetAllConnectionType();
-			return View(model);
+
+            return View();
         }
     }
 }

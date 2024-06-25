@@ -1,4 +1,4 @@
-﻿@model BLL.DTO.PosDTO.AddPosDTO
+﻿@model BLL.DTO.PosDTO.AddPOSDTO
 @{
     ViewBag.Title = "CreatePos";
 }
@@ -6,6 +6,16 @@
 <h2>CreatePos</h2>
 
 <!-- page content -->
+<style>
+    .checkbox-group {
+        display: flex;
+        flex-direction: row;
+    }
+
+        .checkbox-group div {
+            margin-right: 10px;
+        }
+</style>
 
 @using (Html.BeginForm("CreatePos", "Pos", FormMethod.Post, new { id = "login-form", @class = "login-form" }))
 {
@@ -26,15 +36,16 @@
                                   class="form-vertical form-label-left">
 
                                 <div class="form-group">
-                                    <div class="row"> 
+                                    <div class="row">
                                         @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3 col-sm-3 col-12" });
                                         <div class="col-md-6 col-sm-6 col-12">
-                                            @Html.EditorFor(model =>model.Name,new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
 
                                         </div>
                                     </div>
                                 </div>
+
 
                                 <div class="form-group">
                                     <div class="row">
@@ -70,7 +81,7 @@
                                     <div class="row">
                                         @Html.LabelFor(model => model.City_Id, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                         <div class="col-md-6 col-sm-6 col-12">
-                                            <select id="UserTypeId" name="UserTypeId" class="select2_single form-control">
+                                            <select id="City_Id" name="City_Id" class="select2_single form-control">
                                                 <option value="">-- Select User Type --</option>
                                                 @foreach (var city in ViewBag.City)
                                                 {
@@ -104,9 +115,9 @@
 
                                 <div class="form-group">
                                     <div class="row">
-                                        @Html.LabelFor(model => model.ConnectionType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                        @Html.LabelFor(model => model.ConnType_Id, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                         <div class="col-md-6 col-sm-6 col-12">
-                                            <select id="UserTypeId" name="UserTypeId" class="select2_single form-control">
+                                            <select id="ConnType_Id" name="ConnType_Id" class="select2_single form-control">
                                                 <option value="">-- Select User Type --</option>
                                                 @foreach (var conType in ViewBag.ConType)
                                                 {
@@ -155,6 +166,37 @@
                                     </div>
                                 </div>
 
+                                <div id="hidden-fields-container"></div>
+                                <div class="checkbox-group">
+                                    <div>
+                                        <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" />>
+                                        <label for="mon">Mon</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="tue" name="Tue" value="tue" onchange="updateSelectedDays()" />
+                                        <label for="tue">Tue</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="wed" name="Wed" value="wed" onchange="updateSelectedDays()" />
+                                        <label for="wed">Wed</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="thu" name="Thu" value="thu" onchange="updateSelectedDays()" />
+                                        <label for="thu">Thu</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="fri" name="Fri" value="fri" onchange="updateSelectedDays()" />
+                                        <label for="fri">Fri</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="sat" name="Sat" value="sat" onchange="updateSelectedDays()" />
+                                        <label for="sat">Sat</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="sun" name="Sun" value="sun" onchange="updateSelectedDays()" />
+                                        <label for="sun">Sun</label>
+                                    </div>
+                                </div>
 
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
@@ -176,3 +218,23 @@
         </div>
     </div>
 }
+
+<script>
+    function updateSelectedDays() {
+        // Containerul pentru câmpurile ascunse
+        var container = document.getElementById('hidden-fields-container');
+        container.innerHTML = ''; // Goliți containerul
+
+        // Obțineți toate checkbox-urile bifate
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+
+        // Adăugați un câmp ascuns pentru fiecare checkbox bifat
+        checkboxes.forEach(function (checkbox) {
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'SelectedDays';
+            input.value = checkbox.value;
+            container.appendChild(input);
+        });
+    }
+</script>

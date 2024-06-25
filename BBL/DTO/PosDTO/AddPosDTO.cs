@@ -1,7 +1,10 @@
 ﻿
+using System.Collections.Generic;
+using System.Web.UI;
+
 namespace BLL.DTO.PosDTO
 {
-	public class AddPosDTO
+	public class AddPOSDTO
 	{
 		public string Name { get; set; }
 		public string Telephone { get; set; }
@@ -17,8 +20,11 @@ namespace BLL.DTO.PosDTO
 		public string MorningClosing { get; set; }
 		public string AfternoonOpening { get; set; }
 		public string AfternonClosing { get; set; }
-		public string DaysClosed { get; set; }
+		public List<string> SelectedDays { get; set; } = new List<string>();
 		public long InsertDate { get; set; }
+
+		public static string[] WeekDays { get; } = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+
 
 	}
 }

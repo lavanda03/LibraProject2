@@ -21,8 +21,10 @@ namespace BLL.Repositories.Pos
 		{
 			this._dbContext = _dbContext;	
 		}
-		
-		public int AddPos(AddPosDTO command)
+
+		//public static string[] WeekDays = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+
+		public int AddPos(AddPOSDTO command)
 		{
 			var posEntity = new PosEntity()
 			{
@@ -37,13 +39,29 @@ namespace BLL.Repositories.Pos
 				MorningClosing = command.MorningClosing,
 				MorningOperning = command.MorningOperning,
 				AfternonClosing = command.AfternonClosing,
-				AfternoonOpening = command.AfternoonOpening,
-				DaysClosed = command.DaysClosed
+				AfternoonOpening = command.AfternoonOpening
+				
 			};
 
 			_dbContext.Pos.Add(posEntity);
 			_dbContext.SaveChanges();
-			return posEntity.Id;
+
+
+			foreach (var day in command.SelectedDays)
+			{
+				var weekEntity = new WeekDaysPos()
+				{
+					IdPos =posEntity.Id,
+					WeekDays= day
+				};
+
+				_dbContext.WeekDaysPOS.Add(weekEntity);
+				_dbContext.SaveChanges();
+			}
+		
+		  return posEntity.Id;
+
+			
 		}
 
 		public GetPosDTO GetPosById(int id) 
@@ -162,20 +180,6 @@ namespace BLL.Repositories.Pos
 		//	}
 		//	return listWeekDays;
 		//}
-		public List<WeekDays> GetAllWeeKDays()
-		{
-			var weekDays = _dbContext.WeekDays.ToList();
-			var listWeekDays = new List<WeekDays>();
-
-			foreach (var day in weekDays)
-			{
-				listWeekDays.Add(new WeekDays
-				{
-					Id = day.Id,
-					WeekName= day.WeekName	
-				});
-			}
-			return listWeekDays;
-		}
+		
 	}
 }

@@ -97,23 +97,7 @@
 			context.SaveChanges();
 
 
-			var weekDays = new List<WeekDays>
-			{
-				new WeekDays{WeekName = "1"},
-				new WeekDays{WeekName = "2"},
-				new WeekDays{WeekName = "3"},
-				new WeekDays{WeekName = "4"},
-				new WeekDays{WeekName = "5"},
-				new WeekDays{WeekName = "6"},
-				new WeekDays{WeekName = "7"}
-
-			};
-
-			foreach(var w in weekDays)
-			{
-				context.WeekDays.AddOrUpdate(u => u.WeekName, w);	
-			}
-			context.SaveChanges();
+			
 		}
 	}
 }

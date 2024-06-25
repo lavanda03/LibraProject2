@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace BBL.DTO.PosDTO
 {
-	public class WeekDaysPos
+	public class WeekDaysPosDTO
 	{
-		public int Id { get; set; }
-		public int PosId { get; set; }
-		public int WeekDaysId { get; set; }
 
 	}
 }
