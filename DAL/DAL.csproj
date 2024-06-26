@@ -119,21 +119,9 @@
     <Compile Include="Migrations\202406131853456_InitialMigration.designer.cs">
       <DependentUpon>202406131853456_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202406211344260_AddWeekDaysTable.cs" />
-    <Compile Include="Migrations\202406211344260_AddWeekDaysTable.Designer.cs">
-      <DependentUpon>202406211344260_AddWeekDaysTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202406250719096_DeleteWeekDaysTable.cs" />
-    <Compile Include="Migrations\202406250719096_DeleteWeekDaysTable.Designer.cs">
-      <DependentUpon>202406250719096_DeleteWeekDaysTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202406251126213_ChangeStructureWeekDaysPos.cs" />
-    <Compile Include="Migrations\202406251126213_ChangeStructureWeekDaysPos.Designer.cs">
-      <DependentUpon>202406251126213_ChangeStructureWeekDaysPos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202406251328054_PrimaryKeyIdWeekDaysPosTable.cs" />
-    <Compile Include="Migrations\202406251328054_PrimaryKeyIdWeekDaysPosTable.Designer.cs">
-      <DependentUpon>202406251328054_PrimaryKeyIdWeekDaysPosTable.cs</DependentUpon>
+    <Compile Include="Migrations\202406260822287_AddWeekTable.cs" />
+    <Compile Include="Migrations\202406260822287_AddWeekTable.Designer.cs">
+      <DependentUpon>202406260822287_AddWeekTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -146,17 +134,8 @@
     <EmbeddedResource Include="Migrations\202406131853456_InitialMigration.resx">
       <DependentUpon>202406131853456_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202406211344260_AddWeekDaysTable.resx">
-      <DependentUpon>202406211344260_AddWeekDaysTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202406250719096_DeleteWeekDaysTable.resx">
-      <DependentUpon>202406250719096_DeleteWeekDaysTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202406251126213_ChangeStructureWeekDaysPos.resx">
-      <DependentUpon>202406251126213_ChangeStructureWeekDaysPos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202406251328054_PrimaryKeyIdWeekDaysPosTable.resx">
-      <DependentUpon>202406251328054_PrimaryKeyIdWeekDaysPosTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202406260822287_AddWeekTable.resx">
+      <DependentUpon>202406260822287_AddWeekTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

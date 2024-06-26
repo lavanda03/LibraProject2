@@ -1,24 +1,40 @@
-﻿@{
+﻿@model BLL.DTO.UserDTO.GetUsersDTO
+@{
     ViewBag.Title = "Browse";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
+
 <div class="clearfix"></div>
 
-
-<table id="userTable" class="display">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Login</th>
-        <th>Telephone</th>
-        <th>User Type Name</th>
-    </tr>
-    </thead>
-</table>
+<div class="custom-container">
+    <table id="userTable" class="display">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Login</th>
+                <th>Telephone</th>
+                <th>User Type Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.UserDTO)
+            {
+                <tr data-user-id="@user.Id">
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>@user.Login</td>
+                    <td>@user.Telephone</td>
+                    <td>@user.UserType</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+ </div>
 
 @section scripts
 {
@@ -35,6 +51,17 @@
             ];
 
             bindDataTable("#userTable", "/user/QueryUsers", columns)
+
+
+            $('#userTable tbody').on('dblclick', 'tr', function () {
+                var Id = $(this).data('user-id'); // Obținem ID-ul utilizatorului din data attribute
+                window.location.href = `/User/DetailsUser/${Id}`; // Redirecționăm către view-ul de detalii al utilizatorului
+            });
+
         });
+
+       
+
     </script>
 }
+

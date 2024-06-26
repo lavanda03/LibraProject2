@@ -7,18 +7,18 @@ namespace DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AddWeekDaysTable : IMigrationMetadata
+    public sealed partial class AddWeekTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddWeekDaysTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddWeekTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "202406211344260_AddWeekDaysTable"; }
+            get { return "202406260822287_AddWeekTable"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return null; }
+            get { return Resources.GetString("Source"); }
         }
         
         string IMigrationMetadata.Target

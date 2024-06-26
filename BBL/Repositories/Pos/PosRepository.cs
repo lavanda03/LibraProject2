@@ -89,13 +89,6 @@ namespace BLL.Repositories.Pos
 
 		}
 
-
-
-
-
-
-		//public static string[] WeekDays = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
-
 		public int AddPos(AddPOSDTO command)
 		{
 			var posEntity = new PosEntity()

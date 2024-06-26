@@ -80,5 +80,17 @@ namespace WebApp.Controllers
 			return View(model);
 		}
 
+	
+		public ActionResult DetailsUser(int id)
+		{
+			var user = userRepository.GetUserById(id);
+
+			if (user == null)
+			{
+				return HttpNotFound();
+			}
+			return View(user);
+		}
+
     }
 }

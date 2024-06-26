@@ -17,5 +17,6 @@ namespace BLL.DTO.UserDTO
 		public string Login { get; set; }
 		public string Telephone { get; set; }
 		public int UserTypeId { get; set; }
+		public string UserType { get; set; }
 	}
 }

@@ -79,7 +79,7 @@
 
                                 <div class="form-group">
                                     <div class="row">
-                                        @Html.LabelFor(model => model.City_Id, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                        @Html.LabelFor(model => model.CityName, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                         <div class="col-md-6 col-sm-6 col-12">
                                             <select id="City_Id" name="City_Id" class="select2_single form-control">
                                                 <option value="">-- Select User Type --</option>
@@ -115,7 +115,7 @@
 
                                 <div class="form-group">
                                     <div class="row">
-                                        @Html.LabelFor(model => model.ConnType_Id, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                        @Html.LabelFor(model => model.ConnectionType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                         <div class="col-md-6 col-sm-6 col-12">
                                             <select id="ConnType_Id" name="ConnType_Id" class="select2_single form-control">
                                                 <option value="">-- Select User Type --</option>
@@ -169,7 +169,7 @@
                                 <div id="hidden-fields-container"></div>
                                 <div class="checkbox-group">
                                     <div>
-                                        <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" />>
+                                        <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" />
                                         <label for="mon">Mon</label>
                                     </div>
                                     <div>
