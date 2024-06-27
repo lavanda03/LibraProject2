@@ -20,8 +20,8 @@ namespace WebApp
 				);
 
 			routes.MapRoute(
-	            name: "UserDetails",
-	            url: "User/Details/{id}",
+	            name: "DetailsUser",
+	            url: "user/DetailsUser/{id}",
 	            defaults: new { controller = "User", action = "DetailsUser", id = UrlParameter.Optional }
                 );
 

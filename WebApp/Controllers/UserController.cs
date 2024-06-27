@@ -80,7 +80,7 @@ namespace WebApp.Controllers
 			return View(model);
 		}
 
-	
+		[HttpGet]
 		public ActionResult DetailsUser(int id)
 		{
 			var user = userRepository.GetUserById(id);

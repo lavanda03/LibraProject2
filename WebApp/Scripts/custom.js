@@ -4523,7 +4523,7 @@ function bindDataTableDblClick(elementId, endpoint){
     table.on('dblclick', 'tbody tr', function () {
         let data = table.row(this).data();
 
-        let url = endpoint + data.id;
+        let url = endpoint + data.Id
         
         console.log(url);
 

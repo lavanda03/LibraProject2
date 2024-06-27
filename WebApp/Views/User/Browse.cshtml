@@ -20,19 +20,6 @@
                 <th>User Type Name</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach (var user in Model.UserDTO)
-            {
-                <tr data-user-id="@user.Id">
-                    <td>@user.Id</td>
-                    <td>@user.Name</td>
-                    <td>@user.Email</td>
-                    <td>@user.Login</td>
-                    <td>@user.Telephone</td>
-                    <td>@user.UserType</td>
-                </tr>
-            }
-        </tbody>
     </table>
  </div>
 
@@ -51,12 +38,12 @@
             ];
 
             bindDataTable("#userTable", "/user/QueryUsers", columns)
+            bindDataTableDblClick('#userTable', '/user/DetailsUser')
+
+      
+            
 
 
-            $('#userTable tbody').on('dblclick', 'tr', function () {
-                var Id = $(this).data('user-id'); // Obținem ID-ul utilizatorului din data attribute
-                window.location.href = `/User/DetailsUser/${Id}`; // Redirecționăm către view-ul de detalii al utilizatorului
-            });
 
         });
 
