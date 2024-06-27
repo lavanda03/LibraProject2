@@ -80,8 +80,9 @@ namespace WebApp.Controllers
 			return View(model);
 		}
 
+
 		[HttpGet]
-		public ActionResult DetailsUser(int id)
+		public ActionResult EditUser(int id)
 		{
 			var user = userRepository.GetUserById(id);
 
@@ -89,7 +90,20 @@ namespace WebApp.Controllers
 			{
 				return HttpNotFound();
 			}
+
+			ViewBag.UserTypes = userRepository.GetAllUsersType();
 			return View(user);
+		}
+
+		[HttpPost]
+		public ActionResult EditUser(UpdateUserDTO user)
+		{
+			if (ModelState.IsValid)
+			{
+				userRepository.UpdateUser(user);
+				return RedirectToAction("EditUser", new { id = user.Id });
+			}
+			return View(user);	
 		}
 
     }

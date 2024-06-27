@@ -75,5 +75,16 @@ namespace WebApp.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public ActionResult EditPos(int id)
+        {
+           var pos = posRepository.GetPosById(id);
+
+			ViewBag.City = posRepository.GetAllCitites();
+			ViewBag.ConType = posRepository.GetAllConnectionType();
+
+			return View(pos);
+        }
     }
 }

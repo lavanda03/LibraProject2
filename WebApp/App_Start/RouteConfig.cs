@@ -19,12 +19,7 @@ namespace WebApp
 				defaults: new { controller = "Authorization", action = "Login", id = UrlParameter.Optional }
 				);
 
-			routes.MapRoute(
-	            name: "DetailsUser",
-	            url: "user/DetailsUser/{id}",
-	            defaults: new { controller = "User", action = "DetailsUser", id = UrlParameter.Optional }
-                );
-
+			
 
 		}
 	}

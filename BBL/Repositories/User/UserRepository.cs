@@ -147,6 +147,7 @@ namespace BLL.Repositories
 			//verificare null?
 			var result = new GetUserDTO()
 			{
+				Id = userEntity.Id,
 				Name = userEntity.Name,
 				Email = userEntity.Email,
 				Login = userEntity.Login,
@@ -158,9 +159,20 @@ namespace BLL.Repositories
 			return result;
 		}
 
-		public void UpdateUser(UpdateUserDTO updateUser) 
+		public void UpdateUser(UpdateUserDTO updateUser)
 		{
-			_context.Entry(updateUser).State = System.Data.Entity.EntityState.Modified;
+			var user = _context.Users.FirstOrDefault(x => x.Id == updateUser.Id);
+			if (user == null)
+			{
+				return;
+			}
+
+	        user.Name = updateUser.Name;
+			user.Telephone = updateUser.Telephone;
+			user.UserTypeId = updateUser.UserTypeId;
+			user.Email = updateUser.Email;
+
+			_context.Entry(user).State = System.Data.Entity.EntityState.Modified;
 			_context.SaveChanges();
 		}
 

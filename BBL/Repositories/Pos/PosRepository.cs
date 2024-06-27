@@ -140,9 +140,18 @@ namespace BLL.Repositories.Pos
 				Name = posEntity.Name,
 				Telephone = posEntity.Telephone,
 				Address = posEntity.Address,
-			  //status
+				CellPhone = posEntity.CellPhone,
+				Brand = posEntity.Brand,
+				Model = posEntity.Model,
+				City_Id = posEntity.City_Id,
+				ConnType_Id = posEntity.ConnType_Id,
+				MorningClosing = posEntity.MorningClosing,
+				MorningOperning = posEntity.MorningOperning,
+				AfternonClosing = posEntity.AfternonClosing,
+				AfternoonOpening = posEntity.AfternoonOpening
+		
 
-			};
+	        };
 
 			return result;
 		}
@@ -172,6 +181,15 @@ namespace BLL.Repositories.Pos
 
 		public void UpdatePos(UpdatePosDTO updatePos)
 		{
+
+			var pos = _dbContext.Pos.FirstOrDefault(x => x.Id == updatePos.Id);
+
+			if (pos == null)
+			{
+				return;
+			}
+
+			//continui 
 			_dbContext.Entry(updatePos).State = System.Data.Entity.EntityState.Modified;
 			_dbContext.SaveChanges();
 		}
