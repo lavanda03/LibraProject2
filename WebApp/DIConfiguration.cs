@@ -8,6 +8,9 @@ using System.Web.UI;
 using WebApp.Controllers;
 using BLL.DTO.UserDTO;
 using BBL.DTO.UserDTO.UserValidation;
+using BLL.Repositories.Pos;
+using System.Linq;
+using BBL.DTO.PosDTO.PosValidation;
 
 
 
@@ -42,6 +45,7 @@ namespace WebApp
         public static void RegisterRepositories(ContainerBuilder builder)
         {
             builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<PosRepository>().As<IPosRepository>(); 
         }
 
 
@@ -49,20 +53,33 @@ namespace WebApp
         {
             builder.RegisterControllers(typeof(HomeController).Assembly);
         }
+
         public static void RegisterValidators(ContainerBuilder builder) 
         {
-			builder.RegisterAssemblyTypes(typeof(LoginModelValidator).Assembly)
+		    
+            builder.RegisterAssemblyTypes(typeof(LoginModelValidator).Assembly)
+	        .Where(t => t.GetInterfaces().Any(i => i.IsClosedTypeOf(typeof(IValidator<>))))
+	        .AsImplementedInterfaces()
+	        .InstancePerLifetimeScope();
+
+			builder.RegisterType<LoginModelValidator>().AsSelf().InstancePerLifetimeScope();
+
+			builder.RegisterAssemblyTypes(typeof(AddUserValidation).Assembly)
+           .Where(t=>t.IsClosedTypeOf(typeof(IValidator<>)))
+           .AsImplementedInterfaces()
+           .InstancePerLifetimeScope();
+
+			builder.RegisterType<AddUserValidation>().AsSelf().InstancePerLifetimeScope();
+
+			builder.RegisterAssemblyTypes(typeof(PosValidation).Assembly)
 		   .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
 		   .AsImplementedInterfaces()
 		   .InstancePerLifetimeScope();
 
+			builder.RegisterType<PosValidation>().AsSelf().InstancePerLifetimeScope();
 
 
-            builder.RegisterAssemblyTypes(typeof(AddUserValidation).Assembly)
-                .Where(t=>t.IsClosedTypeOf(typeof(IValidator<>)))
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();  
 		}
-        
-    }
+
+	}
 }

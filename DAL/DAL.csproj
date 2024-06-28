@@ -114,9 +114,14 @@
     <Compile Include="Entities\StatusEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Entities\UserTypeEntity.cs" />
+    <Compile Include="Entities\WeekDaysPos.cs" />
     <Compile Include="Migrations\202406131853456_InitialMigration.cs" />
     <Compile Include="Migrations\202406131853456_InitialMigration.designer.cs">
       <DependentUpon>202406131853456_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406260822287_AddWeekTable.cs" />
+    <Compile Include="Migrations\202406260822287_AddWeekTable.Designer.cs">
+      <DependentUpon>202406260822287_AddWeekTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,6 +133,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202406131853456_InitialMigration.resx">
       <DependentUpon>202406131853456_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406260822287_AddWeekTable.resx">
+      <DependentUpon>202406260822287_AddWeekTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

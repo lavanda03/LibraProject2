@@ -24,11 +24,10 @@ namespace DAL.Entities
 		public string MorningClosing { get; set; }
 		public string AfternoonOpening { get; set; }
 		public string AfternonClosing { get; set; }
-		public string DaysClosed { get; set; }
 		public long InsertDate { get; set; }
 		public List<IssueEntity> Issues { get; set; }//+
 		public long? DeleteAt { get; set; }
-
+		public List<WeekDaysPos> WeekDaysPos { get; set; }
 
 
 	}

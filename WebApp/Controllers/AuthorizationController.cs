@@ -1,12 +1,10 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using BLL.Repositories.User;
-using System.Security.Claims;
 using BLL.DTO.UserDTO;
 using Newtonsoft.Json;
 
@@ -19,11 +17,15 @@ namespace WebApp.Controllers
     {
      
        private readonly IUserRepository userRepository;
+	   private readonly LoginModelValidator validation;
     
-        public AuthorizationController(IUserRepository userRepository)
-		{ 
-           this.userRepository = userRepository;
-        }
+        public AuthorizationController(IUserRepository userRepository,LoginModelValidator validation)
+		{
+			//this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+			//this.validation = validation ?? throw new ArgumentNullException(nameof(validation));
+			this.userRepository = userRepository;
+			this.validation = validation;
+		}
 
 		[AllowAnonymous]
 		public ActionResult Login()
@@ -40,13 +42,26 @@ namespace WebApp.Controllers
 			if (ModelState.IsValid)
 			{
 
+				var result = validation.Validate(model);
+
+				if (!result.IsValid)
+				{
+					foreach (var error in result.Errors)
+					{
+						ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+					}
+					return View(model); // return to the view with the validation errors
+				}
+
 				var user = userRepository.LoginUser(model.Login, model.Password);
 
 				if (user == null)
 				{
-					ModelState.AddModelError("login", "not valid user");
-					
+					ModelState.AddModelError("", "Invalid login attempt."); 
+					return View(model);
 				}
+
+
 
 				else
 				{

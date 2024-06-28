@@ -1,30 +1,51 @@
-﻿using BLL.DTO.UserDTO;
+﻿using BBL.DTO.UserDTO.UserValidation;
+using BLL.DTO.UserDTO;
 using BLL.Repositories.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Newtonsoft.Json;
+using System.Runtime.InteropServices;
 using System.Web.Mvc;
+using WebApp.Helpers;
 
 namespace WebApp.Controllers
 {
-    public class UserController : Controller
+	[Authorize]
+	public class UserController : Controller
     {
 
 		private readonly IUserRepository userRepository;
+		private readonly AddUserValidation validation;
 
-		public UserController(IUserRepository userRepository)
+		public UserController(IUserRepository userRepository,AddUserValidation validation)
 		{
-
+		
 			this.userRepository = userRepository;
+			this.validation = validation;
 		}
 
 		// GET: User
+		[HttpGet]
 		public ActionResult Browse()
         {
-			var users = userRepository.GetAllUsers();
-            return View(users);
+            return View();
         }
+
+		[HttpGet]
+		public JsonResult QueryUsers()
+		{
+			var criteria = Request.GetPaginatingCriteria();
+
+			var users = userRepository.QueryUsers(criteria);
+
+			var jsonData = new
+			{
+				draw = Request.QueryString["draw"],
+				recordsTotal = users.Total,
+				recordsFiltered = users.TotalFiltered,
+				data = users.UserDTO
+			};
+
+			return Json(jsonData, JsonRequestBehavior.AllowGet);
+		}
 
 
 		[HttpGet]
@@ -38,11 +59,51 @@ namespace WebApp.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				var result = validation.Validate(model);
+
+				if (!result.IsValid)
+				{
+					foreach (var error in result.Errors)
+					{
+						ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+					}
+					ViewBag.UserTypes = userRepository.GetAllUsersType();
+					return View(model);
+				}
+
 				userRepository.AddUser(model);
+
+				return RedirectToAction("Browse");
 			}
 
 			ViewBag.UserTypes = userRepository.GetAllUsersType();
-			return View();
+			return View(model);
+		}
+
+
+		[HttpGet]
+		public ActionResult EditUser(int id)
+		{
+			var user = userRepository.GetUserById(id);
+
+			if (user == null)
+			{
+				return HttpNotFound();
+			}
+
+			ViewBag.UserTypes = userRepository.GetAllUsersType();
+			return View(user);
+		}
+
+		[HttpPost]
+		public ActionResult EditUser(UpdateUserDTO user)
+		{
+			if (ModelState.IsValid)
+			{
+				userRepository.UpdateUser(user);
+				return RedirectToAction("EditUser", new { id = user.Id });
+			}
+			return View(user);	
 		}
 
     }

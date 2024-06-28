@@ -17,10 +17,10 @@ namespace WebApp
 				name: "Default",
 				url: "{controller}/{action}/{id}",
 				defaults: new { controller = "Authorization", action = "Login", id = UrlParameter.Optional }
-				); 
+				);
 
 			
-			 
+
 		}
 	}
 }

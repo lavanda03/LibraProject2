@@ -1,7 +1,39 @@
 ﻿
 @{
     ViewBag.Title = "BrowsePos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>BrowsePos</h2>
 
+<table id="posTable" class="display">
+    <thead>
+        <tr>
+            <th> Pos Id</th>
+            <th> Pos Name</th>
+            <th>Telephone</th>
+            <th>Address</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+</table>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            let columns = [
+                { "data": "Id", "name": " Pos Id", "autoWidth": true },
+                { "data": "Name", "name": " Pos Name", "autoWidth": true },
+                { "data": "Telephone", "name": "Telephone", "autoWidth": true },
+                { "data": "Address", "name": "Address", "autoWidth": true },
+                { "data": "Status", "name": "Status", "autoWidth": true }
+            ];
+
+            bindDataTable("#posTable", "/pos/QuerryPos", columns)
+            bindDataTableDblClick("#posTable","/pos/EditPos/" )
+        });
+    </script>
+}

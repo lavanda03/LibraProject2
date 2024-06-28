@@ -1,46 +1,54 @@
-﻿@model  BLL.DTO.UserDTO.GetUsersDTO
-
+﻿@model BLL.DTO.UserDTO.GetUsersDTO
 @{
     ViewBag.Title = "Browse";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
+
 <div class="clearfix"></div>
 
-
-<table id="userTable" class="display">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Login</th>
-            <th>Telephone</th>
-            <th>UserTypeId</th>
-        </tr>
-    </thead>
-    <tbody>
-
-
-        @foreach (var user in Model.UserDTO)
-        {
+<div class="custom-container">
+    <table id="userTable" class="display">
+        <thead>
             <tr>
-                <td>@user.Name</td>
-                <td>@user.Email</td>
-                <td>@user.Login</td>
-                <td>@user.Telephone</td>
-                <td>@user.UserTypeId</td>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Login</th>
+                <th>Telephone</th>
+                <th>User Type Name</th>
             </tr>
-
-        }
-    </tbody>
-</table>
+        </thead>
+    </table>
+ </div>
 
 @section scripts
 {
     <script>
         $(document).ready(function () {
-            $('#userTable').datatable();
+
+            let columns = [
+                { "data": "Id", "name": "Id", "autoWidth": true },
+                { "data": "Name", "name": "Name", "autoWidth": true },
+                { "data": "Email", "name": "Email", "autoWidth": true },
+                { "data": "Login", "name": "Login", "autoWidth": true },
+                { "data": "Telephone", "name": "Telephone", "autoWidth": true },
+                { "data": "UserType", "name": "User Type Name", "autoWidth": true }
+            ];
+
+            bindDataTable("#userTable", "/user/QueryUsers", columns)
+            bindDataTableDblClick('#userTable', '/user/EditUser/')
+
+      
+            
+
+
+
         });
+
+       
+
     </script>
 }
+

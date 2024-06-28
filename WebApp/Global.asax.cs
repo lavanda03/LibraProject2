@@ -34,6 +34,7 @@ namespace WebApp
 		}
 
 		protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
+		
 		{
 			HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
 			if (authCookie != null) 

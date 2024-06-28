@@ -9,6 +9,9 @@ using DataAccessLayer;
 using DAL.Entities;
 using BLL.DTO.PosDTO;
 using System.Runtime.InteropServices;
+using BBL.DTO.PosDTO;
+using BBL.Common;
+using BLL.DTO.UserDTO;
 
 
 namespace BLL.Repositories.Pos
@@ -20,8 +23,73 @@ namespace BLL.Repositories.Pos
 		{
 			this._dbContext = _dbContext;	
 		}
-		
-		public int AddPos(AddPosDTO command)
+
+
+		public GetPossDTO QyeryPos (QueryPaginatedRequestDTO criteria)
+		{
+			var queryable = GetValidPos();
+
+			if (!string.IsNullOrEmpty(criteria.SearchValue))
+			{
+				var search = criteria.SearchValue.ToLower();
+				queryable = queryable.Where(x => x.Name.ToLower().Contains(search) ||
+												 x.Telephone.ToLower().Contains(search) ||
+												 x.Address.ToLower().Contains(search));
+											
+			}
+			if (!string.IsNullOrEmpty(criteria.OrderBy))
+			{
+				var orderByDesc = !string.IsNullOrEmpty(criteria.Direction) && criteria.Direction.ToLower() == "desc";
+				var orderBy = criteria.OrderBy.ToLower();
+
+				switch (orderBy)
+				{
+					case "id":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Id)
+							: queryable.OrderBy(x => x.Id);
+						break;
+					case "name":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Name)
+							: queryable.OrderBy(x => x.Name);
+						break;
+					case "telephone":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Telephone)
+							: queryable.OrderBy(x => x.Telephone);
+						break;
+					case "address":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Address)
+							: queryable.OrderBy(x => x.Address);
+						break;
+				}
+			}
+
+			var filteredCount = queryable.Count();
+
+			var views = queryable.AsEnumerable().Skip(criteria.Page.Value).Take(criteria.PageSize.Value).ToList();
+
+			var result = new GetPossDTO
+			{
+				Total = GetValidPos().Count(),
+				TotalFiltered = filteredCount,
+				PossDTO = new List<GetPosDTO>(views.Select(x => new GetPosDTO
+				{
+					Id = x.Id,
+					Name = x.Name,
+					Telephone = x.Telephone,
+					Address= x.Address
+					
+				}))
+			};
+
+			return result;
+
+		}
+
+		public int AddPos(AddPOSDTO command)
 		{
 			var posEntity = new PosEntity()
 			{
@@ -36,13 +104,29 @@ namespace BLL.Repositories.Pos
 				MorningClosing = command.MorningClosing,
 				MorningOperning = command.MorningOperning,
 				AfternonClosing = command.AfternonClosing,
-				AfternoonOpening = command.AfternoonOpening,
-				DaysClosed = command.DaysClosed
+				AfternoonOpening = command.AfternoonOpening
+				
 			};
 
 			_dbContext.Pos.Add(posEntity);
 			_dbContext.SaveChanges();
+
+
+			foreach (var day in command.SelectedDays)
+			{
+				var weekEntity = new WeekDaysPos()
+				{
+					IdPos =posEntity.Id,
+					WeekDays= day
+				};
+
+				_dbContext.WeekDaysPOS.Add(weekEntity);
+				
+			}
+			_dbContext.SaveChanges();
 			return posEntity.Id;
+
+			
 		}
 
 		public GetPosDTO GetPosById(int id) 
@@ -56,9 +140,18 @@ namespace BLL.Repositories.Pos
 				Name = posEntity.Name,
 				Telephone = posEntity.Telephone,
 				Address = posEntity.Address,
-			  //status
+				CellPhone = posEntity.CellPhone,
+				Brand = posEntity.Brand,
+				Model = posEntity.Model,
+				City_Id = posEntity.City_Id,
+				ConnType_Id = posEntity.ConnType_Id,
+				MorningClosing = posEntity.MorningClosing,
+				MorningOperning = posEntity.MorningOperning,
+				AfternonClosing = posEntity.AfternonClosing,
+				AfternoonOpening = posEntity.AfternoonOpening
+		
 
-			};
+	        };
 
 			return result;
 		}
@@ -88,7 +181,28 @@ namespace BLL.Repositories.Pos
 
 		public void UpdatePos(UpdatePosDTO updatePos)
 		{
-			_dbContext.Entry(updatePos).State = System.Data.Entity.EntityState.Modified;
+
+			var pos = _dbContext.Pos.FirstOrDefault(x => x.Id == updatePos.Id);
+
+			if (pos == null)
+			{
+				return;
+			}
+
+			pos.Name = updatePos.Name;
+			pos.Telephone = updatePos.Telephone;
+			pos.CellPhone = updatePos.CellPhone;
+			pos.Address = updatePos.Address;
+			pos.City_Id = updatePos.City_Id;
+			pos.Brand = updatePos.Brand;
+			pos.Model = updatePos.Model;
+			pos.ConnType_Id = updatePos.ConnType_Id;
+			pos.MorningOperning = updatePos.MorningOperning;
+			pos.MorningClosing = updatePos.MorningClosing;
+			pos.AfternonClosing = updatePos.AfternonClosing;
+			pos.AfternoonOpening = updatePos.AfternoonOpening;
+
+			_dbContext.Entry(pos).State = System.Data.Entity.EntityState.Modified;
 			_dbContext.SaveChanges();
 		}
 
@@ -110,5 +224,44 @@ namespace BLL.Repositories.Pos
 		{
 			return _dbContext.Pos.Where(x => x.DeleteAt == null);
 		}
+
+
+		public List<GetCitiesDTO> GetAllCitites()
+		{
+			var cityEntity = _dbContext.Cities.ToList();
+			
+			var listCities = new List<GetCitiesDTO>();	
+
+			foreach(var city in cityEntity)
+			{
+				listCities.Add(new GetCitiesDTO
+				{
+
+					Id = city.Id,
+					Name=city.CityName
+				});
+			}
+			return listCities;
+		}
+
+		public List<GetConnectionsTypeDTO>GetAllConnectionType()
+		{
+			var conType = _dbContext.ConnectionTypes.ToList();
+			var listConType = new List<GetConnectionsTypeDTO>();
+
+			foreach (var type in  conType)
+			{
+				listConType.Add(new GetConnectionsTypeDTO
+				{
+					Id = type.Id,
+					ConectionType=type.ConnectionType
+				});
+			}
+			return listConType;
+		}
+
+		
+		
+		
 	}
 }

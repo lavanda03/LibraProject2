@@ -67,19 +67,30 @@
 				});
 
 
-			var cities = new List<CityEntity>()
+			context.Cities.AddOrUpdate(u => u.Id,
+			new Entities.CityEntity
 			{
-				new CityEntity {CityName = "Chisinau" },
-				new CityEntity {CityName = "Orhei"},
-				new CityEntity {CityName = "Milano"}
-
-			};
-
-			foreach (var city in cities)
-			{
-				context.Cities.AddOrUpdate(u => u.Id, city);
-			}
+				CityName = "Chisinau"
+			});
 			context.SaveChanges();
+
+
+			context.Cities.AddOrUpdate(u => u.Id,
+		new Entities.CityEntity
+		{
+			CityName = "Orhei"
+		});
+			context.SaveChanges();
+
+
+			context.Cities.AddOrUpdate(u => u.Id,
+		new Entities.CityEntity
+		{
+			CityName = "Milano"
+		});
+			context.SaveChanges();
+
+
 
 
 			context.ConnectionTypes.AddOrUpdate(u => u.ConnectionType,
@@ -96,6 +107,8 @@
 				});
 			context.SaveChanges();
 
+
+			
 		}
 	}
 }

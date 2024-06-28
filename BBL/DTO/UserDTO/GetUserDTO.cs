@@ -10,7 +10,7 @@ using BLL.DTO.UserDTO;
 
 namespace BLL.DTO.UserDTO
 {
-	//[FluentValidation.Attributes.Validator(typeof(LoginModelValidator))]
+
 	public class GetUserDTO
 	{
 		public int Id { get; set; }	
