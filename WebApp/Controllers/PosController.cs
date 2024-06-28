@@ -86,5 +86,17 @@ namespace WebApp.Controllers
 
 			return View(pos);
         }
+
+        [HttpPost]
+        public ActionResult EditPos(UpdatePosDTO updatePos)
+        {
+            if (ModelState.IsValid)
+            {
+                posRepository.UpdatePos(updatePos);
+                return RedirectToAction("EditPos", new { id =updatePos.Id });
+
+            }
+            return View(updatePos);  
+        }
     }
 }

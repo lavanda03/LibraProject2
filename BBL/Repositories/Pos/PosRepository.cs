@@ -189,8 +189,20 @@ namespace BLL.Repositories.Pos
 				return;
 			}
 
-			//continui 
-			_dbContext.Entry(updatePos).State = System.Data.Entity.EntityState.Modified;
+			pos.Name = updatePos.Name;
+			pos.Telephone = updatePos.Telephone;
+			pos.CellPhone = updatePos.CellPhone;
+			pos.Address = updatePos.Address;
+			pos.City_Id = updatePos.City_Id;
+			pos.Brand = updatePos.Brand;
+			pos.Model = updatePos.Model;
+			pos.ConnType_Id = updatePos.ConnType_Id;
+			pos.MorningOperning = updatePos.MorningOperning;
+			pos.MorningClosing = updatePos.MorningClosing;
+			pos.AfternonClosing = updatePos.AfternonClosing;
+			pos.AfternoonOpening = updatePos.AfternoonOpening;
+
+			_dbContext.Entry(pos).State = System.Data.Entity.EntityState.Modified;
 			_dbContext.SaveChanges();
 		}
 
@@ -249,21 +261,7 @@ namespace BLL.Repositories.Pos
 		}
 
 		
-		//public List <WeekDaysPOS> GetAllWeeKDays()
-		//{
-		//	var weekDays = _dbContext.WeekDaysPOs.ToList();
-		//	var listWeekDays = new List<WeekDaysPOS>();
-
-		//	foreach(var day in weekDays)
-		//	{
-		//		listWeekDays.Add(new WeekDaysPOS
-		//		{
-		//			Id = day.Id,
-		//			WeekDaysId = day.WeekDaysId
-		//		});
-		//	}
-		//	return listWeekDays;
-		//}
+		
 		
 	}
 }
