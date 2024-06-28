@@ -11,6 +11,7 @@ using BBL.DTO.UserDTO.UserValidation;
 using BLL.Repositories.Pos;
 using System.Linq;
 using BBL.DTO.PosDTO.PosValidation;
+using BLL.Repositories.Issue;
 
 
 
@@ -46,6 +47,7 @@ namespace WebApp
         {
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<PosRepository>().As<IPosRepository>(); 
+            builder.RegisterType<IssueRepository>().As<IIssueRepository>(); 
         }
 
 

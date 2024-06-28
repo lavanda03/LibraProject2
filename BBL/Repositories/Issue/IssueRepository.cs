@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using BLL.DTO.IssueDTO;
 using DataAccessLayer;
 using DAL.Entities;
+using BBL.DTO.PosDTO;
+using BBL.Common;
+using BBL.DTO.IssueDTO;
 
 
 namespace BLL.Repositories.Issue
@@ -19,6 +22,111 @@ namespace BLL.Repositories.Issue
 		{
 			this._dbContext = _dbContext;
 		}
+
+
+
+		public GetIssuessDTO QueryIssue(QueryPaginatedRequestDTO criteria)
+		{
+			var queryable = GetValidIssues();
+
+			if (!string.IsNullOrEmpty(criteria.SearchValue))
+			{
+				var search = criteria.SearchValue.ToLower();
+				queryable = queryable.Where(x => x.Id.ToString().Contains(search) ||
+												 x.Pos.Id.ToString().Contains(search) ||
+												 x.Pos.Name.ToLower().Contains(search) ||
+												 x.User.Name.ToLower().Contains(search) ||
+												 x.CreationDate.ToString().Contains(search) ||
+												 x.IssuesType.Name.ToLower().Contains(search) ||
+												 x.Status.Status.ToLower().Contains(search) ||
+												 x.UserType.UserType.ToLower().Contains(search) ||
+												 x.Memo.ToLower().Contains(search));
+			}
+
+			if (!string.IsNullOrEmpty(criteria.OrderBy))
+			{
+				var orderByDesc = !string.IsNullOrEmpty(criteria.Direction) && criteria.Direction.ToLower() == "desc";
+				var orderBy = criteria.OrderBy.Replace(" ", "").ToLower();
+
+				switch (orderBy)
+				{
+					case "issue":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Id)
+							: queryable.OrderBy(x => x.Id);
+						break;
+					case "pos.id":
+						queryable = orderByDesc
+						   ? queryable.OrderByDescending(x => x.Pos.Id)
+						   : queryable.OrderBy(x => x.Pos.Id);
+						break;
+					case "pos.name":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Pos.Name)
+							: queryable.OrderBy(x => x.Pos.Name);
+						break;
+					case "createdby":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.User.Name)
+							: queryable.OrderBy(x => x.User.Name);
+						break;
+					case "date":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.CreationDate)
+							: queryable.OrderBy(x => x.CreationDate);
+						break;
+					case "issuestype":
+						queryable = orderByDesc
+						   ? queryable.OrderByDescending(x => x.IssuesType.Name)
+						   : queryable.OrderBy(x => x.IssuesType.Name);
+						break;
+					case "status":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Status.Status)
+							: queryable.OrderBy(x => x.Status.Status);
+						break;
+					case "assignedto":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.UserType.UserType)
+							: queryable.OrderBy(x => x.UserType.UserType);
+						break;
+					case "memo":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Memo)
+							: queryable.OrderBy(x => x.Memo);
+						break;
+
+				}
+			}
+
+			var filteredCount = queryable.Count();
+
+			var views = queryable.AsEnumerable().Skip(criteria.Page.Value).Take(criteria.PageSize.Value).ToList();
+
+			var result = new GetIssuessDTO
+			{
+
+				Total = GetValidIssues().Count(),
+				TotalFiltered = filteredCount,
+				IssueDTO = new List<GetIssuesDTO>(views.Select(x=>new GetIssuesDTO
+				{
+					Id = x.Id,
+					IdPos= x.IdPos,
+					PosName = x.Pos.Name,
+					CreatedByName = x.User.Name,
+					CreationDate = x.CreationDate, //conmvert
+					IssueType = x.IssuesType.Name,
+					Status= x.Status.Status,
+				    AssignedToName = x.User.Name,
+					Memo = x.Memo,	
+
+				}))
+
+			};
+
+			return result; 
+		}
+
 
 		public int AddIssue(AddIssuesDTO issue)
 		{

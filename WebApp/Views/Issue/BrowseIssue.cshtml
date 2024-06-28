@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "BrowseIssue";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>BrowseIssue</h2>
+
+
+<table id="issueTable" class="display">
+    <thead>
+        <tr>
+            <th>Issue</th>
+            <th> Pos.Id</th>
+            <th> Pos.Name</th>
+            <th> Created By</th>
+            <th> Date</th>
+            <th> Issue Type</th>
+            <th> Status</th>
+            <th> Assigned To</th>
+            <th> Memo</th>
+        </tr>
+    </thead>
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            let columns = [
+                { "data": "Id", "name": "Issue", "autoWidth": true },
+                { "data": "Pos.Id", "name": " Pos.Id", "autoWidth": true },
+                { "data": "Pos.Name", "name": " Pos.Name", "autoWidth": true },
+                { "data": "User.Name", "name": "Created By", "autoWidth": true },
+                { "data": "CreationDate", "name": "Date", "autoWidth": true },
+                { "data": "IssuesType.Id", "name": "Issue Type", "autoWidth": true }
+                { "data": "Statuses.Name", "name": "Status", "autoWidth": true },
+                { "data": "UserType.UserType", "name": "Assigned To", "autoWidth": true },
+                { "data": "Memo", "name": "Memo", "autoWidth": true }
+            ];
+
+            bindDataTable("#issueTable", "/issue/QuerryIssue", columns)
+            bindDataTableDblClick("#issueTable","/pos/EditPos/" )
+        });
+    </script>
+}

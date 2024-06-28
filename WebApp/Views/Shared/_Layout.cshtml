@@ -69,17 +69,16 @@
                                     <li>
                                         @Html.ActionLink("Add POS", "CreatePos", "Pos", null, new { @class = "nav-link" })
                                     </li>
-                                    <li> @Html.ActionLink("Browse", "BrowsePos", "Pos", null, new { @class = "nav-link" }) </li>
+                                    <li> @Html.ActionLink("Browse POS", "BrowsePos", "Pos", null, new { @class = "nav-link" }) </li>
                                 </ul>
                             </li>
                             <li>
                                 <a><i class="fa fa-wrench"></i> Issues <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li>
-                                        <a href="general_elements.html">Add Issues</a>
-                                    </li>
+                                       @Html.ActionLink("Add Issue", "CreateIssue", "Issue", null, new {@class = "nav-link"})
                                     <li>
-                                        <a href="media_gallery.html">Browse Issues</a>
+                                        @Html.ActionLink("Browse Issue", "BrowseIssue", "Issue", null, new { @class = "nav-link" })
                                     </li>
 
                                 </ul>

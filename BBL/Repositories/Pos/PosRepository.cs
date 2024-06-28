@@ -34,13 +34,14 @@ namespace BLL.Repositories.Pos
 				var search = criteria.SearchValue.ToLower();
 				queryable = queryable.Where(x => x.Name.ToLower().Contains(search) ||
 												 x.Telephone.ToLower().Contains(search) ||
-												 x.Address.ToLower().Contains(search));
+												 x.Address.ToLower().Contains(search) ||
+												 x.Id.ToString().Contains(search));
 											
 			}
 			if (!string.IsNullOrEmpty(criteria.OrderBy))
 			{
 				var orderByDesc = !string.IsNullOrEmpty(criteria.Direction) && criteria.Direction.ToLower() == "desc";
-				var orderBy = criteria.OrderBy.ToLower();
+				var orderBy = criteria.OrderBy.Replace(" ", "").ToLower();
 
 				switch (orderBy)
 				{
@@ -49,7 +50,7 @@ namespace BLL.Repositories.Pos
 							? queryable.OrderByDescending(x => x.Id)
 							: queryable.OrderBy(x => x.Id);
 						break;
-					case "name":
+					case "posname":
 						queryable = orderByDesc
 							? queryable.OrderByDescending(x => x.Name)
 							: queryable.OrderBy(x => x.Name);
