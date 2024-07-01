@@ -201,31 +201,81 @@
                                 <div id="hidden-fields-container"></div>
                                 <div class="checkbox-group">
                                     <div>
-                                        <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" />
+                                        @if (Model.SelectedDays.Contains("mon"))
+                                        {
+                                            <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()"  checked/>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" />
+                                        }
+                                        
                                         <label for="mon">Mon</label>
                                     </div>
                                     <div>
-                                        <input type="checkbox" id="tue" name="Tue" value="tue" onchange="updateSelectedDays()" />
+                                        @if (Model.SelectedDays.Contains("tue"))
+                                        {
+                                            <input type="checkbox" id="tue" name="Tue" value="tue" onchange="updateSelectedDays()" checked />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="tue" name="Tue" value="tue" onchange="updateSelectedDays()" />
+                                        }
                                         <label for="tue">Tue</label>
                                     </div>
                                     <div>
-                                        <input type="checkbox" id="wed" name="Wed" value="wed" onchange="updateSelectedDays()" />
+                                        @if (Model.SelectedDays.Contains("wed"))
+                                        {
+                                            <input type="checkbox" id="wed" name="Wed" value="wed" onchange="updateSelectedDays()" checked />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="wed" name="Wed" value="wed" onchange="updateSelectedDays()"  />
+                                        }
                                         <label for="wed">Wed</label>
                                     </div>
                                     <div>
-                                        <input type="checkbox" id="thu" name="Thu" value="thu" onchange="updateSelectedDays()" />
+                                        @if (Model.SelectedDays.Contains("thu"))
+                                        {
+                                            <input type="checkbox" id="thu" name="Thu" value="thu" onchange="updateSelectedDays()" checked />
+                                        }
+                                        else
+                                        {
+                                        <input type="checkbox" id="thu" name="Thu" value="thu" onchange="updateSelectedDays()"/>
+                                        }
                                         <label for="thu">Thu</label>
                                     </div>
                                     <div>
-                                        <input type="checkbox" id="fri" name="Fri" value="fri" onchange="updateSelectedDays()" />
+                                        @if (Model.SelectedDays.Contains("fri"))
+                                        {
+                                            <input type="checkbox" id="fri" name="Fri" value="fri" onchange="updateSelectedDays()" checked />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="fri" name="Fri" value="fri" onchange="updateSelectedDays()" />
+                                        }
                                         <label for="fri">Fri</label>
                                     </div>
                                     <div>
-                                        <input type="checkbox" id="sat" name="Sat" value="sat" onchange="updateSelectedDays()" />
+                                        @if (Model.SelectedDays.Contains("sat"))
+                                        {
+                                            <input type="checkbox" id="sat" name="Sat" value="sat" onchange="updateSelectedDays()" checked />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="sat" name="Sat" value="sat" onchange="updateSelectedDays()"/>
+                                        }
                                         <label for="sat">Sat</label>
                                     </div>
                                     <div>
-                                        <input type="checkbox" id="sun" name="Sun" value="sun" onchange="updateSelectedDays()" />
+                                        @if (Model.SelectedDays.Contains("sun"))
+                                        {
+                                            <input type="checkbox" id="sun" name="Sun" value="sun" onchange="updateSelectedDays()" checked />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="sun" name="Sun" value="sun" onchange="updateSelectedDays()" />
+                                        }
                                         <label for="sun">Sun</label>
                                     </div>
                                 </div>

@@ -130,17 +130,19 @@ namespace BLL.Repositories.Issue
 
 		public int AddIssue(AddIssuesDTO issue)
 		{
+			
 			var issueEntity = new IssueEntity()
 			{
-				IdType = issue.IssuesType.Id,
-				IdSubType = issue.IssuesType.Id,
-				IdProblem = issue.IssuesType.Id,
+				IdType= issue.IdType,
+				IdSubType = issue.IdSubType,
+				IdProblem = issue.IdProblem,
 				Priority = issue.Priority,
-				IdStatus = issue.Statuses.Id,
+				IdStatus = issue.IdStatus,
 				Description = issue.Description,
 				Solotion = issue.Solotion,
+				IdUserCreated = issue.IdUserCreated,
 				Memo = issue.Memo
-				//assigned
+			
 
 			};
 
@@ -200,5 +202,6 @@ namespace BLL.Repositories.Issue
 			return _dbContext.Issues.Where(x => x.DeleteAt == null);
 		}
 
+		
 	}
 }

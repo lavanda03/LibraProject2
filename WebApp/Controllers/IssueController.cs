@@ -14,22 +14,33 @@ namespace WebApp.Controllers
     public class IssueController : Controller
     {
         private readonly IIssueRepository issueRepository;
+        private readonly IPosRepository posRepository;
 
 
-        public IssueController(IIssueRepository issueRepository)
+        public IssueController(IIssueRepository issueRepository,IPosRepository posRepository)
         {
             this.issueRepository = issueRepository;
+            this.posRepository = posRepository;
         }
 
         [HttpGet]
-        public ActionResult CreateIssue()
+        public ActionResult BrowsePos()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult CreateIssue(int id)
+        {
+
+            var pos = posRepository.GetPosById(id);
+            return View(pos);
         }
 
         [HttpPost]
         public ActionResult CreateIssue(AddIssuesDTO issueModel)
         {
+            
             return View(issueModel);
         }
 
@@ -41,8 +52,26 @@ namespace WebApp.Controllers
 
         }
 
+		[HttpGet]
+		public JsonResult QueryPos()
+		{
+			var criteria = Request.GetPaginatingCriteria();
 
-        public JsonResult QuerryIssue()
+			var pos = posRepository.QueryPos(criteria);
+
+			var jsonData = new
+			{
+				draw = Request.QueryString["draw"],
+				recordTotal = pos.Total,
+				recordsFiltered = pos.TotalFiltered,
+				data = pos.PossDTO
+
+			};
+
+			return Json(jsonData, JsonRequestBehavior.AllowGet);
+		}
+
+		public JsonResult QueryIssue()
         {
             var criteria = Request.GetPaginatingCriteria();
 

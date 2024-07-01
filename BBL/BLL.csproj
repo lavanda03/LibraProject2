@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\QueryPaginatedRequestDTO.cs" />
+    <Compile Include="DTO\CommonDTO\PosAndIssuesViewModel.cs" />
     <Compile Include="DTO\IssueDTO\AddIssueDTO.cs" />
     <Compile Include="DTO\IssueDTO\GetIssuesDTO.cs" />
     <Compile Include="DTO\IssueDTO\GetIssuessDTO.cs" />

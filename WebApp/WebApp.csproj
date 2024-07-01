@@ -261,8 +261,9 @@
     <Content Include="Content\font-awesome\scss\_variables.scss" />
     <Content Include="Views\User\EditUser.cshtml" />
     <Content Include="Views\Pos\EditPos.cshtml" />
-    <Content Include="Views\Issue\CreateIssue.cshtml" />
+    <Content Include="Views\Issue\BrowsePos.cshtml" />
     <Content Include="Views\Issue\BrowseIssue.cshtml" />
+    <Content Include="Views\Issue\CreateIssue.cshtml" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />

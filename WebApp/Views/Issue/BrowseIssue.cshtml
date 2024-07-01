@@ -30,17 +30,17 @@
 
             let columns = [
                 { "data": "Id", "name": "Issue", "autoWidth": true },
-                { "data": "Pos.Id", "name": " Pos.Id", "autoWidth": true },
-                { "data": "Pos.Name", "name": " Pos.Name", "autoWidth": true },
-                { "data": "User.Name", "name": "Created By", "autoWidth": true },
+                { "data": "IdPos", "name": " Pos.Id", "autoWidth": true },
+                { "data": "PosName", "name": " Pos.Name", "autoWidth": true },
+                { "data": "CreatedByName", "name": "Created By", "autoWidth": true },
                 { "data": "CreationDate", "name": "Date", "autoWidth": true },
-                { "data": "IssuesType.Id", "name": "Issue Type", "autoWidth": true }
-                { "data": "Statuses.Name", "name": "Status", "autoWidth": true },
-                { "data": "UserType.UserType", "name": "Assigned To", "autoWidth": true },
+                { "data": "IssueType", "name": "Issue Type", "autoWidth": true },
+                { "data": "Status", "name": "Status", "autoWidth": true },
+                { "data": "AssignedToId", "name": "Assigned To", "autoWidth": true },
                 { "data": "Memo", "name": "Memo", "autoWidth": true }
             ];
 
-            bindDataTable("#issueTable", "/issue/QuerryIssue", columns)
+            bindDataTable("#issueTable", "/issue/QueryIssue", columns)
             bindDataTableDblClick("#issueTable","/pos/EditPos/" )
         });
     </script>

@@ -1,7 +1,95 @@
-﻿
+﻿@model BBL.DTO.CommonDTO.PosAndIssuesViewModel
+ 
 @{
     ViewBag.Title = "CreateIssue";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Issues manager</h1>
+<h2>CreateIssue</h2>
+
+<div class="left_col-" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12">
+                <div class="x_panel" style="width: 105vh;">
+                    <div class="col-md-6 col-sm-6  ">
+                        <div class="x_panel" style="width: 200%; height: 20vh;">
+                            <div class="x_title">
+                                <h2>Add issue for <small>Stripped table subtitle</small></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>POS Id</th>
+                                            <th>POS Name</th>
+                                            <th>Telephone</th>
+                                            <th>CellPhone</th>
+                                            <th>Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>@Model.GetPosDTO.Id</td>
+                                            <td>@Model.GetPosDTO.Name</td>
+                                            <td>@Model.GetPosDTO.Telephone</td>
+                                            <td>@Model.GetPosDTO.CellPhone</td>
+                                            <td>@Model.GetPosDTO.Address</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="x_panel" style="width: 200%; height: 20vh;">
+                            <div class="x_title">
+                                <h2>Add issue  <small>Stripped table subtitle</small></h2>
+                                <div class="clearfix"></div>
+                                <br />
+                                <form id="demo-form2" data-parsley-validate
+                                      class="form-vertical form-label-left">
+
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            @Html.LabelFor(model => model.AddIss, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            <div class="col-md-6 col-sm-6 col-12">
+                                                <select id="City_Id" name="City_Id" class="select2_single form-control">
+                                                    <option value="">-- Select User Type --</option>
+                                                    @foreach (var city in ViewBag.City)
+                                                    {
+                                                        <option value="@city.Id">@city.Name</option>
+                                                    }
+                                                    @Html.ValidationMessageFor(model => model.City_Id)
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            @Html.LabelFor(model => model.CityName, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            <div class="col-md-6 col-sm-6 col-12">
+                                                <select id="City_Id" name="City_Id" class="select2_single form-control">
+                                                    <option value="">-- Select User Type --</option>
+                                                    @foreach (var city in ViewBag.City)
+                                                    {
+                                                        <option value="@city.Id">@city.Name</option>
+                                                    }
+                                                    @Html.ValidationMessageFor(model => model.City_Id)
+                                                </select>
+                                            </div>
+                                        </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

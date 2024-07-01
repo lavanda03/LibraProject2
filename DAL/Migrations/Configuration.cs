@@ -15,7 +15,7 @@
 		public Configuration()
 		{
 			AutomaticMigrationsEnabled = true;
-			AutomaticMigrationDataLossAllowed = false;
+			AutomaticMigrationDataLossAllowed = true;
 		}
 
 		protected override void Seed(DataAccessLayer.ApplicationDbContext context)
@@ -26,14 +26,14 @@
 
 
 
-			context.UserTypes.AddOrUpdate(u => u.UserType,
+			context.UserTypes.AddOrUpdate(u => u.Id,
 				new Entities.UserTypeEntity
 				{
 					UserType = "admin"
 				});
 			context.SaveChanges();
 
-			context.UserTypes.AddOrUpdate(u => u.UserType,
+			context.UserTypes.AddOrUpdate(u => u.Id,
 				new Entities.UserTypeEntity
 				{
 					UserType = "tehnical group"
@@ -41,7 +41,7 @@
 			context.SaveChanges();
 
 
-			context.Users.AddOrUpdate(u => u.Name,
+			context.Users.AddOrUpdate(u => u.Id,
 				new Entities.UserEntity
 				{
 					Name = "crme1",
@@ -53,8 +53,9 @@
 					Salt = salt
 
 				});
+			context.SaveChanges();
 
-			context.Users.AddOrUpdate(u => u.Name,
+			context.Users.AddOrUpdate(u => u.Id,
 				new Entities.UserEntity
 				{
 					Name = "crme2",
@@ -65,6 +66,7 @@
 					UserTypeId = 2,
 					Salt = salt
 				});
+			context.SaveChanges();
 
 
 			context.Cities.AddOrUpdate(u => u.Id,
@@ -76,31 +78,30 @@
 
 
 			context.Cities.AddOrUpdate(u => u.Id,
-		new Entities.CityEntity
-		{
+		    new Entities.CityEntity
+		   {
 			CityName = "Orhei"
-		});
+		  });
 			context.SaveChanges();
 
 
 			context.Cities.AddOrUpdate(u => u.Id,
-		new Entities.CityEntity
-		{
+		   new Entities.CityEntity
+		   {
 			CityName = "Milano"
-		});
+		   });
 			context.SaveChanges();
 
 
 
-
-			context.ConnectionTypes.AddOrUpdate(u => u.ConnectionType,
-				new Entities.ConnectionTypeEntity
-				{
-					ConnectionType = "Wi-Fi"
-				});
+			context.ConnectionTypes.AddOrUpdate(u => u.Id,
+			   new Entities.ConnectionTypeEntity
+			   {
+				   ConnectionType = "Wi-Fi"
+			   });
 			context.SaveChanges();
 
-			context.ConnectionTypes.AddOrUpdate(u => u.ConnectionType,
+			context.ConnectionTypes.AddOrUpdate(u => u.Id,
 				new Entities.ConnectionTypeEntity
 				{
 					ConnectionType = "Remote"
@@ -108,7 +109,85 @@
 			context.SaveChanges();
 
 
-			
+
+
+
+
+
+			context.IssuesType.AddOrUpdate(u => u.Id,
+				new IssuesTypeEntity
+				{
+					IssueLevel = 0,
+					Name = "Hardware",
+					InsertDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+
+				});
+			context.SaveChanges();
+
+
+			context.IssuesType.AddOrUpdate(u => u.Id,
+				new IssuesTypeEntity
+				{
+					IssueLevel = 1,
+					Name = "Software",
+					InsertDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+
+				});
+			context.SaveChanges();
+
+
+			context.IssuesType.AddOrUpdate(u => u.Id,
+				new IssuesTypeEntity
+				{
+					ParentIssues = 2,
+					Name = "Card Reader",
+					InsertDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+
+				});
+			context.SaveChanges();
+
+			context.IssuesType.AddOrUpdate(u => u.Id,
+			new IssuesTypeEntity
+			{
+				ParentIssues = 2,
+				Name = "Printer",
+				InsertDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+
+			});
+			context.SaveChanges();
+
+
+			context.IssuesType.AddOrUpdate(u => u.Id,
+			new IssuesTypeEntity
+			{
+				ParentIssues = 2,
+				Name = "Power Supply",
+				InsertDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+
+			});
+			context.SaveChanges();
+
+
+			context.IssuesType.AddOrUpdate(u => u.Id,
+			new IssuesTypeEntity
+			{
+				ParentIssues = 3,
+				Name = "Application",
+				InsertDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+
+			});
+			context.SaveChanges();
+
+
+			context.IssuesType.AddOrUpdate(u => u.Id,
+			new IssuesTypeEntity
+			{
+				ParentIssues = 3,
+				Name = "Integration",
+				InsertDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+
+			});
+			context.SaveChanges();
 		}
 	}
 }

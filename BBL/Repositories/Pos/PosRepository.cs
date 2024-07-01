@@ -25,7 +25,7 @@ namespace BLL.Repositories.Pos
 		}
 
 
-		public GetPossDTO QyeryPos (QueryPaginatedRequestDTO criteria)
+		public GetPossDTO QueryPos (QueryPaginatedRequestDTO criteria)
 		{
 			var queryable = GetValidPos();
 
@@ -35,7 +35,8 @@ namespace BLL.Repositories.Pos
 				queryable = queryable.Where(x => x.Name.ToLower().Contains(search) ||
 												 x.Telephone.ToLower().Contains(search) ||
 												 x.Address.ToLower().Contains(search) ||
-												 x.Id.ToString().Contains(search));
+												 x.Id.ToString().Contains(search) ||
+												 x.CellPhone.ToString().Contains(search));
 											
 			}
 			if (!string.IsNullOrEmpty(criteria.OrderBy))
@@ -65,6 +66,11 @@ namespace BLL.Repositories.Pos
 							? queryable.OrderByDescending(x => x.Address)
 							: queryable.OrderBy(x => x.Address);
 						break;
+					case "cellphone":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.CellPhone)
+							: queryable.OrderBy(x => x.CellPhone);
+						break;
 				}
 			}
 
@@ -81,7 +87,9 @@ namespace BLL.Repositories.Pos
 					Id = x.Id,
 					Name = x.Name,
 					Telephone = x.Telephone,
-					Address= x.Address
+					Address= x.Address,
+					CellPhone = x.CellPhone
+					
 					
 				}))
 			};
@@ -133,7 +141,7 @@ namespace BLL.Repositories.Pos
 		public GetPosDTO GetPosById(int id) 
 		{
 
-		   var posEntity = _dbContext.Pos.FirstOrDefault(u=>u.Id== id);
+		   var posEntity = _dbContext.Pos.Include(x=>x.WeekDaysPos).FirstOrDefault(u=>u.Id== id);
 
 			var result = new GetPosDTO()
 			{
@@ -149,8 +157,8 @@ namespace BLL.Repositories.Pos
 				MorningClosing = posEntity.MorningClosing,
 				MorningOperning = posEntity.MorningOperning,
 				AfternonClosing = posEntity.AfternonClosing,
-				AfternoonOpening = posEntity.AfternoonOpening
-		
+				AfternoonOpening = posEntity.AfternoonOpening,
+				SelectedDays = posEntity.WeekDaysPos.Select(x => x.WeekDays).ToList()		
 
 	        };
 

@@ -14,7 +14,7 @@ namespace BLL.Repositories.Pos
 	public interface IPosRepository
 	{
 		int AddPos(AddPOSDTO addPos);
-		GetPossDTO QyeryPos(QueryPaginatedRequestDTO criteria);
+		GetPossDTO QueryPos(QueryPaginatedRequestDTO criteria);
 		GetPosDTO GetPosById(int id);
         List<GetPosDTO> GetAllPos();
 		void UpdatePos(UpdatePosDTO updatePos);

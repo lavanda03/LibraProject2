@@ -31,11 +31,11 @@ namespace WebApp.Controllers
 
 
         [HttpGet]
-        public JsonResult QuerryPos()
+        public JsonResult QueryPos()
         {
             var criteria = Request.GetPaginatingCriteria();
 
-            var pos = posRepository.QyeryPos(criteria);
+            var pos = posRepository.QueryPos(criteria);
 
             var jsonData = new
             {
