@@ -18,6 +18,7 @@ namespace BLL.DTO.IssueDTO
 		public int IdProblem { get; set; }	//-
 	    public string Problem { get; set; }
 		public string Priority { get; set; }
+		public int PriorityId { get; set; }
 		public int IdStatus { get; set; }
 		public string Status { get; set; } //-
 		public string Memo { get; set; }

@@ -113,11 +113,11 @@ namespace BLL.Repositories.Issue
 					Id = x.Id,
 					IdPos= x.IdPos,
 					PosName = x.Pos.Name,
-					CreatedByName = x.User.Name,
-					CreationDate = x.CreationDate, //conmvert
+					UserName = x.User.Name,
+					CreationDate = x.CreationDate, 
 					IssueType = x.IssuesType.Name,
 					Status= x.Status.Status,
-				    AssignedToName = x.User.Name,
+				    UserType = x.UserType.UserType,
 					Memo = x.Memo,	
 
 				}))
@@ -136,7 +136,7 @@ namespace BLL.Repositories.Issue
 				IdType= issue.IdType,
 				IdSubType = issue.IdSubType,
 				IdProblem = issue.IdProblem,
-				Priority = issue.Priority,
+				PriorityId = issue.PriorityId,
 				IdStatus = issue.IdStatus,
 				Description = issue.Description,
 				Solotion = issue.Solotion,
@@ -171,11 +171,82 @@ namespace BLL.Repositories.Issue
 
 		public List<GetIssuesDTO> GetAllIssues()
 		{
+			var issuesEntity = _dbContext.Issues.ToList();
+			var result = new List<GetIssuesDTO>();	
 
-			_dbContext.Issues.ToList();
+			foreach(var x in issuesEntity)
+			{
+				result.Add(new GetIssuesDTO
+				{
+					Id = x.Id,
+					IdPos= x.IdPos,
+					PosName = x.Pos.Name,
+					IdType= x.IdType,
+					IssueType = x.IssuesType.Name,
+					IdSubType = x.IdSubType,
+					SubType = x.IssuesType.Name,
+					IdProblem = x.IdProblem,
+					ProblemType = x.IssuesType.Name
+				});
+
+			}
 			return new List<GetIssuesDTO>();
 			//need to change the logic
 		}
+
+
+		public List<GetIssuesTypeDTO>GetAllIssuesType()
+		{
+			var issueType = _dbContext.IssuesType.ToList();
+			var result = new List<GetIssuesTypeDTO>();
+			
+			foreach(var x in  issueType)
+			{
+				result.Add(new GetIssuesTypeDTO
+				{
+					Id = x.Id,
+					IssueLevel = x.IssueLevel,
+					ParentIssues = x.ParentIssues,
+					Name  = x.Name
+
+				});
+			}
+			return result;
+		}
+
+		public List<GetAllPriority>GetPriority()
+		{
+			var priority= _dbContext.Priorities.ToList();
+			var result = new List<GetAllPriority>();
+
+			foreach(var x in priority)
+			{
+				result.Add(new GetAllPriority
+				{
+					Id = x.Id,
+					Priority = x.PriorityName
+				}) ;
+			}
+			return result;
+		}
+
+
+		public List<GetAllStatus>GetStatuses()
+		{
+			var status = _dbContext.Statuses.ToList();
+			var result = new List<GetAllStatus>();
+
+			foreach (var x in status)
+			{
+				result.Add(new GetAllStatus
+				{
+					Id = x.Id,
+					Status = x.Status
+				});
+			}
+			return result;
+		}
+
 		public void UpdateIssue(UpdateIssuesDTO updateIssue)
 		{
 

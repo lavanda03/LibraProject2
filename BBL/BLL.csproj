@@ -103,6 +103,9 @@
     <Compile Include="Common\QueryPaginatedRequestDTO.cs" />
     <Compile Include="DTO\CommonDTO\PosAndIssuesViewModel.cs" />
     <Compile Include="DTO\IssueDTO\AddIssueDTO.cs" />
+    <Compile Include="DTO\IssueDTO\GetAllPriority.cs" />
+    <Compile Include="DTO\IssueDTO\GetAllStatus.cs" />
+    <Compile Include="DTO\IssueDTO\GetIssuesTypeDTO.cs" />
     <Compile Include="DTO\IssueDTO\GetIssuesDTO.cs" />
     <Compile Include="DTO\IssueDTO\GetIssuessDTO.cs" />
     <Compile Include="DTO\IssueDTO\UpdateIssuesDTO.cs" />

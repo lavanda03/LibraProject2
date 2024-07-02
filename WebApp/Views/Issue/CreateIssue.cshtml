@@ -1,8 +1,10 @@
 ﻿@model BBL.DTO.CommonDTO.PosAndIssuesViewModel
- 
+
 @{
     ViewBag.Title = "CreateIssue";
 }
+
+
 
 <h2>CreateIssue</h2>
 
@@ -44,7 +46,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="x_panel" style="width: 200%; height: 20vh;">
+                        <div class="x_panel" style="width: 200%; height: 30vh;">
                             <div class="x_title">
                                 <h2>Add issue  <small>Stripped table subtitle</small></h2>
                                 <div class="clearfix"></div>
@@ -55,36 +57,40 @@
 
                                     <div class="form-group">
                                         <div class="row">
-                                            @Html.LabelFor(model => model.AddIss, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            @Html.LabelFor(model => model.AddIssuesDTO.IssueType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
-                                                <select id="City_Id" name="City_Id" class="select2_single form-control">
-                                                    <option value="">-- Select User Type --</option>
-                                                    @foreach (var city in ViewBag.City)
-                                                    {
-                                                        <option value="@city.Id">@city.Name</option>
-                                                    }
-                                                    @Html.ValidationMessageFor(model => model.City_Id)
+                                                <select id="IssueType" name="IssueType" class="select2_single form-control">
+                                                    <option value="">-- Select Issue Type --</option>
                                                 </select>
+                                                @Html.ValidationMessageFor(model => model.AddIssuesDTO.IssueType)
                                             </div>
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <div class="row">
+                                            @Html.LabelFor(model => model.AddIssuesDTO.SubType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            <div class="col-md-6 col-sm-6 col-12">
+                                                <select id="SubType" name="SubType" class="select2_single form-control">
+                                                    <option value="">-- Select SubType --</option>
+                                                </select>
+                                                @Html.ValidationMessageFor(model => model.AddIssuesDTO.SubType)
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <div class="row">
-                                            @Html.LabelFor(model => model.CityName, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            @Html.LabelFor(model => model.AddIssuesDTO.Problem, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
-                                                <select id="City_Id" name="City_Id" class="select2_single form-control">
-                                                    <option value="">-- Select User Type --</option>
-                                                    @foreach (var city in ViewBag.City)
-                                                    {
-                                                        <option value="@city.Id">@city.Name</option>
-                                                    }
-                                                    @Html.ValidationMessageFor(model => model.City_Id)
+                                                <select id="Problem" name="Problem" class="select2_single form-control">
+                                                    <option value="">-- Select Problem --</option>
                                                 </select>
+                                                @Html.ValidationMessageFor(model => model.AddIssuesDTO.Problem)
                                             </div>
                                         </div>
-                                  </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -93,3 +99,59 @@
         </div>
     </div>
 </div>
+
+
+@section scripts
+{
+  <script>
+
+   var issueTypes = @Html.Raw(Json.Encode(ViewBag.IssueType));
+
+     window.onload = function() {
+    var issueTypeSelect = document.getElementById("IssueType");
+    var subTypeSelect = document.getElementById("SubType");
+    var problemSelect = document.getElementById("Problem");
+
+    // Populate IssueType dropdown
+    issueTypeSelect.options.length = 0;
+    issueTypeSelect.options[0] = new Option('-- Select Issue Type --', '');
+    for (var i = 0; i < issueTypes.length; i++) {
+        if (issueTypes[i].ParentIssues === 0 && issueTypes[i].IssueLevel === 1) {
+            issueTypeSelect.options[issueTypeSelect.options.length] = new Option(issueTypes[i].Name, issueTypes[i].Id);
+        }
+    }
+
+    // Event listener for IssueType change
+    issueTypeSelect.onchange = function() {
+        var selectedIssueTypeId = parseInt(this.value);
+
+        // Clear and populate SubType dropdown
+        subTypeSelect.options.length = 0;
+        subTypeSelect.options[0] = new Option('-- Select SubType --', '');
+        for (var i = 0; i < issueTypes.length; i++) {
+            if (issueTypes[i].ParentIssues === selectedIssueTypeId && issueTypes[i].IssueLevel === 2) {
+                subTypeSelect.options[subTypeSelect.options.length] = new Option(issueTypes[i].Name, issueTypes[i].Id);
+            }
+        }
+
+        // Clear Problem dropdown
+        problemSelect.options.length = 0;
+        problemSelect.options[0] = new Option('-- Select Problem --', '');
+    };
+
+    // Event listener for SubType change
+      subTypeSelect.onchange = function() {
+        var selectedSubTypeId = parseInt(this.value);
+
+        // Clear and populate Problem dropdown
+        problemSelect.options.length = 0;
+        problemSelect.options[0] = new Option('-- Select Problem --', '');
+        for (var i = 0; i < issueTypes.length; i++) {
+            if (issueTypes[i].ParentIssues === selectedSubTypeId && issueTypes[i].IssueLevel === 3) {
+                problemSelect.options[problemSelect.options.length] = new Option(issueTypes[i].Name, issueTypes[i].Id);
+            }
+        }
+    };
+};
+    </script>
+}

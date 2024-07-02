@@ -10,14 +10,14 @@ namespace WebApp.Controllers
 {
 	[Authorize]
 	public class UserController : Controller
-    {
+	{
 
 		private readonly IUserRepository userRepository;
 		private readonly AddUserValidation validation;
 
-		public UserController(IUserRepository userRepository,AddUserValidation validation)
+		public UserController(IUserRepository userRepository, AddUserValidation validation)
 		{
-		
+
 			this.userRepository = userRepository;
 			this.validation = validation;
 		}
@@ -25,9 +25,9 @@ namespace WebApp.Controllers
 		// GET: User
 		[HttpGet]
 		public ActionResult Browse()
-        {
-            return View();
-        }
+		{
+			return View();
+		}
 
 		[HttpGet]
 		public JsonResult QueryUsers()
@@ -50,11 +50,11 @@ namespace WebApp.Controllers
 
 		[HttpGet]
 		public ActionResult CreateUser()
-	{
+		{
 			ViewBag.UserTypes = userRepository.GetAllUsersType();
 			return View();
 		}
-		[HttpPost]	
+		[HttpPost]
 		public ActionResult CreateUser(AddUserDTO model)
 		{
 			if (ModelState.IsValid)
@@ -103,8 +103,8 @@ namespace WebApp.Controllers
 				userRepository.UpdateUser(user);
 				return RedirectToAction("EditUser", new { id = user.Id });
 			}
-			return View(user);	
+			return View(user);
 		}
 
-    }
+	}
 }

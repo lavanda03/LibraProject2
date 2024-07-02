@@ -20,6 +20,7 @@ namespace BLL.Repositories.Issue
 		void DeleteIssue(int id);
 		IQueryable<IssueEntity> GetValidIssues();
 		GetIssuessDTO QueryIssue(QueryPaginatedRequestDTO criteria);
+		List<GetIssuesTypeDTO> GetAllIssuesType();
 
 	}
 }

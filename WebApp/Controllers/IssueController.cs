@@ -1,4 +1,6 @@
-﻿using BLL.DTO.IssueDTO;
+﻿using BBL.DTO.CommonDTO;
+using BLL.DTO.IssueDTO;
+using BLL.DTO.PosDTO;
 using BLL.Repositories.Issue;
 using BLL.Repositories.Pos;
 using System;
@@ -33,14 +35,20 @@ namespace WebApp.Controllers
         public ActionResult CreateIssue(int id)
         {
 
-            var pos = posRepository.GetPosById(id);
-            return View(pos);
+
+            var viewModel = new PosAndIssuesViewModel
+            {
+                GetPosDTO = posRepository.GetPosById(id),  // Inițializare GetPosDTO sau folosește datele existente din logică
+                AddIssuesDTO = new AddIssuesDTO() // Inițializare AddIssuesDTO sau folosește datele existente din logică
+            };
+			ViewBag.IssueType = issueRepository.GetAllIssuesType();
+			return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult CreateIssue(AddIssuesDTO issueModel)
         {
-            
+            ViewBag.IssueType = issueRepository.GetAllIssuesType();
             return View(issueModel);
         }
 

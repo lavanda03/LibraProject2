@@ -28,6 +28,7 @@ namespace DataAccessLayer
         public DbSet<UserEntity> Users => Set<UserEntity>();
         public DbSet<UserTypeEntity> UserTypes => Set<UserTypeEntity>();
 		public DbSet<WeekDaysPos> WeekDaysPOS => Set<WeekDaysPos>();
+        public DbSet<PriorityEntity> Priorities => Set<PriorityEntity>();
 
 
 
@@ -54,6 +55,7 @@ namespace DataAccessLayer
             modelBuilder.Entity<IssueEntity>().HasRequired(u => u.UserType).WithMany(c => c.Issues).HasForeignKey(u => u.IdUserType);
             modelBuilder.Entity<IssueEntity>().HasRequired(u => u.IssuesType).WithMany(c => c.Issues).HasForeignKey(u => u.IdType);
             modelBuilder.Entity<IssueEntity>().HasRequired(u => u.Status).WithMany(c => c.Issues).HasForeignKey(u => u.IdStatus);
+            modelBuilder.Entity<IssueEntity>().HasRequired(u => u.Priority).WithMany(c => c.Issues).HasForeignKey(u => u.PriorityId);
 
 
 			//WrekDaysPos
@@ -61,6 +63,9 @@ namespace DataAccessLayer
 				.HasKey(w => w.Id);
 			modelBuilder.Entity<WeekDaysPos>().Property(x => x.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
 			modelBuilder.Entity<WeekDaysPos>().HasRequired(u => u.PosEntity).WithMany(c => c.WeekDaysPos).HasForeignKey(u => u.IdPos);
+
+
+   
 
 
 

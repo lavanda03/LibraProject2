@@ -11,23 +11,23 @@ namespace BLL.DTO.IssueDTO
 	{
 		public int Id { get; set; }
 		public int IdPos { get; set; }
-		public PosEntity Pos { get; set; }//+
-		public string PosName { get; set; }
+		public string PosName { get; set;}
 		public int IdType { get; set; }
-		public IssuesTypeEntity IssuesType { get; set; }
 		public string IssueType { get; set; }
 		public int IdStatus { get; set; }
-		public string Status { get; set; }	
-		public StatusEntity Statuses { get; set; } //-
-		public string CreatedByName { get; set; }	
-		public int IdUserCreated { get; set; }
-		public UserEntity User { get; set; }//+
-		public int IdUserType { get; set; }
-		public UserTypeEntity UserType { get; set; }//+
-		public long AssignedDate { get; set; }
-		public long CreationDate { get; set; }
-		public int AssignedToId { get; set; }
-		public string AssignedToName { get; set; }	
+        public int IdSubType { get; set; }	
+		public string SubType { get; set; }
+		public int IdProblem { get; set; }
+		public string ProblemType { get; set; }	
+		public string Status { get; set; } 
 		public string Memo { get; set; }
+		public int IdUserCreated { get; set; }
+		public int IdUserType { get; set; }
+		public string UserType { get; set; }
+		public string UserName { get; set; }	
+		public string Description { get; set; }
+		public long CreationDate { get; set; }
+
+
 	}
 }
