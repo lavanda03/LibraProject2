@@ -126,6 +126,43 @@
 			context.SaveChanges();
 
 
+
+
+			//status
+			context.Statuses.AddOrUpdate(u => u.Status,
+				new StatusEntity
+				{
+					Status = "New"
+
+				});
+			context.SaveChanges();
+
+			context.Statuses.AddOrUpdate(u => u.Status,
+				new StatusEntity
+				{
+					Status = "Assigned"
+
+				});
+			context.SaveChanges();
+
+			context.Statuses.AddOrUpdate(u => u.Status,
+				new StatusEntity
+				{
+					Status = "In progress"
+
+				});
+			context.SaveChanges();
+
+			context.Statuses.AddOrUpdate(u => u.Status,
+				new StatusEntity
+				{
+					Status = "Pending"
+
+				});
+			context.SaveChanges();
+
+
+
 			//IsueType
 
 			// Hardware Issues

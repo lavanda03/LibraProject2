@@ -1,15 +1,14 @@
 ﻿using BBL.DTO.CommonDTO;
 using BLL.DTO.IssueDTO;
-using BLL.DTO.PosDTO;
+using BLL.DTO.UserDTO;
 using BLL.Repositories.Issue;
 using BLL.Repositories.Pos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using WebApp.Helpers;
+
 
 namespace WebApp.Controllers
 {
@@ -38,18 +37,41 @@ namespace WebApp.Controllers
 
             var viewModel = new PosAndIssuesViewModel
             {
-                GetPosDTO = posRepository.GetPosById(id),  // Inițializare GetPosDTO sau folosește datele existente din logică
-                AddIssuesDTO = new AddIssuesDTO() // Inițializare AddIssuesDTO sau folosește datele existente din logică
+                GetPosDTO = posRepository.GetPosById(id),  
+                AddIssuesDTO = new AddIssuesDTO()
+                
             };
 			ViewBag.IssueType = issueRepository.GetAllIssuesType();
+            ViewBag.Priority = issueRepository.GetPriority();
+            ViewBag.Status = issueRepository.GetStatuses();
+
+         
+
+			HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+			FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+			var user = JsonConvert.DeserializeObject<GetUserDTO>(authTicket.UserData);
+            viewModel.AddIssuesDTO.IdUserCreated = user.Id;
+            viewModel.AddIssuesDTO.IdUserType = user.UserTypeId;
+            viewModel.AddIssuesDTO.IdPos = id;
+
+
 			return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult CreateIssue(AddIssuesDTO issueModel)
         {
-            ViewBag.IssueType = issueRepository.GetAllIssuesType();
-            return View(issueModel);
+			
+
+			if (ModelState.IsValid)
+			{
+                issueRepository.AddIssue(issueModel);
+				return RedirectToAction("BrowsePos");
+			}
+
+
+			ViewBag.IssueType = issueRepository.GetAllIssuesType();
+            return View();
         }
 
         [HttpGet]

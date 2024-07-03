@@ -133,14 +133,18 @@ namespace BLL.Repositories.Issue
 			
 			var issueEntity = new IssueEntity()
 			{
+				IdPos = issue.IdPos,
 				IdType= issue.IdType,
 				IdSubType = issue.IdSubType,
 				IdProblem = issue.IdProblem,
 				PriorityId = issue.PriorityId,
 				IdStatus = issue.IdStatus,
 				Description = issue.Description,
-				Solotion = issue.Solotion,
+				Solotion = issue.Solution,
 				IdUserCreated = issue.IdUserCreated,
+				IdUserType = issue.IdUserType,
+				AssignedDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+				CreationDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
 				Memo = issue.Memo
 			
 

@@ -28,7 +28,7 @@ namespace BLL.DTO.IssueDTO
 		public long AssignedDate { get; set; }
 		public long CreationDate { get; set;}
 		public long ModifDate{ get; set; }
-		public string Solotion { get; set; }
+		public string Solution { get; set; }
 		
 
 	}

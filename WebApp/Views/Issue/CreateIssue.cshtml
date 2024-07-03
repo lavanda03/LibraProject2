@@ -46,14 +46,30 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="x_panel" style="width: 200%; height: 30vh;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("CreateIssue", "Issue", FormMethod.Post, new { id = "login-form", @class = "login-form" }))
+    {
+
+        <div class="left_col-" role="main">
+            <div class="">
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <div class="x_panel" style="width: 105vh;">
                             <div class="x_title">
-                                <h2>Add issue  <small>Stripped table subtitle</small></h2>
-                                <div class="clearfix"></div>
+                                <h4>
+                                    User Data
+                                </h4>
+                            </div>
+                            <div class="x_content">
                                 <br />
                                 <form id="demo-form2" data-parsley-validate
                                       class="form-vertical form-label-left">
-
 
                                     <div class="form-group">
                                         <div class="row">
@@ -69,7 +85,7 @@
 
                                     <div class="form-group">
                                         <div class="row">
-                                            @Html.LabelFor(model => model.AddIssuesDTO.SubType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            @Html.LabelFor(model => model.AddIssuesDTO.IdSubType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
                                                 <select id="SubType" name="SubType" class="select2_single form-control">
                                                     <option value="">-- Select SubType --</option>
@@ -90,6 +106,91 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            @Html.LabelFor(model => model.AddIssuesDTO.Priority, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            <div class="col-md-6 col-sm-6 col-12">
+                                                <select id="Priority name="Priority" class="select2_single form-control">
+                                                    <option value="">-- Select Priority--</option>
+                                                    @foreach (var prior in ViewBag.Priority)
+                                                    {
+                                                        <option value="@prior.Id">@prior.Priority </option>
+                                                    }
+                                                </select>
+
+                                                @{ 
+                                                    System.Diagnostics.Debug.WriteLine(Model.AddIssuesDTO.Priority);
+                                                }
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            @Html.LabelFor(model => model.AddIssuesDTO.Status, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            <div class="col-md-6 col-sm-6 col-12">
+                                                <select id="Status name="Status" class="select2_single form-control">
+                                                    <option value="">-- Select Status--</option>
+                                                    @foreach (var status in ViewBag.Status)
+                                                    {
+                                                        <option value="@status.Id">@status.Status </option>
+                                                    }
+                                                    @Html.ValidationMessageFor(model => model.AddIssuesDTO.Status)
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            @Html.LabelFor(model => model.AddIssuesDTO.Description, " Problem Description", new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            <div class="col-md-6 col-sm-6 col-12">
+                                                @Html.TextAreaFor(model => model.AddIssuesDTO.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.AddIssuesDTO.Description)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            @Html.LabelFor(model => model.AddIssuesDTO.Solution, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            <div class="col-md-6 col-sm-6 col-12">
+                                                @Html.EditorFor(model => model.AddIssuesDTO.Solution, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.AddIssuesDTO.Solution)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            @Html.LabelFor(model => model.AddIssuesDTO.Memo, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            <div class="col-md-6 col-sm-6 col-12">
+                                                @Html.EditorFor(model => model.AddIssuesDTO.Memo, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.AddIssuesDTO.Memo)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            @Html.Label("IdUser", "AssignedTo", new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            <div class="col-md-6 col-sm-6 col-12">
+                                                @Html.TextBox("IdUser", "", new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-12 col-md-offset-3">
+                                                <button type="submit" value="CreateIssue" class="btn btn-success" style="color: #fff;">
+                                                    Create Issue
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -97,13 +198,14 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
+     }
 
 
-@section scripts
+
+    @section scripts
 {
-  <script>
+        <script>
 
    var issueTypes = @Html.Raw(Json.Encode(ViewBag.IssueType));
 
@@ -153,5 +255,5 @@
         }
     };
 };
-    </script>
-}
+        </script>
+    }

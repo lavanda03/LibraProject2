@@ -21,6 +21,8 @@ namespace BLL.Repositories.Issue
 		IQueryable<IssueEntity> GetValidIssues();
 		GetIssuessDTO QueryIssue(QueryPaginatedRequestDTO criteria);
 		List<GetIssuesTypeDTO> GetAllIssuesType();
+		List<GetAllPriority> GetPriority();
+		 List<GetAllStatus> GetStatuses();
 
 	}
 }
