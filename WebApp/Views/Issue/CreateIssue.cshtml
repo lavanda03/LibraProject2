@@ -1,4 +1,6 @@
-﻿@model BBL.DTO.CommonDTO.PosAndIssuesViewModel
+﻿
+@model BLL.DTO.IssueDTO.AddIssuesDTO
+
 
 @{
     ViewBag.Title = "CreateIssue";
@@ -36,13 +38,12 @@
                                     <tbody>
                                         <tr>
                                             <th scope="row">1</th>
-                                            <td>@Model.GetPosDTO.Id</td>
-                                            <td>@Model.GetPosDTO.Name</td>
-                                            <td>@Model.GetPosDTO.Telephone</td>
-                                            <td>@Model.GetPosDTO.CellPhone</td>
-                                            <td>@Model.GetPosDTO.Address</td>
-                                        </tr>
-                                    </tbody>
+                                            <td>@ViewBag.PosModel.Id</td>
+                                            <td>@ViewBag.PosModel.Name</td>
+                                            <td>@ViewBag.PosModel.Telephone</td>
+                                            <td>@ViewBag.PosModel.CellPhone</td>
+                                            <td>@ViewBag.PosModel.Address</td>
+</tbody>
                                 </table>
                             </div>
                         </div>
@@ -73,43 +74,43 @@
 
                                     <div class="form-group">
                                         <div class="row">
-                                            @Html.LabelFor(model => model.AddIssuesDTO.IssueType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            @Html.LabelFor(model => model.IssueType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
                                                 <select id="IssueType" name="IssueType" class="select2_single form-control">
                                                     <option value="">-- Select Issue Type --</option>
                                                 </select>
-                                                @Html.ValidationMessageFor(model => model.AddIssuesDTO.IssueType)
+                                                @Html.ValidationMessageFor(model => model.IssueType)
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="row">
-                                            @Html.LabelFor(model => model.AddIssuesDTO.IdSubType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            @Html.LabelFor(model => model.SubType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
                                                 <select id="SubType" name="SubType" class="select2_single form-control">
                                                     <option value="">-- Select SubType --</option>
                                                 </select>
-                                                @Html.ValidationMessageFor(model => model.AddIssuesDTO.SubType)
+                                                @Html.ValidationMessageFor(model => model.SubType)
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="row">
-                                            @Html.LabelFor(model => model.AddIssuesDTO.Problem, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            @Html.LabelFor(model => model.Problem, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
                                                 <select id="Problem" name="Problem" class="select2_single form-control">
                                                     <option value="">-- Select Problem --</option>
                                                 </select>
-                                                @Html.ValidationMessageFor(model => model.AddIssuesDTO.Problem)
+                                                @Html.ValidationMessageFor(model => model.Problem)
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="row">
-                                            @Html.LabelFor(model => model.AddIssuesDTO.Priority, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            @Html.LabelFor(model => model.Priority, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
                                                 <select id="Priority name="Priority" class="select2_single form-control">
                                                     <option value="">-- Select Priority--</option>
@@ -119,16 +120,16 @@
                                                     }
                                                 </select>
 
-                                                @{ 
-                                                    System.Diagnostics.Debug.WriteLine(Model.AddIssuesDTO.Priority);
+                                                @{
+                                                    System.Diagnostics.Debug.WriteLine(Model.Priority);
                                                 }
-                                                
+
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            @Html.LabelFor(model => model.AddIssuesDTO.Status, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
                                                 <select id="Status name="Status" class="select2_single form-control">
                                                     <option value="">-- Select Status--</option>
@@ -136,7 +137,7 @@
                                                     {
                                                         <option value="@status.Id">@status.Status </option>
                                                     }
-                                                    @Html.ValidationMessageFor(model => model.AddIssuesDTO.Status)
+                                                    @Html.ValidationMessageFor(model => model.Status)
                                                 </select>
                                             </div>
                                         </div>
@@ -144,29 +145,29 @@
 
                                     <div class="form-group">
                                         <div class="row">
-                                            @Html.LabelFor(model => model.AddIssuesDTO.Description, " Problem Description", new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            @Html.LabelFor(model => model.Description, " Problem Description", new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
-                                                @Html.TextAreaFor(model => model.AddIssuesDTO.Description, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.AddIssuesDTO.Description)
+                                                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Description)
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            @Html.LabelFor(model => model.AddIssuesDTO.Solution, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            @Html.LabelFor(model => model.Solution, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
-                                                @Html.EditorFor(model => model.AddIssuesDTO.Solution, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.AddIssuesDTO.Solution)
+                                                @Html.EditorFor(model => model.Solution, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Solution)
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="row">
-                                            @Html.LabelFor(model => model.AddIssuesDTO.Memo, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                            @Html.LabelFor(model => model.Memo, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
-                                                @Html.EditorFor(model => model.AddIssuesDTO.Memo, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.AddIssuesDTO.Memo)
+                                                @Html.EditorFor(model => model.Memo, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Memo)
                                             </div>
                                         </div>
                                     </div>
@@ -199,7 +200,7 @@
             </div>
         </div>
 
-     }
+    }
 
 
 

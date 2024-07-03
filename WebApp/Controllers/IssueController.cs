@@ -1,9 +1,11 @@
-﻿using BBL.DTO.CommonDTO;
+﻿
 using BLL.DTO.IssueDTO;
+using BLL.DTO.PosDTO;
 using BLL.DTO.UserDTO;
 using BLL.Repositories.Issue;
 using BLL.Repositories.Pos;
 using Newtonsoft.Json;
+using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -34,29 +36,28 @@ namespace WebApp.Controllers
         public ActionResult CreateIssue(int id)
         {
 
+			var posModel = posRepository.GetPosById(id);
 
-            var viewModel = new PosAndIssuesViewModel
-            {
-                GetPosDTO = posRepository.GetPosById(id),  
-                AddIssuesDTO = new AddIssuesDTO()
-                
-            };
 			ViewBag.IssueType = issueRepository.GetAllIssuesType();
-            ViewBag.Priority = issueRepository.GetPriority();
-            ViewBag.Status = issueRepository.GetStatuses();
-
-         
+			ViewBag.Priority = issueRepository.GetPriority();
+			ViewBag.Status = issueRepository.GetStatuses();
 
 			HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
 			FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
 			var user = JsonConvert.DeserializeObject<GetUserDTO>(authTicket.UserData);
-            viewModel.AddIssuesDTO.IdUserCreated = user.Id;
-            viewModel.AddIssuesDTO.IdUserType = user.UserTypeId;
-            viewModel.AddIssuesDTO.IdPos = id;
 
+			var model = new AddIssuesDTO
+			{
+				IdUserCreated = user.Id,
+				IdUserType = user.UserTypeId,
+				IdPos = id
+			};
 
-			return View(viewModel);
-        }
+			// Adaugă modelul POS în ViewBag
+			ViewBag.PosModel = posModel;
+
+			return View(model);
+		}
 
         [HttpPost]
         public ActionResult CreateIssue(AddIssuesDTO issueModel)
