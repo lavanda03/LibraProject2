@@ -204,13 +204,14 @@
                                     <div>
                                         @if (Model.SelectedDays.Contains("mon"))
                                         {
-                                            <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()"  checked/>
+                                            //<input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" @Model.SelectedDays.Contains("mon") ? checked : checked="" />
+                                            <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" />
                                         }
                                         else
                                         {
                                             <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" />
                                         }
-                                        
+
                                         <label for="mon">Mon</label>
                                     </div>
                                     <div>

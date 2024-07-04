@@ -42,19 +42,17 @@ namespace WebApp.Controllers
 			ViewBag.Priority = issueRepository.GetPriority();
 			ViewBag.Status = issueRepository.GetStatuses();
 
-			HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-			FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-			var user = JsonConvert.DeserializeObject<GetUserDTO>(authTicket.UserData);
 
 			var model = new AddIssuesDTO
 			{
-				IdUserCreated = user.Id,
-				IdUserType = user.UserTypeId,
-				IdPos = id
+				IdPos = id,
+				PosName = posModel.Name,
+				PosTelephone = posModel.Telephone,
+				PosCellPhone = posModel.CellPhone,
+				PosAddress = posModel.Address
 			};
 
-			// Adaugă modelul POS în ViewBag
-			ViewBag.PosModel = posModel;
+			
 
 			return View(model);
 		}
@@ -66,8 +64,19 @@ namespace WebApp.Controllers
 
 			if (ModelState.IsValid)
 			{
-                issueRepository.AddIssue(issueModel);
-				return RedirectToAction("BrowsePos");
+				HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+				FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+				var user = JsonConvert.DeserializeObject<GetUserDTO>(authTicket.UserData);
+
+
+				issueModel.IdUserCreated = user.Id;
+				issueModel.IdUserType = user.UserTypeId;
+
+					
+				
+
+				issueRepository.AddIssue(issueModel);
+				return RedirectToAction("BrowseIssue");
 			}
 
 

@@ -29,6 +29,12 @@ namespace BLL.DTO.IssueDTO
 		public long CreationDate { get; set;}
 		public long ModifDate{ get; set; }
 		public string Solution { get; set; }
+
+		public string PosName { get; set; }	
+		public string PosTelephone { get; set; }
+		public string PosCellPhone { get; set; }
+		public string PosAddress { get; set; }
+
 		
 
 	}

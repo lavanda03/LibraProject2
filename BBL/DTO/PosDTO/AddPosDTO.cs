@@ -23,7 +23,7 @@ namespace BLL.DTO.PosDTO
 		public List<string> SelectedDays { get; set; } = new List<string>();
 		public long InsertDate { get; set; }
 
-		public static string[] WeekDays { get; } = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+		
 
 
 	}

@@ -38,12 +38,12 @@
                                     <tbody>
                                         <tr>
                                             <th scope="row">1</th>
-                                            <td>@ViewBag.PosModel.Id</td>
-                                            <td>@ViewBag.PosModel.Name</td>
-                                            <td>@ViewBag.PosModel.Telephone</td>
-                                            <td>@ViewBag.PosModel.CellPhone</td>
-                                            <td>@ViewBag.PosModel.Address</td>
-</tbody>
+                                            <td>@Model.IdPos</td>
+                                            <td>@Model.PosName</td>
+                                            <td>@Model.PosTelephone</td>
+                                            <td>@Model.PosCellPhone</td>
+                                            <td>@Model.PosAddress</td>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
 
     @using (Html.BeginForm("CreateIssue", "Issue", FormMethod.Post, new { id = "login-form", @class = "login-form" }))
     {
-
+        @Html.HiddenFor(model => model.IdPos)
         <div class="left_col-" role="main">
             <div class="">
                 <div class="clearfix"></div>
@@ -72,11 +72,14 @@
                                 <form id="demo-form2" data-parsley-validate
                                       class="form-vertical form-label-left">
 
+
+
+
                                     <div class="form-group">
                                         <div class="row">
                                             @Html.LabelFor(model => model.IssueType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
-                                                <select id="IssueType" name="IssueType" class="select2_single form-control">
+                                                <select id="IssueType" name="IdType" class="select2_single form-control">
                                                     <option value="">-- Select Issue Type --</option>
                                                 </select>
                                                 @Html.ValidationMessageFor(model => model.IssueType)
@@ -88,7 +91,7 @@
                                         <div class="row">
                                             @Html.LabelFor(model => model.SubType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
-                                                <select id="SubType" name="SubType" class="select2_single form-control">
+                                                <select id="SubType" name="IdSubType" class="select2_single form-control">
                                                     <option value="">-- Select SubType --</option>
                                                 </select>
                                                 @Html.ValidationMessageFor(model => model.SubType)
@@ -100,7 +103,7 @@
                                         <div class="row">
                                             @Html.LabelFor(model => model.Problem, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
-                                                <select id="Problem" name="Problem" class="select2_single form-control">
+                                                <select id="Problem" name="IdProblem" class="select2_single form-control">
                                                     <option value="">-- Select Problem --</option>
                                                 </select>
                                                 @Html.ValidationMessageFor(model => model.Problem)
@@ -112,7 +115,7 @@
                                         <div class="row">
                                             @Html.LabelFor(model => model.Priority, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
-                                                <select id="Priority name="Priority" class="select2_single form-control">
+                                                <select id="Priority" name="PriorityId" class="select2_single form-control">
                                                     <option value="">-- Select Priority--</option>
                                                     @foreach (var prior in ViewBag.Priority)
                                                     {
@@ -131,7 +134,7 @@
                                         <div class="row">
                                             @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
-                                                <select id="Status name="Status" class="select2_single form-control">
+                                                <select id="Status" name="IdStatus" class="select2_single form-control">
                                                     <option value="">-- Select Status--</option>
                                                     @foreach (var status in ViewBag.Status)
                                                     {
