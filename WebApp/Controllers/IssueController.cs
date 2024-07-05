@@ -128,5 +128,16 @@ namespace WebApp.Controllers
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
+
+		[HttpGet]
+		public ActionResult EditIssue(int Id)
+		{
+			ViewBag.IssueType = issueRepository.GetAllIssuesType();
+			ViewBag.Priority = issueRepository.GetPriority();
+			ViewBag.Status = issueRepository.GetStatuses();
+
+			var issue = issueRepository.GetIssueById(Id);	
+			return View(issue);
+		}
     }
 }

@@ -10,6 +10,7 @@ using DAL.Entities;
 using BBL.DTO.PosDTO;
 using BBL.Common;
 using BBL.DTO.IssueDTO;
+using System.Data.Entity;
 
 
 namespace BLL.Repositories.Issue
@@ -158,17 +159,23 @@ namespace BLL.Repositories.Issue
 		public GetIssuesDTO GetIssueById(int id)
 		{
 
-			var issueEntity = _dbContext.Issues.FirstOrDefault(u => u.Id == id);
+			var issueEntity = GetValidIssues().FirstOrDefault(x => x.Id == id);
 			var result = new GetIssuesDTO()
 			{
 				IdPos = issueEntity.Pos.Id,
 				PosName = issueEntity.Pos.Name,
+				PosTelephone= issueEntity.Pos.Telephone,	
+				PosCellPhone = issueEntity.Pos.CellPhone,
+				PosAddress = issueEntity.Pos.Address,	
 				IdUserCreated = issueEntity.User.Id,
 				CreationDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
 				IdType = issueEntity.IssuesType.Id,
 				IdStatus = issueEntity.Status.Id,
-				//AssignedTo = issueEntity.User.UserType.UserType
-
+				PriorityId = issueEntity.Priority.Id,
+				Solution = issueEntity.Solotion,
+			    ProblemDescription =  issueEntity.Description,
+				IdUserType = issueEntity.IdUserType,
+				Memo = issueEntity.Memo
 			};
 			return result;
 		}
@@ -190,7 +197,11 @@ namespace BLL.Repositories.Issue
 					IdSubType = x.IdSubType,
 					SubType = x.IssuesType.Name,
 					IdProblem = x.IdProblem,
-					ProblemType = x.IssuesType.Name
+					//ProblemId = x.IssuesType.Id,
+				    Priority = x.Priority.PriorityName,
+					Solution = x.Solotion,
+					IdStatus = x.Status.Id,
+					PriorityId = x.Priority.Id,
 				});
 
 			}
@@ -274,7 +285,11 @@ namespace BLL.Repositories.Issue
 
 		public IQueryable<IssueEntity> GetValidIssues()
 		{
-			return _dbContext.Issues.Where(x => x.DeleteAt == null);
+			return _dbContext.Issues.Include(x => x.Pos)
+									.Include(x => x.IssuesType)
+									.Include(x => x.Status)
+									.Include(x => x.Priority).Where(u => u.DeleteAt == null); 
+				                    
 		}
 
 		

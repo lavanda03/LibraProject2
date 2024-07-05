@@ -1,0 +1,199 @@
+﻿@model BLL.DTO.IssueDTO.GetIssuesDTO
+@{
+    ViewBag.Title = "EditIssue";
+}
+
+<h2>EditIssue</h2>
+
+@using (Html.BeginForm("EditIssue", "Pos", FormMethod.Post, new { id = "login-form", @class = "login-form" }))
+{
+    <div class="left_col-" role="main">
+        <div class="">
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-12">
+                    <div class="x_panel" style="width: 105vh;">
+                        <div class="col-md-6 col-sm-6  ">
+                            <div class="x_panel" style="width: 200%; height: 20vh;">
+                                <div class="x_title">
+                                    <h2>Add issue for <small>Stripped table subtitle</small></h2>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>POS Id</th>
+                                                <th>POS Name</th>
+                                                <th>Telephone</th>
+                                                <th>CellPhone</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>@Model.IdPos</td>
+                                                <td>@Model.PosName.</td>
+                                                <td>@Model.PosTelephone</td>
+                                                <td>@Model.PosCellPhone</td>
+                                                <td>@Model.PosAddress</td>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="left_col-" role="main">
+        <div class="">
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-12">
+                    <div class="x_panel" style="width: 105vh;">
+                        <div class="x_title">
+                            <h4>
+                                User Data
+                            </h4>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            <form id="demo-form2" data-parsley-validate
+                                  class="form-vertical form-label-left">
+
+
+
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.IssueType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            <select id="IssueType" name="IdType" class="select2_single form-control">
+                                                <option value="">-- Select Issue Type --</option>
+                                            </select>
+                                            @Html.ValidationMessageFor(model => model.IssueType)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.SubType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            <select id="SubType" name="IdSubType" class="select2_single form-control">
+                                                <option value="">-- Select SubType --</option>
+                                            </select>
+                                            @Html.ValidationMessageFor(model => model.SubType)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.Problem, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            <select id="Problem" name="IdProblem" class="select2_single form-control">
+                                                <option value="">-- Select Problem --</option>
+                                            </select>
+                                            @Html.ValidationMessageFor(model => model.Problem)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.Priority, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            <select id="Priority" name="PriorityId" class="select2_single form-control">
+                                                <option value="">-- Select Priority--</option>
+                                                @foreach (var prior in ViewBag.Priority)
+                                                {
+                                                    <option value="@prior.Id">@prior.Priority </option>
+                                                }
+                                            </select>
+
+                                            @{
+                                                System.Diagnostics.Debug.WriteLine(Model.Priority);
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            <select id="Status" name="IdStatus" class="select2_single form-control">
+                                                <option value="">-- Select Status--</option>
+                                                @foreach (var status in ViewBag.Status)
+                                                {
+                                                    <option value="@status.Id">@status.Status </option>
+                                                }
+                                                @Html.ValidationMessageFor(model => model.Status)
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.ProblemDescription, " Problem Description", new { @class = "control-label col-md-3 col-sm-3 col-12" });
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            @Html.TextAreaFor(model => model.ProblemDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.ProblemDescription)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.Solution, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            @Html.EditorFor(model => model.Solution, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Solution)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.Memo, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            @Html.EditorFor(model => model.Memo, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Memo)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.Label("IdUser", "AssignedTo", new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            @Html.TextBox("IdUser", "", new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-12 col-md-offset-3">
+                                            <button type="submit" value="CreateIssue" class="btn btn-success" style="color: #fff;">
+                                                Create Issue
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
