@@ -4530,3 +4530,19 @@ function bindDataTableDblClick(elementId, endpoint){
         window.location.href = url;
     });
 }
+
+function bindDataTableClick(elementId, endpoint) {
+    $(document).on('click', elementId + ' tbody tr', function () {
+        let table = $(elementId).DataTable();
+        let data = table.row(this).data();
+        let issueId = data.Id;
+        let url = '/issue/EditIssue/' + issueId; // Url pentru editarea issue-ului
+
+        // Apelează acțiunea pentru preluarea datelor pentru editare
+        $.get(url, function (data) {
+            $('.modal-body').html(data); // Încarcă formularul de editare în modal-body
+            $('#editModal').modal('show'); // Deschide modalul
+        });
+    });
+}
+

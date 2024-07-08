@@ -5,44 +5,42 @@
 
 <h2>EditIssue</h2>
 
-@using (Html.BeginForm("EditIssue", "Pos", FormMethod.Post, new { id = "login-form", @class = "login-form" }))
-{
-    <div class="left_col-" role="main">
-        <div class="">
-            <div class="clearfix"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-12">
-                    <div class="x_panel" style="width: 105vh;">
-                        <div class="col-md-6 col-sm-6  ">
-                            <div class="x_panel" style="width: 200%; height: 20vh;">
-                                <div class="x_title">
-                                    <h2>Add issue for <small>Stripped table subtitle</small></h2>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="x_content">
 
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>POS Id</th>
-                                                <th>POS Name</th>
-                                                <th>Telephone</th>
-                                                <th>CellPhone</th>
-                                                <th>Address</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>@Model.IdPos</td>
-                                                <td>@Model.PosName.</td>
-                                                <td>@Model.PosTelephone</td>
-                                                <td>@Model.PosCellPhone</td>
-                                                <td>@Model.PosAddress</td>
-                                        </tbody>
-                                    </table>
-                                </div>
+<div class="left_col-" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12">
+                <div class="x_panel" style="width: 105vh;">
+                    <div class="col-md-6 col-sm-6  ">
+                        <div class="x_panel" style="width: 200%; height: 20vh;">
+                            <div class="x_title">
+                                <h2>Add issue for <small>Stripped table subtitle</small></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>POS Id</th>
+                                            <th>POS Name</th>
+                                            <th>Telephone</th>
+                                            <th>CellPhone</th>
+                                            <th>Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>@Model.IdPos</td>
+                                            <td>@Model.PosName.</td>
+                                            <td>@Model.PosTelephone</td>
+                                            <td>@Model.PosCellPhone</td>
+                                            <td>@Model.PosAddress</td>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -50,6 +48,11 @@
             </div>
         </div>
     </div>
+</div>
+
+
+@using (Html.BeginForm("EditIssue", "Issue", FormMethod.Post, new { id = "login-form", @class = "login-form" }))
+{
     <div class="left_col-" role="main">
         <div class="">
             <div class="clearfix"></div>
@@ -58,7 +61,7 @@
                     <div class="x_panel" style="width: 105vh;">
                         <div class="x_title">
                             <h4>
-                                User Data
+                                Issue Data
                             </h4>
                         </div>
                         <div class="x_content">
@@ -66,17 +69,17 @@
                             <form id="demo-form2" data-parsley-validate
                                   class="form-vertical form-label-left">
 
-
-
-
                                 <div class="form-group">
                                     <div class="row">
                                         @Html.LabelFor(model => model.IssueType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                         <div class="col-md-6 col-sm-6 col-12">
                                             <select id="IssueType" name="IdType" class="select2_single form-control">
-                                                <option value="">-- Select Issue Type --</option>
+                                                @foreach (var issueType in ViewBag.IssueType)
+                                                {
+                                                    <option value="@issueType.Id" @(Model.IdType == issueType.Id ? "selected" : "")>@issueType.Name </option>
+                                                }
+                                                @Html.ValidationMessageFor(model => model.IssueType)
                                             </select>
-                                            @Html.ValidationMessageFor(model => model.IssueType)
                                         </div>
                                     </div>
                                 </div>
@@ -113,17 +116,13 @@
                                                 <option value="">-- Select Priority--</option>
                                                 @foreach (var prior in ViewBag.Priority)
                                                 {
-                                                    <option value="@prior.Id">@prior.Priority </option>
+                                                    <option value="@prior.Id" @(Model.PriorityId == prior.Id ? "selected" : "")>@prior.Priority </option>
                                                 }
                                             </select>
-
-                                            @{
-                                                System.Diagnostics.Debug.WriteLine(Model.Priority);
-                                            }
-
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <div class="row">
                                         @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-3 col-sm-3 col-12" })
@@ -132,7 +131,7 @@
                                                 <option value="">-- Select Status--</option>
                                                 @foreach (var status in ViewBag.Status)
                                                 {
-                                                    <option value="@status.Id">@status.Status </option>
+                                                    <option value="@status.Id" @(Model.IdStatus == status.Id ? "selected" : "")>@status.Status </option>
                                                 }
                                                 @Html.ValidationMessageFor(model => model.Status)
                                             </select>
@@ -142,13 +141,14 @@
 
                                 <div class="form-group">
                                     <div class="row">
-                                        @Html.LabelFor(model => model.ProblemDescription, " Problem Description", new { @class = "control-label col-md-3 col-sm-3 col-12" });
+                                        @Html.LabelFor(model => model.ProblemDescription, "Problem Description", new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                         <div class="col-md-6 col-sm-6 col-12">
-                                            @Html.TextAreaFor(model => model.ProblemDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.TextAreaFor(model => model.ProblemDescription, new { @class = "form-control", @style = "resize:none;width:100%;height:70px;" })
                                             @Html.ValidationMessageFor(model => model.ProblemDescription)
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <div class="row">
                                         @Html.LabelFor(model => model.Solution, new { @class = "control-label col-md-3 col-sm-3 col-12" })
@@ -169,11 +169,19 @@
                                     </div>
                                 </div>
 
+
                                 <div class="form-group">
                                     <div class="row">
-                                        @Html.Label("IdUser", "AssignedTo", new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                        @Html.LabelFor(model => model.IdUserType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                         <div class="col-md-6 col-sm-6 col-12">
-                                            @Html.TextBox("IdUser", "", new { @class = "form-control", @readonly = "readonly" })
+                                            <select id="UserType" name="IdUserType" class="select2_single form-control">
+                                                <option value="">-- Select Status--</option>
+                                                @foreach (var userType in ViewBag.UserType)
+                                                {
+                                                    <option value="@userType.Id" @(Model.IdUserType == userType.Id ? "selected" : "")>@userType.UserType </option>
+                                                }
+                                                @Html.ValidationMessageFor(model => model.Status)
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -182,8 +190,8 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6 col-12 col-md-offset-3">
-                                            <button type="submit" value="CreateIssue" class="btn btn-success" style="color: #fff;">
-                                                Create Issue
+                                            <button type="submit" value="EditPos" class="btn btn-success" style="color: #fff;">
+                                                Edit Pos
                                             </button>
                                         </div>
 
@@ -196,4 +204,111 @@
             </div>
         </div>
     </div>
+}
+
+
+    <div class="left_col-" role="main">
+        <div class="">
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-12">
+                    <div class="x_panel" style="width: 105vh;">
+                        <div class="x_title">
+                            <h4>
+                                Issue Data
+                            </h4>
+                        </div>
+                        <div class="x_content">
+                                <table id="logsTable" class="display">
+                                    <thead>
+                                        <tr>
+                                            <th>InsertDate</th>
+                                            <th>Action</th>
+                                            <th>User</th>
+                                            <th>Notes</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+
+   var issueTypes = @Html.Raw(Json.Encode(ViewBag.IssueType));
+
+     window.onload = function() {
+    var issueTypeSelect = document.getElementById("IssueType");
+    var subTypeSelect = document.getElementById("SubType");
+    var problemSelect = document.getElementById("Problem");
+
+    // Populate IssueType dropdown
+    issueTypeSelect.options.length = 0;
+    issueTypeSelect.options[0] = new Option('-- Select Issue Type --', '');
+    for (var i = 0; i < issueTypes.length; i++) {
+        if (issueTypes[i].ParentIssues === 0 && issueTypes[i].IssueLevel === 1) {
+            issueTypeSelect.options[issueTypeSelect.options.length] = new Option(issueTypes[i].Name, issueTypes[i].Id);
+        }
+    }
+
+    // Event listener for IssueType change
+    issueTypeSelect.onchange = function() {
+        var selectedIssueTypeId = parseInt(this.value);
+
+        // Clear and populate SubType dropdown
+        subTypeSelect.options.length = 0;
+        subTypeSelect.options[0] = new Option('-- Select SubType --', '');
+        for (var i = 0; i < issueTypes.length; i++) {
+            if (issueTypes[i].ParentIssues === selectedIssueTypeId && issueTypes[i].IssueLevel === 2) {
+                subTypeSelect.options[subTypeSelect.options.length] = new Option(issueTypes[i].Name, issueTypes[i].Id);
+            }
+        }
+
+        // Clear Problem dropdown
+        problemSelect.options.length = 0;
+        problemSelect.options[0] = new Option('-- Select Problem --', '');
+    };
+
+    // Event listener for SubType change
+      subTypeSelect.onchange = function() {
+        var selectedSubTypeId = parseInt(this.value);
+
+        // Clear and populate Problem dropdown
+        problemSelect.options.length = 0;
+        problemSelect.options[0] = new Option('-- Select Problem --', '');
+        for (var i = 0; i < issueTypes.length; i++) {
+            if (issueTypes[i].ParentIssues === selectedSubTypeId && issueTypes[i].IssueLevel === 3) {
+                problemSelect.options[problemSelect.options.length] = new Option(issueTypes[i].Name, issueTypes[i].Id);
+            }
+        }
+    };
+        };
+
+
+
+
+        $(document).ready(function () {
+
+            let columns = [
+                { "data": "InsertDate", "name": "InsertDate", "autoWidth": true },
+                { "data": "Action", "name": "Action", "autoWidth": true },
+                { "data": "User", "name": "User", "autoWidth": true },
+                { "data": "Notes", "name": "Notes", "autoWidth": true },
+               
+            ];
+
+            bindDataTable("#logsTable", "/issue/QueryLogs", columns)
+         
+        });
+
+
+    </script>
 }

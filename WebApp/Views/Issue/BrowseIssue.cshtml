@@ -1,4 +1,4 @@
-﻿
+﻿@model BLL.DTO.IssueDTO.GetIssuesDTO
 @{
     ViewBag.Title = "BrowseIssue";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,9 +19,12 @@
             <th> Status</th>
             <th> Assigned To</th>
             <th> Memo</th>
+            
         </tr>
     </thead>
 </table>
+
+
 
 @section scripts
 {
@@ -37,11 +40,15 @@
                 { "data": "IssueType", "name": "Issue Type", "autoWidth": true },
                 { "data": "Status", "name": "Status", "autoWidth": true },
                 { "data": "UserType", "name": "Assigned To", "autoWidth": true },
-                { "data": "Memo", "name": "Memo", "autoWidth": true }
+                { "data": "Memo", "name": "Memo", "autoWidth": true },
+               
             ];
+       
 
             bindDataTable("#issueTable", "/issue/QueryIssue", columns)
             bindDataTableDblClick("#issueTable", "/issue/EditIssue/")
+
+           
             
         });
     </script>

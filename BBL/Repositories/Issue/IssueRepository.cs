@@ -11,6 +11,8 @@ using BBL.DTO.PosDTO;
 using BBL.Common;
 using BBL.DTO.IssueDTO;
 using System.Data.Entity;
+using System.Web.UI;
+using System.ComponentModel;
 
 
 namespace BLL.Repositories.Issue
@@ -129,6 +131,78 @@ namespace BLL.Repositories.Issue
 		}
 
 
+
+
+		public GetLogssDTO QueryLogs(QueryPaginatedRequestDTO criteria)
+		{
+			var queryable =GetValidLog();
+
+			if (!string.IsNullOrEmpty(criteria.SearchValue))
+			{
+				var search = criteria.SearchValue.ToLower();
+				queryable = queryable.Where(x => x.InsertDate.ToString().Contains(search) ||
+												 x.Action.ToString().Contains(search) ||
+												 x.User.Name.ToLower().Contains(search) ||
+												 x.Notes.ToLower().Contains(search));
+												
+			}
+
+			if (!string.IsNullOrEmpty(criteria.OrderBy))
+			{
+				var orderByDesc = !string.IsNullOrEmpty(criteria.Direction) && criteria.Direction.ToLower() == "desc";
+				var orderBy = criteria.OrderBy.Replace(" ", "").ToLower();
+
+				switch (orderBy)
+				{
+					case "insertdate":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.InsertDate)
+							: queryable.OrderBy(x => x.InsertDate);
+						break;
+					case "action":
+						queryable = orderByDesc
+						   ? queryable.OrderByDescending(x => x.Action)
+						   : queryable.OrderBy(x => x.Action);
+						break;
+					case "user":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.User.Name)
+							: queryable.OrderBy(x => x.User.Name);
+						break;
+					case "notes":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.Notes)
+							: queryable.OrderBy(x => x.Notes);
+						break;
+
+				}
+			}
+
+			var filteredCount = queryable.Count();
+
+			var views = queryable.AsEnumerable().Skip(criteria.Page.Value).Take(criteria.PageSize.Value).ToList();
+
+			var result = new GetLogssDTO
+			{
+
+				Total = GetValidLog().Count(),
+				TotalFiltered = filteredCount,
+				Logs = new List<GetLogsDTO>(views.Select(x => new GetLogsDTO
+				{
+					InsertDate = x.InsertDate,
+					Action = x.Action,
+					User = x.User.Name,
+					Notes = x.Notes,
+
+				}))
+
+			};
+
+			return result;
+		}
+
+
+
 		public int AddIssue(AddIssuesDTO issue)
 		{
 			
@@ -153,6 +227,19 @@ namespace BLL.Repositories.Issue
 
 			_dbContext.Issues.Add(issueEntity);
 			_dbContext.SaveChanges();
+
+			var logs = new LogEntity()
+			{
+				IdIssue = issueEntity.Id,
+				InsertDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+				Action = "Added",
+				IdUser = issue.IdUserCreated,
+				Notes = "log"
+
+			};
+			_dbContext.Logs.Add(logs);
+			_dbContext.SaveChanges();
+
 			return issueEntity.Id;
 		}
 
@@ -175,6 +262,7 @@ namespace BLL.Repositories.Issue
 				Solution = issueEntity.Solotion,
 			    ProblemDescription =  issueEntity.Description,
 				IdUserType = issueEntity.IdUserType,
+				UserType = issueEntity.UserType.UserType,
 				Memo = issueEntity.Memo
 			};
 			return result;
@@ -264,8 +352,61 @@ namespace BLL.Repositories.Issue
 
 		public void UpdateIssue(UpdateIssuesDTO updateIssue)
 		{
+			
+			var issueEntity = _dbContext.Issues.FirstOrDefault(x => x.Id == updateIssue.Id);
 
-			_dbContext.Entry(updateIssue).State = System.Data.Entity.EntityState.Modified;
+		    if (issueEntity == null) 
+			{
+				return;
+			}
+			
+			if(issueEntity.IssuesType.Name != updateIssue.IssueType)
+			{
+				issueEntity.IssuesType.Name = updateIssue.IssueType;
+			}
+			
+			if (issueEntity.Description != updateIssue.ProblemDescription)
+			{
+				issueEntity.Description = updateIssue.ProblemDescription;
+			}
+
+			if (issueEntity.PriorityId != updateIssue.PriorityId)
+			{
+				issueEntity.PriorityId = updateIssue.PriorityId;
+			}
+
+			if (issueEntity.IdStatus != updateIssue.IdStatus)
+			{
+				issueEntity.IdStatus = updateIssue.IdStatus;
+			}
+
+			if (issueEntity.Solotion != updateIssue.Solution)
+			{
+				issueEntity.Solotion = updateIssue.Solution;
+			}
+			if (issueEntity.IdUserType != updateIssue.IdUserType)
+			{
+				issueEntity.IdUserType = updateIssue.IdUserType;
+			}
+			if (issueEntity.Memo != updateIssue.Memo)
+			{
+				issueEntity.Memo = updateIssue.Memo;
+			}
+			
+
+			_dbContext.Entry(issueEntity).State = System.Data.Entity.EntityState.Modified;
+			_dbContext.SaveChanges();
+
+			var updateLog = new LogEntity()
+			{
+				IdIssue = issueEntity.Id,
+				InsertDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+				Action = "Update",
+				IdUser = issueEntity.IdUserCreated,
+				Notes = "closed"
+
+			};
+			_dbContext.Logs.Add(updateLog);
 			_dbContext.SaveChanges();
 		}
 
@@ -292,6 +433,29 @@ namespace BLL.Repositories.Issue
 				                    
 		}
 
-		
+		public IQueryable<LogEntity> GetValidLog()
+		{
+			return _dbContext.Logs.Include(x => x.User).Where(u => u.DeleteAt == null);
+									
+		}
+
+
+
+		public List<GetAllUserType> GetUserType()
+		{
+			var userType = _dbContext.UserTypes.ToList();
+			var result = new List<GetAllUserType>();
+
+			foreach (var x in userType)
+			{
+				result.Add(new GetAllUserType
+				{
+					Id = x.Id,
+					UserType = x.UserType
+				});
+			}
+			return result;
+		}
+
 	}
 }

@@ -59,10 +59,11 @@
 
                         <ul class="nav side-menu">
                             <li>
-                                <a href="#">
-                                    <i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard <span class="fa fa-chevron-down"></span>
+                                <a href="@Url.Action("Index", "Home")" class="nav-link">
+                                    <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
                                 </a>
                             </li>
+
                             <li>
                                 <a href="#"><i class="fa fa-credit-card"></i> POS <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
@@ -76,7 +77,7 @@
                                 <a><i class="fa fa-wrench"></i> Issues <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li>
-                                       @Html.ActionLink("Add Issue", "BrowsePos", "Issue", null, new {@class = "nav-link"})
+                                        @Html.ActionLink("Add Issue", "BrowsePos", "Issue", null, new { @class = "nav-link" })
                                     <li>
                                         @Html.ActionLink("Browse Issue", "BrowseIssue", "Issue", null, new { @class = "nav-link" })
                                     </li>

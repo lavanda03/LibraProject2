@@ -104,9 +104,12 @@
     <Compile Include="DTO\IssueDTO\AddIssueDTO.cs" />
     <Compile Include="DTO\IssueDTO\GetAllPriority.cs" />
     <Compile Include="DTO\IssueDTO\GetAllStatus.cs" />
+    <Compile Include="DTO\IssueDTO\GetAllUserType.cs" />
     <Compile Include="DTO\IssueDTO\GetIssuesTypeDTO.cs" />
     <Compile Include="DTO\IssueDTO\GetIssuesDTO.cs" />
     <Compile Include="DTO\IssueDTO\GetIssuessDTO.cs" />
+    <Compile Include="DTO\IssueDTO\GetLogsDTO.cs" />
+    <Compile Include="DTO\IssueDTO\GetLogssDTO.cs" />
     <Compile Include="DTO\IssueDTO\UpdateIssuesDTO.cs" />
     <Compile Include="DTO\PosDTO\AddPOSDTO.cs" />
     <Compile Include="DTO\PosDTO\GetCitiesDTO.cs" />

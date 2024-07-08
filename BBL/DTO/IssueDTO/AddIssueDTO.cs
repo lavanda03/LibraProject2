@@ -9,7 +9,7 @@ namespace BLL.DTO.IssueDTO
 {
 	public class AddIssuesDTO
 	{
-		
+		public int Id { get; set; }	
 		public int IdPos { get; set; }	
 		public int IdType { get; set; }	
 		public string IssueType { get; set; }

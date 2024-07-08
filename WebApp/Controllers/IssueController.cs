@@ -129,15 +129,58 @@ namespace WebApp.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
+		public JsonResult QueryLogs()
+		{
+			var criteria = Request.GetPaginatingCriteria();
+
+			var log = issueRepository.QueryLogs(criteria);
+
+			var jsonData = new
+			{
+				draw = Request.QueryString["draw"],
+				recordTotal = log.Total,
+				recordsFiltered = log.TotalFiltered,
+				data = log.Logs
+
+			};
+
+			return Json(jsonData, JsonRequestBehavior.AllowGet);
+		}
+
 		[HttpGet]
 		public ActionResult EditIssue(int Id)
 		{
 			ViewBag.IssueType = issueRepository.GetAllIssuesType();
 			ViewBag.Priority = issueRepository.GetPriority();
 			ViewBag.Status = issueRepository.GetStatuses();
+			ViewBag.UserType = issueRepository.GetUserType();
 
 			var issue = issueRepository.GetIssueById(Id);	
 			return View(issue);
 		}
+
+		[HttpPost]
+		public ActionResult EditIssue(UpdateIssuesDTO updateIssues)
+		{
+			if(ModelState.IsValid)
+			{
+				issueRepository.UpdateIssue(updateIssues);
+				return RedirectToAction("BrowseIssue" , new { id = updateIssues.Id });
+			}
+			return View(updateIssues);
+		}
+
+		
+		//public ActionResult Edit(int id)
+		//{
+
+		//	ViewBag.IssueType = issueRepository.GetAllIssuesType();
+		//	ViewBag.Priority = issueRepository.GetPriority();
+		//	ViewBag.Status = issueRepository.GetStatuses();
+
+		//	ViewBag.IssueDetails = issueRepository.GetIssueById(id);
+
+		//	return View();
+		//}
     }
 }

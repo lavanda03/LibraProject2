@@ -22,7 +22,9 @@ namespace BLL.Repositories.Issue
 		GetIssuessDTO QueryIssue(QueryPaginatedRequestDTO criteria);
 		List<GetIssuesTypeDTO> GetAllIssuesType();
 		List<GetAllPriority> GetPriority();
-		 List<GetAllStatus> GetStatuses();
+		List<GetAllStatus> GetStatuses();
+		List<GetAllUserType> GetUserType();
+		GetLogssDTO QueryLogs(QueryPaginatedRequestDTO criteria);
 
 	}
 }
