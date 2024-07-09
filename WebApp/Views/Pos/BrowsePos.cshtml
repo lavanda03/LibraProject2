@@ -6,6 +6,10 @@
 
 <h2>BrowsePos</h2>
 
+<div id="modalContainer">
+    @Html.Partial("_ModalPartial")
+</div>
+
 <table id="posTable" class="display">
     <thead>
         <tr>
@@ -33,7 +37,23 @@
             ];
 
             bindDataTable("#posTable", "/pos/QueryPos", columns)
-            bindDataTableDblClick("#posTable","/pos/EditPos/" )
+            //bindDataTableDblClick("#posTable","/pos/EditPos/" )
         });
+
+        const table = new DataTable('#posTable');
+
+        table.on('click', 'tbody tr', (e) => {
+            let classList = e.currentTarget.classList;
+
+            if (classList.contains('selected')) {
+                classList.remove('selected');
+            }
+            else {
+                table.rows('.selected').nodes().each((row) => row.classList.remove('selected'));
+                classList.add('selected');
+            }
+        });
+
+       
     </script>
 }

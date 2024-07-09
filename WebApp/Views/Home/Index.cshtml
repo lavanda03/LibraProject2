@@ -1,9 +1,7 @@
-﻿@{
+﻿
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,95 +9,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .dashboard {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 20px;
-        }
-        .box {
-            width: 250px;
-            height: 100px;
-            margin: 5px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
-.box.red {
-            background-color: #e74c3c;
-        }
-.box.orange {
-            background-color: #f39c12;
-        }
-.box.blue {
-            background-color: #3498db;
-        }
-.box.green {
-            background-color: #2ecc71;
-        }
-        .box h3 {
-            margin: 0;
-            font-size: 1.5em;
-        }
-        .box p {
-            margin: 5px 0 0;
-        }
-        .box a {
-            margin-top: 10px;
-            color: white;
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="~/Content/Style.css">
 </head>
 <body>
-    <body>
-        
-           
-          <div class="box red">
-                        <h3>0</h3>
-                        <p>New Issues</p>
-                        <a href="#">View Details</a>
-          </div>
-               
+    <div class="dashboard">
+
+
+    
             
-            <div class="box orange">
-                        <h3>0</h3>
-                        <p>Pending Issues</p>
-                        <a href="#">View Details</a>
-             </div>
-         
-             
-             <div class="box blue">
-                        <h3>0</h3>
-                        <p>Assigned Issues</p>
-                        <a href="#">View Details</a>
-             </div>
-               
-  
-              <div class="box green">
-                        <h3>1</h3>
-                        <p>In Progress Issues</p>
-                        <a href="#">View Details</a>
-               </div>
-              
-         
-    </body>
+               <div class="box red">
+                    <h3></h3>
+                    <p>New Issues</p>
+                    <a href="#">View Details</a>
+                </div>
+            
+
+              <div class="box orange">
+                    <h3></h3>
+                    <p>Pending Issues</p>
+                    <a href="#">View Details</a>
+                </div>
+            
+
+           
+                <div class="box blue">
+                    <h3>0</h3>
+                    <p>Assigned Issues</p>
+                    <a href="#">View Details</a>
+                </div>
+            
+
+           
+                <div class="box green">
+                    <h3>1</h3>
+                    <p>In Progress Issues</p>
+                    <a href="#">View Details</a>
+                </div>
+            
+        
+    </div>
+</body>
 </html>
+
 
 
 <table id="issueTable" class="display">
@@ -141,7 +92,12 @@
 
 
             bindDataTable("#issueTable", "/issue/QueryIssue", columns)
-            bindDataTableDblClick("#issueTable", "/issue/EditIssue/")
+
+
+            
+           ;
+
+          
 
 
 

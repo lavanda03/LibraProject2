@@ -270,7 +270,7 @@ namespace BLL.Repositories.Issue
 
 		public List<GetIssuesDTO> GetAllIssues()
 		{
-			var issuesEntity = _dbContext.Issues.ToList();
+			var issuesEntity = GetValidIssues();
 			var result = new List<GetIssuesDTO>();	
 
 			foreach(var x in issuesEntity)
@@ -285,16 +285,16 @@ namespace BLL.Repositories.Issue
 					IdSubType = x.IdSubType,
 					SubType = x.IssuesType.Name,
 					IdProblem = x.IdProblem,
-					//ProblemId = x.IssuesType.Id,
 				    Priority = x.Priority.PriorityName,
 					Solution = x.Solotion,
 					IdStatus = x.Status.Id,
+					Status = x.Status.Status,
 					PriorityId = x.Priority.Id,
 				});
 
 			}
-			return new List<GetIssuesDTO>();
-			//need to change the logic
+			return result;
+		
 		}
 
 
@@ -310,7 +310,9 @@ namespace BLL.Repositories.Issue
 					Id = x.Id,
 					IssueLevel = x.IssueLevel,
 					ParentIssues = x.ParentIssues,
-					Name  = x.Name
+					Name = x.Name,
+					
+					
 
 				});
 			}

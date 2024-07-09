@@ -1,0 +1,165 @@
+﻿@model BLL.DTO.PosDTO.GetPosDTO
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.Id, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                        <div class="col-md-6 col-sm-6 col-12">
+                            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3 col-sm-3 col-12" });
+                        <div class="col-md-6 col-sm-6 col-12">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.Telephone, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                        <div class="col-md-6 col-sm-6 col-12">
+                            @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Telephone)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.CellPhone, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                        <div class="col-md-6 col-sm-6 col-12">
+                            @Html.EditorFor(model => model.CellPhone, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CellPhone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                        <div class="col-md-6 col-sm-6 col-12">
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Address)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.City_Id, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                        <div class="col-md-6 col-sm-6 col-12">
+                            <select id="City_Id" name="City_Id" class="select2_single form-control">
+                                <option value="">-- Select User Type --</option>
+                                @foreach (var city in ViewBag.City)
+                                {
+                                    <option value="@city.Id" @(Model.City_Id == city.Id ? "selected" : "")>@city.Name</option>
+                                }
+                                }
+                                @Html.ValidationMessageFor(model => model.City_Id)
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.Brand, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                        <div class="col-md-6 col-sm-6 col-12">
+                            @Html.EditorFor(model => model.Brand, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Brand)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.Model, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                        <div class="col-md-6 col-sm-6 col-12">
+                            @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Model)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.ConnType_Id, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                        <div class="col-md-6 col-sm-6 col-12">
+                            <select id="ConnType_Id" name="ConnType_Id" class="select2_single form-control">
+                                <option value="">-- Select User Type --</option>
+                                @foreach (var conType in ViewBag.ConType)
+                                {
+                                    <option value="@conType.Id" @(Model.ConnType_Id == conType.Id ? "selected" : "")>@conType.ConectionType </option>
+                                }
+                                @Html.ValidationMessageFor(model => model.ConnType_Id)
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="x_title">
+                    <h4>
+                        Operning hours and holidays
+                    </h4>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.MorningOperning, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                        <div class="col-md-6 col-sm-6 col-12">
+                            @Html.TextBoxFor(model => model.MorningOperning, new { @class = "form-control", @type = "time" })
+                            @Html.ValidationMessageFor(model => model.MorningOperning, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.MorningClosing, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                        <div class="col-md-6 col-sm-6 col-12">
+                            @Html.TextBoxFor(model => model.MorningClosing, new { @class = "form-control", @type = "time" })
+                            @Html.ValidationMessageFor(model => model.MorningClosing, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.AfternoonOpening, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                        <div class="col-md-6 col-sm-6 col-12">
+                            @Html.TextBoxFor(model => model.AfternoonOpening, new { @class = "form-control", @type = "time" })
+                            @Html.ValidationMessageFor(model => model.AfternoonOpening, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        @Html.LabelFor(model => model.AfternonClosing, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                        <div class="col-md-6 col-sm-6 col-12">
+                            @Html.TextBoxFor(model => model.AfternonClosing, new { @class = "form-control", @type = "time" })
+                            @Html.ValidationMessageFor(model => model.AfternonClosing, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

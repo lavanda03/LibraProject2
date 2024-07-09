@@ -182,5 +182,11 @@ namespace WebApp.Controllers
 
 		//	return View();
 		//}
+
+		public ActionResult PartialEditIssue()
+		{
+			ViewBag.Message = "trqaalalal";
+			return View();
+		}
     }
 }

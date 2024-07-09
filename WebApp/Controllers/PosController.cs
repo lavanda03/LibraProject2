@@ -98,5 +98,16 @@ namespace WebApp.Controllers
             }
             return View(updatePos);  
         }
+
+        [HttpGet]
+        public ActionResult EditPosPartialView(int id)
+        {
+			var pos = posRepository.GetPosById(id);
+
+			ViewBag.City = posRepository.GetAllCitites();
+			ViewBag.ConType = posRepository.GetAllConnectionType();
+
+			return PartialView("_ModalPartial",pos);
+        }
     }
 }
