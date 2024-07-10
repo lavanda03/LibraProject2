@@ -7,7 +7,7 @@
 <h2>BrowseIssue</h2>
 
 
-@Html.Partial("PartialEditIssue")
+
 
 <table id="issueTable" class="display">
     <thead>
@@ -51,10 +51,7 @@
            // bindDataTableDblClick("#issueTable", "/issue/EditIssue/")
 
 
-            $('#issueTable').on('click', 'tr', function () {
-                var name = $('td', this).eq(1).text();
-                $('#DescModal').modal("show");
-            });
+           
             
             
         });

@@ -96,18 +96,18 @@ namespace WebApp.Controllers
                 return RedirectToAction("EditPos", new { id =updatePos.Id });
 
             }
-            return View(updatePos);  
+			return PartialView("EditPosPartialView",updatePos);  
         }
 
         [HttpGet]
-        public ActionResult EditPosPartialView(int id)
+        public ActionResult EditPosPartialView()
         {
-			var pos = posRepository.GetPosById(id);
+			var pos = posRepository.GetPosById(1);
 
 			ViewBag.City = posRepository.GetAllCitites();
 			ViewBag.ConType = posRepository.GetAllConnectionType();
 
-			return PartialView("_ModalPartial",pos);
+			return PartialView("EditPosPartialView",pos);
         }
     }
 }

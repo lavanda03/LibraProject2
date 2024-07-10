@@ -6,9 +6,7 @@
 
 <h2>BrowsePos</h2>
 
-<div id="modalContainer">
-    @Html.Partial("_ModalPartial")
-</div>
+
 
 <table id="posTable" class="display">
     <thead>
@@ -21,6 +19,16 @@
         </tr>
     </thead>
 </table>
+
+
+
+<div id="modal-placeholder"></div>
+
+<div>
+    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-contact" data-url="@Url.Action("EditPosPartialView")">
+        Edit
+    </button>
+</div>
 
 
 @section scripts
@@ -37,22 +45,67 @@
             ];
 
             bindDataTable("#posTable", "/pos/QueryPos", columns)
-            //bindDataTableDblClick("#posTable","/pos/EditPos/" )
+            //bindDataTableDblClick("#posTable","/pos/EditPos/"
+
+
+            var placeholderElement = $('#modal-placeholder');
+            $('button[data-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    placeholderElement.html(data);
+                    placeholderElement.find('.modal').modal('show');
+                });
+
+            });
+
+            placeholderElement.on('click', '[data-save="modal"]', function (event) {
+                event.preventDefault();
+
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr('action');
+                var dataToSend = form.serialize();
+
+                $.post(actionUrl, dataToSend).done(function (data) {
+                    placeholderElement.find('.modal').modal('hide');
+                });
+            });
+
+            var table = new DataTable('#posTable');
+            table.on('click', 'tbody tr', (e) =>
+            {
+                    let classList = e.currentTarget.classList;
+
+                    if (classList.contains('selected')) {
+                        classList.remove('selected');
+                    }
+                    else {
+                        table.rows('.selected').nodes().each((row) => row.classList.remove('selected'));
+                        classList.add('selected');
+                    }
+
+                //let data = table.row(this).data();
+                //let url = '/EditPosPartialView/' + data.Id;
+
+                //$.ajax({
+                //    url: url,
+                //    type: 'GET',
+                //    success: function (response) {
+                //        // Manipulăm răspunsul (de exemplu, deschidem modalul pentru editare)
+                //        $('#editModalContent').html(response); // Exemplu: Injectăm HTML-ul primit într-un modal
+                //        $('#editModal').modal('show'); // Exemplu: Afișăm modalul de editare
+                //    },
+                //    error: function (xhr, status, error) {
+                //        console.error('Eroare în timpul cererii AJAX:', error);
+                //        // Poți trata eroarea sau afișa un mesaj utilizatorului
+                //    }
+             });
+            
         });
 
-        const table = new DataTable('#posTable');
+       
 
-        table.on('click', 'tbody tr', (e) => {
-            let classList = e.currentTarget.classList;
-
-            if (classList.contains('selected')) {
-                classList.remove('selected');
-            }
-            else {
-                table.rows('.selected').nodes().each((row) => row.classList.remove('selected'));
-                classList.add('selected');
-            }
-        });
+      
+        
 
        
     </script>
