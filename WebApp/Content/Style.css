@@ -62,7 +62,10 @@
     text-decoration: underline;
 }
 
-
+.selected {
+    background-color: #cce5ff; /* Culoare de fundal pentru rândul selectat */
+    font-weight: bold; /* Text îngroșat pentru rândul selectat */
+}
 
 
 }

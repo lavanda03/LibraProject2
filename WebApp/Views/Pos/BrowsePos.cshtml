@@ -5,6 +5,11 @@
 }
 
 <h2>BrowsePos</h2>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+
 
 
 
@@ -24,8 +29,8 @@
 
 <div id="modal-placeholder"></div>
 
-<div>
-    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-contact" data-url="@Url.Action("EditPosPartialView")">
+<div style="margin-top: 20px;">
+    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-contact" data-url="@Url.Action("EditPosPartialView")" data-pos-id="">
         Edit
     </button>
 </div>
@@ -48,65 +53,53 @@
             //bindDataTableDblClick("#posTable","/pos/EditPos/"
 
 
-            var placeholderElement = $('#modal-placeholder');
-            $('button[data-toggle="ajax-modal"]').click(function (event) {
-                var url = $(this).data('url');
-                $.get(url).done(function (data) {
-                    placeholderElement.html(data);
-                    placeholderElement.find('.modal').modal('show');
-                });
-
+            var table = $('#posTable').DataTable({
+                "columns": columns
             });
 
-            placeholderElement.on('click', '[data-save="modal"]', function (event) {
-                event.preventDefault();
+            $('#posTable tbody').on('click', 'tr', function () {
+                if (!$(this).hasClass('selected')) {
+                    // Deselect all rows
+                    $('#posTable tbody tr.selected').removeClass('selected');
 
-                var form = $(this).parents('.modal').find('form');
-                var actionUrl = form.attr('action');
-                var dataToSend = form.serialize();
+                    // Select the clicked row
+                    $(this).addClass('selected');
 
-                $.post(actionUrl, dataToSend).done(function (data) {
-                    placeholderElement.find('.modal').modal('hide');
+                    // Get data of the selected row
+                    var rowData = table.row(this).data();
+                    if (rowData) {
+                        var posId = rowData.Id;
+                        alert("PosId: " + posId);
+                        $('[data-toggle="ajax-modal"]').attr('data-pos-id', posId);
+                    }
+                }
+            });
+
+
+            $('[data-toggle="ajax-modal"]').click(function () {
+                let posId = $(this).data('pos-id');
+                $.ajax({
+                    url: $(this).data('url'),
+                    type: 'GET',
+                    data: { posId: posId },
+                    success: function (data) {
+                        $('#modal-placeholder').html(data);
+                        $('#modal-placeholder .modal').modal('show');
+                    },
+                    error: function () {
+                        alert('Error retrieving data.');
+                    }
                 });
             });
 
-            var table = new DataTable('#posTable');
-            table.on('click', 'tbody tr', (e) =>
-            {
-                    let classList = e.currentTarget.classList;
 
-                    if (classList.contains('selected')) {
-                        classList.remove('selected');
-                    }
-                    else {
-                        table.rows('.selected').nodes().each((row) => row.classList.remove('selected'));
-                        classList.add('selected');
-                    }
 
-                //let data = table.row(this).data();
-                //let url = '/EditPosPartialView/' + data.Id;
 
-                //$.ajax({
-                //    url: url,
-                //    type: 'GET',
-                //    success: function (response) {
-                //        // Manipulăm răspunsul (de exemplu, deschidem modalul pentru editare)
-                //        $('#editModalContent').html(response); // Exemplu: Injectăm HTML-ul primit într-un modal
-                //        $('#editModal').modal('show'); // Exemplu: Afișăm modalul de editare
-                //    },
-                //    error: function (xhr, status, error) {
-                //        console.error('Eroare în timpul cererii AJAX:', error);
-                //        // Poți trata eroarea sau afișa un mesaj utilizatorului
-                //    }
-             });
-            
+
+
         });
 
-       
 
-      
-        
 
-       
     </script>
 }

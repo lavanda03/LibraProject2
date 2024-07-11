@@ -100,9 +100,9 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditPosPartialView()
+        public ActionResult EditPosPartialView(int posId)
         {
-			var pos = posRepository.GetPosById(1);
+			var pos = posRepository.GetPosById(posId);
 
 			ViewBag.City = posRepository.GetAllCitites();
 			ViewBag.ConType = posRepository.GetAllConnectionType();
