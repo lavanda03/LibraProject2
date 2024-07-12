@@ -29,12 +29,14 @@
 
 <div id="modal-placeholder"></div>
 
-<div style="margin-top: 20px;">
-    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-contact" data-url="@Url.Action("EditPosPartialView")" data-pos-id="">
+<div style="display: flex; gap: 20px; margin-top: 20px;">
+    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#edit-contact" data-url="@Url.Action("EditPosPartialView")" data-pos-id="" data-modal-placeholder="#modal-edit-placeholder">
         Edit
     </button>
+    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#details-contact" data-url="@Url.Action("DetailsPosPartialView")" data-pos-id="" data-modal-placeholder="#modal-details-placeholder">
+        Details
+    </button>
 </div>
-
 
 @section scripts
 {
@@ -57,25 +59,28 @@
                 "columns": columns
             });
 
+            var editPlaceholderElement = $('#modal-edit-placeholder');
+           
+
+
+        //selectam rindul si luam Id la POS 
             $('#posTable tbody').on('click', 'tr', function () {
                 if (!$(this).hasClass('selected')) {
-                    // Deselect all rows
+                 
                     $('#posTable tbody tr.selected').removeClass('selected');
 
-                    // Select the clicked row
                     $(this).addClass('selected');
 
-                    // Get data of the selected row
                     var rowData = table.row(this).data();
                     if (rowData) {
                         var posId = rowData.Id;
-                        alert("PosId: " + posId);
+                        
                         $('[data-toggle="ajax-modal"]').attr('data-pos-id', posId);
                     }
                 }
             });
 
-
+            //luam id si transmitem prin ajax lametoda si deschidem modalul
             $('[data-toggle="ajax-modal"]').click(function () {
                 let posId = $(this).data('pos-id');
                 $.ajax({
@@ -92,6 +97,17 @@
                 });
             });
 
+
+            editPlaceholderElement.on('click', '[data-save="modal"]', function (event) {
+                event.preventDefault();
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr('action');
+                var dataToSend = form.serialize();
+
+                $.post(actionUrl, dataToSend).done(function (data) {
+                    editPlaceholderElement.find('.modal').modal('hide');
+                });
+            });
 
 
 

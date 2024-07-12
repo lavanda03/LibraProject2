@@ -93,9 +93,9 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 posRepository.UpdatePos(updatePos);
-                return RedirectToAction("EditPos", new { id =updatePos.Id });
+				return PartialView("EditPosPartialView", updatePos);
 
-            }
+			}
 			return PartialView("EditPosPartialView",updatePos);  
         }
 
@@ -109,5 +109,16 @@ namespace WebApp.Controllers
 
 			return PartialView("EditPosPartialView",pos);
         }
-    }
+
+        [HttpGet]
+        public ActionResult DetailsPosPartialView(int posId)
+		{
+			var pos = posRepository.GetPosById(posId);
+
+			ViewBag.City = posRepository.GetAllCitites();
+			ViewBag.ConType = posRepository.GetAllConnectionType();
+
+			return PartialView("EditPosPartialView", pos);
+		}
+	}
 }
