@@ -4,16 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace DAL.Entities
 {
-	public class IssuesTypeEntity
-	{
+	public class PriorityEntity
+	{ 
 		public int Id { get; set; }	
-		public int IssueLevel { get; set; }
-		public int ParentIssues {  get; set; }	
-		public string Name { get; set; }
-		public long InsertDate { get; set; }
+		public string PriorityName { get; set; }
+
 		public List<IssueEntity> Issues { get; set; }
 	}
 }

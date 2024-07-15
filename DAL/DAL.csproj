@@ -111,6 +111,7 @@
     <Compile Include="Entities\IssuesTypeEntity.cs" />
     <Compile Include="Entities\LogEntity.cs" />
     <Compile Include="Entities\PosEntity.cs" />
+    <Compile Include="Entities\PriorityEntity.cs" />
     <Compile Include="Entities\StatusEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Entities\UserTypeEntity.cs" />

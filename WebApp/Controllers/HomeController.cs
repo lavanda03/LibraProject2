@@ -1,8 +1,5 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using BLL.Repositories.Issue;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace WebApp.Controllers
@@ -10,16 +7,21 @@ namespace WebApp.Controllers
 	[Authorize]
 	public class HomeController : Controller
 	{
-		
+		private readonly IIssueRepository issueRepository;
 
-        public HomeController()
-        {  
+		public HomeController(IIssueRepository issueRepository)
+        {
+			this.issueRepository = issueRepository;
         }
 
 		[Authorize()]
+		[HttpGet]
         public ActionResult Index()
 		{
-			return View();
+			var issuesStatuses = issueRepository.GetIssuesStatus();
+
+			return View(issuesStatuses);
+			
 		}
 
 		[Authorize]

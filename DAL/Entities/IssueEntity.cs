@@ -17,8 +17,7 @@ namespace DAL.Entities
 		public int IdSubType { get; set; }  //-
 		//public IdSubTypeEntity
 		public int IdProblem { get; set; }	//-
-		//public IdProblemEntity
-		public string Priority { get; set; }
+		//public IdProblemEntit
 		public int IdStatus { get; set; }
 		public StatusEntity Status { get; set; } //-
 		public string Memo { get; set; }
@@ -33,6 +32,7 @@ namespace DAL.Entities
 		public string Solotion { get; set; }
 		public List<LogEntity> Logs { get; set; }//+
 		public long? DeleteAt { get; set; }	
-
+		public int PriorityId { get; set; }
+		public PriorityEntity Priority { get; set; }
 	}
 }

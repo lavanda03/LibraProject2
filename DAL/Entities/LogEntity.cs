@@ -16,5 +16,6 @@ namespace DAL.Entities
 		public string Action { get; set; }
 		public string Notes { get; set; }
 		public long InsertDate { get; set; }
+		public string DeleteAt { get; set; }
 	}
 }

@@ -185,6 +185,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthorizationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IssueController.cs" />
     <Compile Include="Controllers\PosController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DIConfiguration.cs" />
@@ -206,6 +207,8 @@
     <Content Include="Content\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="Content\jquery.dataTables.min.css" />
+    <Content Include="Content\Style.css" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\custom.min.js" />
     <Content Include="favicon.ico" />
@@ -258,8 +261,15 @@
     <Content Include="Content\font-awesome\scss\_screen-reader.scss" />
     <Content Include="Content\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\font-awesome\scss\_variables.scss" />
-    <Content Include="Views\User\EditUser.cshtml" />
-    <Content Include="Views\Pos\EditPos.cshtml" />
+    <Content Include="Views\Issue\BrowsePos.cshtml" />
+    <Content Include="Views\Issue\BrowseIssue.cshtml" />
+    <Content Include="Views\Issue\CreateIssue.cshtml" />
+    <Content Include="Views\Pos\_EditPosPartialView.cshtml" />
+    <Content Include="Views\Pos\_DetailsPosPartialView.cshtml" />
+    <Content Include="Views\User\_EditUserPartialView.cshtml" />
+    <Content Include="Views\User\_DetailsUserPartialView.cshtml" />
+    <Content Include="Views\Issue\_EditIssuePartialView.cshtml" />
+    <Content Include="Views\Issue\_DetailsIssuePartialView.cshtml" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />

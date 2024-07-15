@@ -4530,3 +4530,6 @@ function bindDataTableDblClick(elementId, endpoint){
         window.location.href = url;
     });
 }
+
+
+

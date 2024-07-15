@@ -16,16 +16,16 @@ using BLL.DTO.UserDTO;
 
 namespace BLL.Repositories.Pos
 {
-	public class PosRepository:IPosRepository
+	public class PosRepository : IPosRepository
 	{
-		private readonly ApplicationDbContext _dbContext;	
-		public PosRepository(ApplicationDbContext _dbContext) 
+		private readonly ApplicationDbContext _dbContext;
+		public PosRepository(ApplicationDbContext _dbContext)
 		{
-			this._dbContext = _dbContext;	
+			this._dbContext = _dbContext;
 		}
 
 
-		public GetPossDTO QyeryPos (QueryPaginatedRequestDTO criteria)
+		public GetPossDTO QueryPos(QueryPaginatedRequestDTO criteria)
 		{
 			var queryable = GetValidPos();
 
@@ -34,13 +34,15 @@ namespace BLL.Repositories.Pos
 				var search = criteria.SearchValue.ToLower();
 				queryable = queryable.Where(x => x.Name.ToLower().Contains(search) ||
 												 x.Telephone.ToLower().Contains(search) ||
-												 x.Address.ToLower().Contains(search));
-											
+												 x.Address.ToLower().Contains(search) ||
+												 x.Id.ToString().Contains(search) ||
+												 x.CellPhone.ToString().Contains(search));
+
 			}
 			if (!string.IsNullOrEmpty(criteria.OrderBy))
 			{
 				var orderByDesc = !string.IsNullOrEmpty(criteria.Direction) && criteria.Direction.ToLower() == "desc";
-				var orderBy = criteria.OrderBy.ToLower();
+				var orderBy = criteria.OrderBy.Replace(" ", "").ToLower();
 
 				switch (orderBy)
 				{
@@ -49,7 +51,7 @@ namespace BLL.Repositories.Pos
 							? queryable.OrderByDescending(x => x.Id)
 							: queryable.OrderBy(x => x.Id);
 						break;
-					case "name":
+					case "posname":
 						queryable = orderByDesc
 							? queryable.OrderByDescending(x => x.Name)
 							: queryable.OrderBy(x => x.Name);
@@ -63,6 +65,11 @@ namespace BLL.Repositories.Pos
 						queryable = orderByDesc
 							? queryable.OrderByDescending(x => x.Address)
 							: queryable.OrderBy(x => x.Address);
+						break;
+					case "cellphone":
+						queryable = orderByDesc
+							? queryable.OrderByDescending(x => x.CellPhone)
+							: queryable.OrderBy(x => x.CellPhone);
 						break;
 				}
 			}
@@ -80,8 +87,9 @@ namespace BLL.Repositories.Pos
 					Id = x.Id,
 					Name = x.Name,
 					Telephone = x.Telephone,
-					Address= x.Address
-					
+					Address = x.Address,
+					CellPhone = x.CellPhone,
+					Status = x.Issues.Count == 0 ? "No issues" : $"{x.Issues.Count} active issues"
 				}))
 			};
 
@@ -105,7 +113,7 @@ namespace BLL.Repositories.Pos
 				MorningOperning = command.MorningOperning,
 				AfternonClosing = command.AfternonClosing,
 				AfternoonOpening = command.AfternoonOpening
-				
+
 			};
 
 			_dbContext.Pos.Add(posEntity);
@@ -116,23 +124,23 @@ namespace BLL.Repositories.Pos
 			{
 				var weekEntity = new WeekDaysPos()
 				{
-					IdPos =posEntity.Id,
-					WeekDays= day
+					IdPos = posEntity.Id,
+					WeekDays = day
 				};
 
 				_dbContext.WeekDaysPOS.Add(weekEntity);
-				
+
 			}
 			_dbContext.SaveChanges();
 			return posEntity.Id;
 
-			
+
 		}
 
-		public GetPosDTO GetPosById(int id) 
+		public GetPosDTO GetPosById(int id)
 		{
 
-		   var posEntity = _dbContext.Pos.FirstOrDefault(u=>u.Id== id);
+			var posEntity = _dbContext.Pos.Include(x => x.WeekDaysPos).FirstOrDefault(u => u.Id == id);
 
 			var result = new GetPosDTO()
 			{
@@ -148,10 +156,10 @@ namespace BLL.Repositories.Pos
 				MorningClosing = posEntity.MorningClosing,
 				MorningOperning = posEntity.MorningOperning,
 				AfternonClosing = posEntity.AfternonClosing,
-				AfternoonOpening = posEntity.AfternoonOpening
-		
+				AfternoonOpening = posEntity.AfternoonOpening,
+				SelectedDays = posEntity.WeekDaysPos.Select(x => x.WeekDays).ToList()
 
-	        };
+			};
 
 			return result;
 		}
@@ -159,22 +167,22 @@ namespace BLL.Repositories.Pos
 		public List<GetPosDTO> GetAllPos()
 		{
 
-		    var posEntities=_dbContext.Pos.ToList();
+			var posEntities = _dbContext.Pos.ToList();
 			var result = new List<GetPosDTO>();
-			
-		   foreach (var i in posEntities)
-		   {
+
+			foreach (var i in posEntities)
+			{
 
 				result.Add(new GetPosDTO()
 				{
-                    Id = i.Id,
+					Id = i.Id,
 					Name = i.Name,
-					Telephone= i.Telephone,	
+					Telephone = i.Telephone,
 					Address = i.Address
 					//status
 				});
 
-		   }
+			}
 			return result;
 
 		}
@@ -206,9 +214,9 @@ namespace BLL.Repositories.Pos
 			_dbContext.SaveChanges();
 		}
 
-		public void DeletePos(int id) 
+		public void DeletePos(int id)
 		{
-			var pos = _dbContext.Pos.FirstOrDefault(x=>x.Id==id);
+			var pos = _dbContext.Pos.FirstOrDefault(x => x.Id == id);
 
 			if (pos == null)
 			{
@@ -217,51 +225,56 @@ namespace BLL.Repositories.Pos
 			pos.DeleteAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
 			_dbContext.Entry(pos).State = System.Data.Entity.EntityState.Modified;
-			_dbContext.SaveChanges();	
+			_dbContext.SaveChanges();
 		}
 
-		public IQueryable<PosEntity> GetValidPos() 
+		public IQueryable<PosEntity> GetValidPos()
 		{
-			return _dbContext.Pos.Where(x => x.DeleteAt == null);
+			return _dbContext.Pos
+				.Include(x => x.Issues)
+				.Include(x => x.Cities)
+				.Include(x => x.ConnectionType)
+				.Include(x => x.WeekDaysPos)
+				.Where(x => x.DeleteAt == null);
 		}
 
 
 		public List<GetCitiesDTO> GetAllCitites()
 		{
 			var cityEntity = _dbContext.Cities.ToList();
-			
-			var listCities = new List<GetCitiesDTO>();	
 
-			foreach(var city in cityEntity)
+			var listCities = new List<GetCitiesDTO>();
+
+			foreach (var city in cityEntity)
 			{
 				listCities.Add(new GetCitiesDTO
 				{
 
 					Id = city.Id,
-					Name=city.CityName
+					Name = city.CityName
 				});
 			}
 			return listCities;
 		}
 
-		public List<GetConnectionsTypeDTO>GetAllConnectionType()
+		public List<GetConnectionsTypeDTO> GetAllConnectionType()
 		{
 			var conType = _dbContext.ConnectionTypes.ToList();
 			var listConType = new List<GetConnectionsTypeDTO>();
 
-			foreach (var type in  conType)
+			foreach (var type in conType)
 			{
 				listConType.Add(new GetConnectionsTypeDTO
 				{
 					Id = type.Id,
-					ConectionType=type.ConnectionType
+					ConectionType = type.ConnectionType
 				});
 			}
 			return listConType;
 		}
 
-		
-		
-		
+
+
+
 	}
 }
