@@ -20,7 +20,9 @@ namespace BLL.Repositories.User
         bool ExistUserByEmail(string email);
         IQueryable<UserEntity> GetValidUser();
         bool ExistLogin(string login);
-        List<GetUsersTypeDTO> GetAllUsersType();
+        bool ExistTelephone(string telephone);
+
+		List<GetUsersTypeDTO> GetAllUsersType();
         GetUsersDTO QueryUsers(QueryPaginatedRequestDTO criteria);
     }
 }

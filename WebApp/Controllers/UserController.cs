@@ -1,6 +1,8 @@
-﻿using BBL.DTO.UserDTO.UserValidation;
+﻿using BBL.DTO.PosDTO.PosValidation;
+using BBL.DTO.UserDTO.UserValidation;
 using BLL.DTO.UserDTO;
 using BLL.Repositories.User;
+using FluentValidation.Results;
 using System.Web.Mvc;
 using WebApp.Helpers;
 
@@ -55,27 +57,25 @@ namespace WebApp.Controllers
 		[HttpPost]
 		public ActionResult CreateUser(AddUserDTO model)
 		{
+			AddUserValidation userValidation = new AddUserValidation(userRepository);
+			ValidationResult result = userValidation.Validate(model);
+
 			if (ModelState.IsValid)
 			{
-				var result = validation.Validate(model);
-
-				if (!result.IsValid)
-				{
-					foreach (var error in result.Errors)
-					{
-						ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-					}
-					ViewBag.UserTypes = userRepository.GetAllUsersType();
-					return View(model);
-				}
-
 				userRepository.AddUser(model);
-
 				return RedirectToAction("Browse");
 			}
-
+			else 
+			{
+				foreach(var failure in result.Errors)
+				{
+					ModelState.AddModelError(failure.PropertyName, failure.ErrorMessage);
+				}
+			}
+			
 			ViewBag.UserTypes = userRepository.GetAllUsersType();
-			return View(model);
+			return View();
+
 		}
 
 		[HttpPost]

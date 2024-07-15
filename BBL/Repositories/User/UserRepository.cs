@@ -224,7 +224,7 @@ namespace BLL.Repositories
 		{
 			return !GetValidUser().Any(x => x.Login == login);
 		}
-		public bool ExistTelepgone(string telephone)
+		public bool ExistTelephone(string telephone)
 		{
 			return !GetValidUser().Any(x => x.Telephone == telephone);
 		}
