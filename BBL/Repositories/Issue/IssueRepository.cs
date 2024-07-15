@@ -1,23 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using BLL.DTO.IssueDTO;
 using DataAccessLayer;
 using DAL.Entities;
-using BBL.DTO.PosDTO;
 using BBL.Common;
 using BBL.DTO.IssueDTO;
 using System.Data.Entity;
-using System.Web.UI;
-using System.ComponentModel;
-
+using BBL.Helpers;
 
 namespace BLL.Repositories.Issue
 {
-	public class IssueRepository:IIssueRepository
+	public class IssueRepository : IIssueRepository
 	{
 		private readonly ApplicationDbContext _dbContext;
 
@@ -26,7 +20,19 @@ namespace BLL.Repositories.Issue
 			this._dbContext = _dbContext;
 		}
 
+		public GetIssuesStatusDTO GetIssuesStatus()
+		{
+			var issuesStatus = GetValidIssues().GroupBy(x => x.Status).Select(x => new { Status = x.Key, Count = x.Count() }).ToList();
 
+			return new GetIssuesStatusDTO
+			{
+				IssuesStatuses = new List<GetIssueStatusDTO>(issuesStatus.Select(x => new GetIssueStatusDTO
+				{
+					Status = x.Status.Status,
+					TotalIssues = x.Count
+				}))
+			};
+		}
 
 		public GetIssuessDTO QueryIssue(QueryPaginatedRequestDTO criteria)
 		{
@@ -111,31 +117,31 @@ namespace BLL.Repositories.Issue
 
 				Total = GetValidIssues().Count(),
 				TotalFiltered = filteredCount,
-				IssueDTO = new List<GetIssuesDTO>(views.Select(x=>new GetIssuesDTO
+				IssueDTO = new List<GetIssuesDTO>(views.Select(x => new GetIssuesDTO
 				{
 					Id = x.Id,
-					IdPos= x.IdPos,
+					IdPos = x.IdPos,
 					PosName = x.Pos.Name,
 					UserName = x.User.Name,
-					CreationDate = x.CreationDate, 
+					CreationDate = x.CreationDate,
 					IssueType = x.IssuesType.Name,
-					Status= x.Status.Status,
-				    UserType = x.UserType.UserType,
-					Memo = x.Memo,	
+					Status = x.Status.Status,
+					UserType = x.UserType.UserType,
+					Memo = x.Memo,
 
 				}))
 
 			};
 
-			return result; 
+			return result;
 		}
 
 
 
 
-		public GetLogssDTO QueryLogs(QueryPaginatedRequestDTO criteria)
+		public GetLogsDTO QueryLogs(QueryPaginatedRequestDTO criteria)
 		{
-			var queryable =GetValidLog();
+			var queryable = GetValidLog();
 
 			if (!string.IsNullOrEmpty(criteria.SearchValue))
 			{
@@ -144,7 +150,7 @@ namespace BLL.Repositories.Issue
 												 x.Action.ToString().Contains(search) ||
 												 x.User.Name.ToLower().Contains(search) ||
 												 x.Notes.ToLower().Contains(search));
-												
+
 			}
 
 			if (!string.IsNullOrEmpty(criteria.OrderBy))
@@ -182,14 +188,15 @@ namespace BLL.Repositories.Issue
 
 			var views = queryable.AsEnumerable().Skip(criteria.Page.Value).Take(criteria.PageSize.Value).ToList();
 
-			var result = new GetLogssDTO
+			var result = new GetLogsDTO
 			{
 
 				Total = GetValidLog().Count(),
 				TotalFiltered = filteredCount,
-				Logs = new List<GetLogsDTO>(views.Select(x => new GetLogsDTO
+				Logs = new List<GetLogDTO>(views.Select(x => new GetLogDTO
 				{
-					InsertDate = x.InsertDate,
+					Id = x.Id,
+					InsertDate = x.InsertDate.ConvertToDateTimeOffsetToStringDate(),
 					Action = x.Action,
 					User = x.User.Name,
 					Notes = x.Notes,
@@ -205,11 +212,11 @@ namespace BLL.Repositories.Issue
 
 		public int AddIssue(AddIssuesDTO issue)
 		{
-			
+
 			var issueEntity = new IssueEntity()
 			{
 				IdPos = issue.IdPos,
-				IdType= issue.IdType,
+				IdType = issue.IdType,
 				IdSubType = issue.IdSubType,
 				IdProblem = issue.IdProblem,
 				PriorityId = issue.PriorityId,
@@ -221,7 +228,7 @@ namespace BLL.Repositories.Issue
 				AssignedDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
 				CreationDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
 				Memo = issue.Memo
-			
+
 
 			};
 
@@ -249,18 +256,21 @@ namespace BLL.Repositories.Issue
 			var issueEntity = GetValidIssues().FirstOrDefault(x => x.Id == id);
 			var result = new GetIssuesDTO()
 			{
+				Id = issueEntity.Id,
 				IdPos = issueEntity.Pos.Id,
 				PosName = issueEntity.Pos.Name,
-				PosTelephone= issueEntity.Pos.Telephone,	
+				PosTelephone = issueEntity.Pos.Telephone,
 				PosCellPhone = issueEntity.Pos.CellPhone,
-				PosAddress = issueEntity.Pos.Address,	
-				IdUserCreated = issueEntity.User.Id,
-				CreationDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-				IdType = issueEntity.IssuesType.Id,
-				IdStatus = issueEntity.Status.Id,
-				PriorityId = issueEntity.Priority.Id,
+				PosAddress = issueEntity.Pos.Address,
+				IdUserCreated = issueEntity.IdUserCreated,
+				CreationDate = issueEntity.CreationDate,
+				IdType = issueEntity.IdType,
+				IdSubType = issueEntity.IdSubType,
+				IdProblem = issueEntity.IdProblem,
+				IdStatus = issueEntity.IdStatus,
+				PriorityId = issueEntity.PriorityId,
 				Solution = issueEntity.Solotion,
-			    ProblemDescription =  issueEntity.Description,
+				ProblemDescription = issueEntity.Description,
 				IdUserType = issueEntity.IdUserType,
 				UserType = issueEntity.UserType.UserType,
 				Memo = issueEntity.Memo
@@ -271,21 +281,21 @@ namespace BLL.Repositories.Issue
 		public List<GetIssuesDTO> GetAllIssues()
 		{
 			var issuesEntity = GetValidIssues();
-			var result = new List<GetIssuesDTO>();	
+			var result = new List<GetIssuesDTO>();
 
-			foreach(var x in issuesEntity)
+			foreach (var x in issuesEntity)
 			{
 				result.Add(new GetIssuesDTO
 				{
 					Id = x.Id,
-					IdPos= x.IdPos,
+					IdPos = x.IdPos,
 					PosName = x.Pos.Name,
-					IdType= x.IdType,
+					IdType = x.IdType,
 					IssueType = x.IssuesType.Name,
 					IdSubType = x.IdSubType,
 					SubType = x.IssuesType.Name,
 					IdProblem = x.IdProblem,
-				    Priority = x.Priority.PriorityName,
+					Priority = x.Priority.PriorityName,
 					Solution = x.Solotion,
 					IdStatus = x.Status.Id,
 					Status = x.Status.Status,
@@ -294,16 +304,16 @@ namespace BLL.Repositories.Issue
 
 			}
 			return result;
-		
+
 		}
 
 
-		public List<GetIssuesTypeDTO>GetAllIssuesType()
+		public List<GetIssuesTypeDTO> GetAllIssuesType()
 		{
 			var issueType = _dbContext.IssuesType.ToList();
 			var result = new List<GetIssuesTypeDTO>();
-			
-			foreach(var x in  issueType)
+
+			foreach (var x in issueType)
 			{
 				result.Add(new GetIssuesTypeDTO
 				{
@@ -311,32 +321,32 @@ namespace BLL.Repositories.Issue
 					IssueLevel = x.IssueLevel,
 					ParentIssues = x.ParentIssues,
 					Name = x.Name,
-					
-					
+
+
 
 				});
 			}
 			return result;
 		}
 
-		public List<GetAllPriority>GetPriority()
+		public List<GetAllPriority> GetPriority()
 		{
-			var priority= _dbContext.Priorities.ToList();
+			var priority = _dbContext.Priorities.ToList();
 			var result = new List<GetAllPriority>();
 
-			foreach(var x in priority)
+			foreach (var x in priority)
 			{
 				result.Add(new GetAllPriority
 				{
 					Id = x.Id,
 					Priority = x.PriorityName
-				}) ;
+				});
 			}
 			return result;
 		}
 
 
-		public List<GetAllStatus>GetStatuses()
+		public List<GetAllStatus> GetStatuses()
 		{
 			var status = _dbContext.Statuses.ToList();
 			var result = new List<GetAllStatus>();
@@ -354,19 +364,29 @@ namespace BLL.Repositories.Issue
 
 		public void UpdateIssue(UpdateIssuesDTO updateIssue)
 		{
-			
+
 			var issueEntity = _dbContext.Issues.FirstOrDefault(x => x.Id == updateIssue.Id);
 
-		    if (issueEntity == null) 
+			if (issueEntity == null)
 			{
 				return;
 			}
-			
-			if(issueEntity.IssuesType.Name != updateIssue.IssueType)
+
+			if (issueEntity.IdType != updateIssue.IdType)
 			{
-				issueEntity.IssuesType.Name = updateIssue.IssueType;
+				issueEntity.IdType = updateIssue.IdType;
 			}
-			
+
+			if (issueEntity.IdSubType != updateIssue.IdSubType)
+			{
+				issueEntity.IdSubType = updateIssue.IdSubType;
+			}
+
+			if (issueEntity.IdProblem != updateIssue.IdProblem)
+			{
+				issueEntity.IdProblem = updateIssue.IdProblem;
+			}
+
 			if (issueEntity.Description != updateIssue.ProblemDescription)
 			{
 				issueEntity.Description = updateIssue.ProblemDescription;
@@ -386,15 +406,17 @@ namespace BLL.Repositories.Issue
 			{
 				issueEntity.Solotion = updateIssue.Solution;
 			}
+
 			if (issueEntity.IdUserType != updateIssue.IdUserType)
 			{
 				issueEntity.IdUserType = updateIssue.IdUserType;
 			}
+
 			if (issueEntity.Memo != updateIssue.Memo)
 			{
 				issueEntity.Memo = updateIssue.Memo;
 			}
-			
+
 
 			_dbContext.Entry(issueEntity).State = System.Data.Entity.EntityState.Modified;
 			_dbContext.SaveChanges();
@@ -412,9 +434,9 @@ namespace BLL.Repositories.Issue
 			_dbContext.SaveChanges();
 		}
 
-		public void DeleteIssue(int id) 
+		public void DeleteIssue(int id)
 		{
-			var issue = _dbContext.Issues.FirstOrDefault(x=>x.Id == id);	
+			var issue = _dbContext.Issues.FirstOrDefault(x => x.Id == id);
 
 			if (issue == null)
 			{
@@ -431,17 +453,15 @@ namespace BLL.Repositories.Issue
 			return _dbContext.Issues.Include(x => x.Pos)
 									.Include(x => x.IssuesType)
 									.Include(x => x.Status)
-									.Include(x => x.Priority).Where(u => u.DeleteAt == null); 
-				                    
+									.Include(x => x.Priority).Where(u => u.DeleteAt == null);
+
 		}
 
 		public IQueryable<LogEntity> GetValidLog()
 		{
 			return _dbContext.Logs.Include(x => x.User).Where(u => u.DeleteAt == null);
-									
+
 		}
-
-
 
 		public List<GetAllUserType> GetUserType()
 		{

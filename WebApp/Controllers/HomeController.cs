@@ -1,9 +1,5 @@
-﻿
-using BLL.Repositories.Issue;
-using System;
-using System.Collections.Generic;
+﻿using BLL.Repositories.Issue;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace WebApp.Controllers
@@ -22,12 +18,9 @@ namespace WebApp.Controllers
 		[HttpGet]
         public ActionResult Index()
 		{
-			var issue = issueRepository.GetAllIssues();
-			var result = issue.GroupBy(x => x.Status).Select(x => new { Status = x.Key, Count = x.Count() }).ToList();
-			ViewBag.Status = result;
+			var issuesStatuses = issueRepository.GetIssuesStatus();
 
-
-			return View(result);
+			return View(issuesStatuses);
 			
 		}
 

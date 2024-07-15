@@ -1,8 +1,6 @@
 ﻿using BBL.DTO.UserDTO.UserValidation;
 using BLL.DTO.UserDTO;
 using BLL.Repositories.User;
-using Newtonsoft.Json;
-using System.Runtime.InteropServices;
 using System.Web.Mvc;
 using WebApp.Helpers;
 
@@ -11,7 +9,6 @@ namespace WebApp.Controllers
 	[Authorize]
 	public class UserController : Controller
 	{
-
 		private readonly IUserRepository userRepository;
 		private readonly AddUserValidation validation;
 
@@ -54,6 +51,7 @@ namespace WebApp.Controllers
 			ViewBag.UserTypes = userRepository.GetAllUsersType();
 			return View();
 		}
+
 		[HttpPost]
 		public ActionResult CreateUser(AddUserDTO model)
 		{
@@ -80,31 +78,48 @@ namespace WebApp.Controllers
 			return View(model);
 		}
 
-
-		[HttpGet]
-		public ActionResult EditUser(int id)
-		{
-			var user = userRepository.GetUserById(id);
-
-			if (user == null)
-			{
-				return HttpNotFound();
-			}
-
-			ViewBag.UserTypes = userRepository.GetAllUsersType();
-			return View(user);
-		}
-
 		[HttpPost]
 		public ActionResult EditUser(UpdateUserDTO user)
 		{
+			ViewBag.UserTypes = userRepository.GetAllUsersType();
+
 			if (ModelState.IsValid)
 			{
 				userRepository.UpdateUser(user);
-				return RedirectToAction("EditUser", new { id = user.Id });
+				return PartialView("_EditUserPartialView", user);
 			}
-			return View(user);
+
+			return PartialView("_EditUserPartialView", user);
 		}
 
+		[HttpGet]
+		public ActionResult EditUserPartialView(int userId)
+		{
+			var getUserDTO = userRepository.GetUserById(userId);
+
+			ViewBag.UserTypes = userRepository.GetAllUsersType();
+
+			var updateUserDTO = new UpdateUserDTO
+			{
+				Id = userId,
+				Name = getUserDTO.Name,
+				Email = getUserDTO.Email,
+				Login = getUserDTO.Login,
+				Telephone = getUserDTO.Telephone,
+				UserTypeId = getUserDTO.UserTypeId,
+			};
+
+			return PartialView("_EditUserPartialView", updateUserDTO);
+		}
+
+		[HttpGet]
+		public ActionResult DetailsUserPartialView(int userId)
+		{
+			var getUserDTO = userRepository.GetUserById(userId);
+
+			ViewBag.UserTypes = userRepository.GetAllUsersType();
+
+			return PartialView("_DetailsUserPartialView", getUserDTO);
+		}
 	}
 }

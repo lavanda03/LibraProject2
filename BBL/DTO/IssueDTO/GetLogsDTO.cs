@@ -1,17 +1,11 @@
-﻿using DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BBL.DTO.IssueDTO
 {
 	public class GetLogsDTO
-	{ 
-		public string User { get; set; }
-		public string Action { get; set; }
-		public string Notes { get; set; }
-		public long InsertDate { get; set; }
+	{
+		public List<GetLogDTO> Logs { get; set; }
+		public int Total { get; set; }
+		public int TotalFiltered { get; set; }
 	}
 }

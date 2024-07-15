@@ -3,7 +3,6 @@
     /* Stiluri pentru containerul dashboard */
     /* Stiluri pentru containerul dashboard */
     .dashboard
-
 {
     display: flex; /* Așezare pe orizontală */
    /* Permiterea trecerii la rândul următor */
@@ -12,54 +11,35 @@
     margin: 20px; /* Margini exterioare pentru container */
 }
 
-/* Stiluri pentru fiecare cutie */
+
 .box {
-    width: 200px;
-    height: 200px;
-    border-radius: 15px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    border-radius: 5px;
     color: white;
-    font-size: 1em;
-    margin: 10px; /* Spațiu între cutii */
+    padding: 20px;
+    margin: 10px 0;
+    text-align: center;
+    height: 160px;
 }
 
-/* Stilizare pentru culorile specifice */
-.red {
+.new-issues {
     background-color: #e74c3c;
 }
-
-.orange {
+/* Red */
+.pending-issues {
     background-color: #f39c12;
 }
-
-.blue {
+/* Orange */
+.assigned-issues {
     background-color: #3498db;
 }
-
-.green {
+/* Blue */
+.in-progress-issues {
     background-color: #2ecc71;
 }
-
-/* Stilizare pentru titlul h3 din interiorul fiecărei cutii */
-.box h3 {
-    margin: 0;
-    font-size: 1.5em;
-}
-
-/* Stilizare pentru paragrafele (p) din interiorul fiecărei cutii */
-.box p {
-    margin: 5px 0 0;
-}
-
-/* Stilizare pentru link-urile (a) din interiorul fiecărei cutii */
+/* Green */
 .box a {
-    margin-top: 10px;
     color: white;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .selected {
@@ -68,4 +48,4 @@
 }
 
 
-}
+

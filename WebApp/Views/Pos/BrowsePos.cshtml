@@ -4,39 +4,50 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>BrowsePos</h2>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    Browse POS
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <table id="posTable" class="display">
+                    <thead>
+                        <tr>
+                            <th> Pos Id</th>
+                            <th> Pos Name</th>
+                            <th>Telephone</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                </table>
+                <br />
+                <br />
 
+                <div id="modal-placeholder"></div>
 
+                <div>
+                    <button type="button" class="btn btn-warning" data-toggle="ajax-modal" data-target="#edit-pos-modal" data-url="@Url.Action("EditPosPartialView")">
+                        Edit
+                    </button>
+                    <button type="button" class="btn btn-info" data-toggle="ajax-modal" data-target="#detail-pos-modal" data-url="@Url.Action("DetailsPosPartialView")">
+                        Details
+                    </button>
+                </div>
+            </div>
 
+        </div>
 
+    </div>
 
-<table id="posTable" class="display">
-    <thead>
-        <tr>
-            <th> Pos Id</th>
-            <th> Pos Name</th>
-            <th>Telephone</th>
-            <th>Address</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-</table>
-
-
-
-<div id="modal-placeholder"></div>
-
-<div style="display: flex; gap: 20px; margin-top: 20px;">
-    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#edit-contact" data-url="@Url.Action("EditPosPartialView")" data-pos-id="" data-modal-placeholder="#modal-edit-placeholder">
-        Edit
-    </button>
-    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#details-contact" data-url="@Url.Action("DetailsPosPartialView")" data-pos-id="" data-modal-placeholder="#modal-details-placeholder">
-        Details
-    </button>
 </div>
+
+
+
 
 @section scripts
 {
@@ -52,70 +63,51 @@
             ];
 
             bindDataTable("#posTable", "/pos/QueryPos", columns)
-            //bindDataTableDblClick("#posTable","/pos/EditPos/"
 
+            var modalPlaceHolderElement = $('#modal-placeholder');
+            var posTable = $('#posTable').DataTable();
 
-            var table = $('#posTable').DataTable({
-                "columns": columns
-            });
-
-            var editPlaceholderElement = $('#modal-edit-placeholder');
-           
-
-
-        //selectam rindul si luam Id la POS 
             $('#posTable tbody').on('click', 'tr', function () {
                 if (!$(this).hasClass('selected')) {
-                 
                     $('#posTable tbody tr.selected').removeClass('selected');
 
                     $(this).addClass('selected');
-
-                    var rowData = table.row(this).data();
-                    if (rowData) {
-                        var posId = rowData.Id;
-                        
-                        $('[data-toggle="ajax-modal"]').attr('data-pos-id', posId);
-                    }
                 }
             });
 
-            //luam id si transmitem prin ajax lametoda si deschidem modalul
-            $('[data-toggle="ajax-modal"]').click(function () {
-                let posId = $(this).data('pos-id');
-                $.ajax({
-                    url: $(this).data('url'),
-                    type: 'GET',
-                    data: { posId: posId },
-                    success: function (data) {
-                        $('#modal-placeholder').html(data);
-                        $('#modal-placeholder .modal').modal('show');
-                    },
-                    error: function () {
-                        alert('Error retrieving data.');
-                    }
+            $('button[data-toggle="ajax-modal"]').click(function () {
+                var rowData = posTable.row('.selected').data();
+
+                var url = $(this).data('url') + "?posId=" + rowData.Id;
+                $.get(url).done(function (data) {
+                    modalPlaceHolderElement.html(data);
+                    modalPlaceHolderElement.find('.modal').modal('show');
                 });
+
             });
 
 
-            editPlaceholderElement.on('click', '[data-save="modal"]', function (event) {
+            modalPlaceHolderElement.on('click', '[data-save="modal"]', function (event) {
                 event.preventDefault();
+
                 var form = $(this).parents('.modal').find('form');
                 var actionUrl = form.attr('action');
                 var dataToSend = form.serialize();
 
                 $.post(actionUrl, dataToSend).done(function (data) {
-                    editPlaceholderElement.find('.modal').modal('hide');
+
+                    var newBody = $('.modal-body', data);
+                    modalPlaceHolderElement.find('.modal-body').replaceWith(newBody);
+
+                    var isValid = newBody.find('[name="IsValid"]').val() == 'True';
+                    if (isValid) {
+                        modalPlaceHolderElement.find('.modal').modal('hide');
+                        posTable.ajax.reload();
+                    }
                 });
             });
 
-
-
-
-
         });
-
-
 
     </script>
 }

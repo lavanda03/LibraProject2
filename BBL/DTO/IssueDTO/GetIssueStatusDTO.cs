@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace BBL.DTO.IssueDTO
 {
-	public class GetLogssDTO
+	public class GetIssueStatusDTO
 	{
-		public List<GetLogsDTO> Logs { get; set; }
-		public int Total { get; set; }
-		public int TotalFiltered { get; set; }
-	}
+        public string Status { get; set; }
+        public int TotalIssues { get; set; }
+    }
 }

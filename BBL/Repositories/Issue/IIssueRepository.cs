@@ -13,6 +13,7 @@ namespace BLL.Repositories.Issue
 {
 	public interface IIssueRepository
 	{
+		GetIssuesStatusDTO GetIssuesStatus();
 		int AddIssue(AddIssuesDTO issue);
 		GetIssuesDTO GetIssueById(int id);
 		List<GetIssuesDTO> GetAllIssues();
@@ -24,7 +25,7 @@ namespace BLL.Repositories.Issue
 		List<GetAllPriority> GetPriority();
 		List<GetAllStatus> GetStatuses();
 		List<GetAllUserType> GetUserType();
-		GetLogssDTO QueryLogs(QueryPaginatedRequestDTO criteria);
+		GetLogsDTO QueryLogs(QueryPaginatedRequestDTO criteria);
 
 	}
 }
