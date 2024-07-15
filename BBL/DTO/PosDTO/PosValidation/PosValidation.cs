@@ -14,7 +14,6 @@ namespace BBL.DTO.PosDTO.PosValidation
 	{
 		private readonly IPosRepository _posRepository;
 
-
 		public PosValidation(IPosRepository posRepository)
 		{
 			_posRepository = posRepository;

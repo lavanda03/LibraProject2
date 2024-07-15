@@ -130,6 +130,7 @@ namespace WebApp.Controllers
 				recordsFiltered = log.TotalFiltered,
 				data = log.Logs
 
+
 			};
 
 			return Json(jsonData, JsonRequestBehavior.AllowGet);

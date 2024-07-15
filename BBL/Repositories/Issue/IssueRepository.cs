@@ -459,7 +459,8 @@ namespace BLL.Repositories.Issue
 
 		public IQueryable<LogEntity> GetValidLog()
 		{
-			return _dbContext.Logs.Include(x => x.User).Where(u => u.DeleteAt == null);
+			return _dbContext.Logs.Include(x => x.User).Where(u => u.DeleteAt == null)
+								  .Include(x => x.Issues).Where(u => u.DeleteAt == null);
 
 		}
 

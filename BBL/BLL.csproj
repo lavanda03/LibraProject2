@@ -112,6 +112,7 @@
     <Compile Include="DTO\IssueDTO\GetIssuessDTO.cs" />
     <Compile Include="DTO\IssueDTO\GetLogDTO.cs" />
     <Compile Include="DTO\IssueDTO\GetLogsDTO.cs" />
+    <Compile Include="DTO\IssueDTO\IssueValidation\IssueValidation.cs" />
     <Compile Include="DTO\IssueDTO\UpdateIssuesDTO.cs" />
     <Compile Include="DTO\PosDTO\AddPOSDTO.cs" />
     <Compile Include="DTO\PosDTO\GetCitiesDTO.cs" />
