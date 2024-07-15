@@ -1,11 +1,15 @@
 ﻿
+using FluentValidation.Attributes;
 using System.Collections.Generic;
 using System.Web.UI;
+using BBL.DTO.PosDTO.PosValidation;
 
 namespace BLL.DTO.PosDTO
 {
+
 	public class AddPOSDTO
 	{
+		
 		public string Name { get; set; }
 		public string Telephone { get; set; }
 		public string CellPhone { get; set; }

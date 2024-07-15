@@ -2,6 +2,9 @@
 using BLL.Repositories.Pos;
 using System.Web.Mvc;
 using WebApp.Helpers;
+using FluentValidation;
+using BBL.DTO.PosDTO.PosValidation;
+using FluentValidation.Results;
 
 namespace WebApp.Controllers
 {
@@ -57,10 +60,21 @@ namespace WebApp.Controllers
 		[HttpPost]
 		public ActionResult CreatePos(AddPOSDTO posModel)
 		{
+			PosValidation posValidator = new PosValidation(posRepository);
+
+			ValidationResult result = posValidator.Validate(posModel);
+
 			if (ModelState.IsValid)
 			{
 				posRepository.AddPos(posModel);
 				return RedirectToAction("BrowsePos");
+			}
+			else
+			{
+				foreach (var failure in result.Errors)
+				{
+					ModelState.AddModelError(failure.PropertyName, failure.ErrorMessage);
+				}
 			}
 
 

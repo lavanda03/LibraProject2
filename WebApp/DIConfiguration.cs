@@ -63,21 +63,20 @@ namespace WebApp
 	        .Where(t => t.GetInterfaces().Any(i => i.IsClosedTypeOf(typeof(IValidator<>))))
 	        .AsImplementedInterfaces()
 	        .InstancePerLifetimeScope();
-
 			builder.RegisterType<LoginModelValidator>().AsSelf().InstancePerLifetimeScope();
+
 
 			builder.RegisterAssemblyTypes(typeof(AddUserValidation).Assembly)
            .Where(t=>t.IsClosedTypeOf(typeof(IValidator<>)))
            .AsImplementedInterfaces()
            .InstancePerLifetimeScope();
-
 			builder.RegisterType<AddUserValidation>().AsSelf().InstancePerLifetimeScope();
+
 
 			builder.RegisterAssemblyTypes(typeof(PosValidation).Assembly)
 		   .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
 		   .AsImplementedInterfaces()
 		   .InstancePerLifetimeScope();
-
 			builder.RegisterType<PosValidation>().AsSelf().InstancePerLifetimeScope();
 
 

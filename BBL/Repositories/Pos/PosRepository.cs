@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using BBL.DTO.PosDTO;
 using BBL.Common;
 using BLL.DTO.UserDTO;
+using System.Reflection.Emit;
 
 
 namespace BLL.Repositories.Pos
@@ -274,7 +275,14 @@ namespace BLL.Repositories.Pos
 		}
 
 
+		public bool UniqueName(string name)
+		{
+			return !GetValidPos().Any(x => x.Name.ToLower() == name.ToLower());
+		}
 
-
+		public bool UniqueTelephone(string telephone)
+		{
+			return !GetValidPos().Any(x => x.Telephone.ToLower() != telephone.ToLower());
+		}
 	}
 }

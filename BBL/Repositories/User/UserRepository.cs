@@ -217,12 +217,16 @@ namespace BLL.Repositories
 		}
 		public bool ExistUserByEmail(string email)
 		{
-			return GetValidUser().Any(u => u.Email.ToLower() == email.ToLower());
+			return !GetValidUser().Any(u => u.Email.ToLower() == email.ToLower());
 			
 		}
 		public bool ExistLogin(string login)
 		{
-			return GetValidUser().Any(x => x.Login == login);
+			return !GetValidUser().Any(x => x.Login == login);
+		}
+		public bool ExistTelepgone(string telephone)
+		{
+			return !GetValidUser().Any(x => x.Telephone == telephone);
 		}
 		
 		public IQueryable<UserEntity> GetValidUser()

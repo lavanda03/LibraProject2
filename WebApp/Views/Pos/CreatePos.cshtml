@@ -17,6 +17,10 @@
         }
 </style>
 
+
+@*@Html.ValidationSummary()*@
+
+
 @using (Html.BeginForm("CreatePos", "Pos", FormMethod.Post, new { id = "login-form", @class = "login-form" }))
 {
     <div class="left_col-" role="main">
@@ -37,7 +41,7 @@
 
                                 <div class="form-group">
                                     <div class="row">
-                                        @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3 col-sm-3 col-12" });
+                                        @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                         <div class="col-md-6 col-sm-6 col-12">
                                             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -52,7 +56,7 @@
                                         @Html.LabelFor(model => model.Telephone, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                         <div class="col-md-6 col-sm-6 col-12">
                                             @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.Telephone)
+                                            @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +76,7 @@
                                         @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                         <div class="col-md-6 col-sm-6 col-12">
                                             @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.Address)
+                                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +91,7 @@
                                                 {
                                                     <option value="@city.Id">@city.Name</option>
                                                 }
-                                                @Html.ValidationMessageFor(model => model.City_Id)
+                                                @Html.ValidationMessageFor(model => model.City_Id, "", new { @class = "text-danger" })
                                             </select>
                                         </div>
                                     </div>
@@ -98,7 +102,7 @@
                                         @Html.LabelFor(model => model.Brand, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                         <div class="col-md-6 col-sm-6 col-12">
                                             @Html.EditorFor(model => model.Brand, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.Brand)
+                                            @Html.ValidationMessageFor(model => model.Brand, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +111,7 @@
                                         @Html.LabelFor(model => model.Model, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                         <div class="col-md-6 col-sm-6 col-12">
                                             @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.Model)
+                                            @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +127,7 @@
                                                 {
                                                     <option value="@conType.Id">@conType.ConectionType</option>
                                                 }
-                                                @Html.ValidationMessageFor(model => model.ConnType_Id)
+                                                @Html.ValidationMessageFor(model => model.ConnType_Id, "", new { @class = "text-danger" })
                                             </select>
                                         </div>
                                     </div>
@@ -171,6 +175,7 @@
                                     <div>
                                         <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" />
                                         <label for="mon">Mon</label>
+
                                     </div>
                                     <div>
                                         <input type="checkbox" id="tue" name="Tue" value="tue" onchange="updateSelectedDays()" />
@@ -197,6 +202,8 @@
                                         <label for="sun">Sun</label>
                                     </div>
                                 </div>
+                                @Html.ValidationMessageFor(model => model.SelectedDays, "", new { @class = "text-danger" })
+
 
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
@@ -221,14 +228,12 @@
 
 <script>
     function updateSelectedDays() {
-        // Containerul pentru câmpurile ascunse
-        var container = document.getElementById('hidden-fields-container');
-        container.innerHTML = ''; // Goliți containerul
 
-        // Obțineți toate checkbox-urile bifate
+        var container = document.getElementById('hidden-fields-container');
+        container.innerHTML = '';
+
         var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
 
-        // Adăugați un câmp ascuns pentru fiecare checkbox bifat
         checkboxes.forEach(function (checkbox) {
             var input = document.createElement('input');
             input.type = 'hidden';
