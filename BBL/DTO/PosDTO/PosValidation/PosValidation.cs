@@ -1,22 +1,21 @@
 ﻿using BLL.DTO.PosDTO;
 using BLL.Repositories.Pos;
+using BLL.Repositories.User;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
 
 namespace BBL.DTO.PosDTO.PosValidation
 {
 	public class PosValidation:AbstractValidator<AddPOSDTO>
 	{
-		private readonly IPosRepository _posRepository;
+		private readonly IPosRepository posRepository;
 
 		public PosValidation(IPosRepository posRepository)
 		{
-			_posRepository = posRepository;
+		   this.posRepository = posRepository;	
+
+
 			
 
 			RuleFor(x => x.Name)
@@ -30,7 +29,7 @@ namespace BBL.DTO.PosDTO.PosValidation
 
 
 			RuleFor(x => x.Address)
-				.NotNull().WithMessage("Adress is required.").Length(7, 100);
+				.NotEmpty().WithMessage("Adress is required.").Length(7, 100);
 
 			RuleFor(p => p.Telephone)
 						   .NotEmpty().WithMessage("Phone Number is required.")
@@ -40,14 +39,14 @@ namespace BBL.DTO.PosDTO.PosValidation
 
 
 			RuleFor(p => p.CityName).NotEmpty().WithMessage("City is required");
-			RuleFor(p => p.Brand).NotNull().WithMessage("Brand is required");
-			RuleFor(p => p.Model).NotNull().WithMessage("Model is required");
-			RuleFor(p => p.ConnectionType).NotNull().WithMessage("ConnectionType is required");
+			RuleFor(p => p.Brand).NotEmpty().WithMessage("Brand is required");
+			RuleFor(p => p.Model).NotEmpty().WithMessage("Model is required");
+			RuleFor(p => p.ConnectionType).NotEmpty().WithMessage("ConnectionType is required");
 
-			RuleFor(p => p.MorningOperning).NotNull().WithMessage("MorningOperning is required");
-			RuleFor(p => p.MorningClosing).NotNull().WithMessage("MorningClosing is required");
-			RuleFor(p => p.AfternonClosing).NotNull().WithMessage("AfternonClosing is required");
-			RuleFor(p => p.AfternoonOpening).NotNull().WithMessage("AfternoonOpening is required");
+			RuleFor(p => p.MorningOperning).NotEmpty().WithMessage("MorningOperning is required");
+			RuleFor(p => p.MorningClosing).NotEmpty().WithMessage("MorningClosing is required");
+			RuleFor(p => p.AfternonClosing).NotEmpty().WithMessage("AfternonClosing is required");
+			RuleFor(p => p.AfternoonOpening).NotEmpty().WithMessage("AfternoonOpening is required");
 
 			RuleFor(x => x.SelectedDays).Must(x => x != null && x.Any()).WithMessage("Please select at least one day.");
 		}

@@ -23,7 +23,7 @@
 		public string UserType { get; set; }
 		public string UserName { get; set; }	
 		public string ProblemDescription { get; set; }
-		public long CreationDate { get; set; }
+		public string CreationDate { get; set; }
 		public string PosTelephone { get; set; }
 		public string PosCellPhone { get; set; }
 		public string PosAddress { get; set; }

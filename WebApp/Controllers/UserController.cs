@@ -48,11 +48,11 @@ namespace WebApp.Controllers
 
 
 		[HttpGet]
-		public ActionResult CreateUser()
+		public ActionResult CreateUserPartialView()
 		{
 			ViewBag.UserTypes = userRepository.GetAllUsersType();
-			return View();
-		}
+            return PartialView("_CreateUserPartialView");
+        }
 
 		[HttpPost]
 		public ActionResult CreateUser(AddUserDTO model)
@@ -62,9 +62,10 @@ namespace WebApp.Controllers
 
 			if (ModelState.IsValid)
 			{
-				userRepository.AddUser(model);
-				return RedirectToAction("Browse");
-			}
+                ViewBag.UserTypes = userRepository.GetAllUsersType();
+                userRepository.AddUser(model);
+                return PartialView("_CreateUserPartialView",model);
+            }
 			else 
 			{
 				foreach(var failure in result.Errors)
@@ -74,9 +75,9 @@ namespace WebApp.Controllers
 			}
 			
 			ViewBag.UserTypes = userRepository.GetAllUsersType();
-			return View();
+            return PartialView("_CreateUserPartialView",model);
 
-		}
+        }
 
 		[HttpPost]
 		public ActionResult EditUser(UpdateUserDTO user)

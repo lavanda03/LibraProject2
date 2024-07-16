@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using BLL.DTO.UserDTO;
 using BLL.Repositories.User;
 using FluentValidation;
@@ -37,6 +33,8 @@ namespace BBL.DTO.UserDTO.UserValidation
 
 			RuleFor(x => x.Name).NotEmpty().WithMessage("Please specify a  name");
 			RuleFor(x => x.UserTypeId).NotEmpty().WithMessage("Please specify a user type");
+
+
 		}
 	}
 

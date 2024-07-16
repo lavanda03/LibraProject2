@@ -123,7 +123,7 @@ namespace BLL.Repositories.Issue
 					IdPos = x.IdPos,
 					PosName = x.Pos.Name,
 					UserName = x.User.Name,
-					CreationDate = x.CreationDate,
+					CreationDate = x.CreationDate.ConvertToDateTimeOffsetToStringDate(),
 					IssueType = x.IssuesType.Name,
 					Status = x.Status.Status,
 					UserType = x.UserType.UserType,

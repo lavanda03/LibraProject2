@@ -40,6 +40,9 @@
                     <button type="button" class="btn btn-info" data-toggle="ajax-modal" data-target="#detail-user-modal" data-url="@Url.Action("DetailsUserPartialView")">
                         Details
                     </button>
+                    <button type="button" id="addbutton" class="btn btn-success" data-toggle="ajax-modal-add" data-target="#add-user-modal" data-url="@Url.Action("CreateUserPartialView")">
+                        Add
+                    </button>
                 </div>
             </div>
 
@@ -81,6 +84,16 @@
                 var rowData = userTable.row('.selected').data();
 
                 var url = $(this).data('url') + "?userId=" + rowData.Id;
+                $.get(url).done(function (data) {
+                    modalPlaceHolderElement.html(data);
+                    modalPlaceHolderElement.find('.modal').modal('show');
+                });
+
+            });
+
+            $('button[data-toggle="ajax-modal-add"]').click(function () {
+
+                var url = $(this).data('url');
                 $.get(url).done(function (data) {
                     modalPlaceHolderElement.html(data);
                     modalPlaceHolderElement.find('.modal').modal('show');

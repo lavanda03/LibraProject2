@@ -70,9 +70,9 @@
                                     <li>
                                         <a href="#"><i class="fa fa-credit-card"></i> POS <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li>
+                                            @*<li>
                                                 @Html.ActionLink("Add POS", "CreatePos", "Pos", null, new { @class = "nav-link" })
-                                            </li>
+                                            </li>*@
                                             <li> @Html.ActionLink("Browse POS", "BrowsePos", "Pos", null, new { @class = "nav-link" }) </li>
                                         </ul>
                                     </li>
@@ -92,16 +92,16 @@
                                         {
                                             <a><i class="fa fa-user"></i> Users<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
-                                                <li>
+                                                @*<li>
                                                     @Html.ActionLink("Add User", "CreateUser", "User", null, new { @class = "nav-link" })
-                                                </li>
+                                                </li>*@
                                                 <li>
                                                     @Html.ActionLink("Browse User", "Browse", "User", null, new { @class = "nav-link" })
                                                 </li>
                                             </ul>
                                         }
                                     </li>
-                                    }
+                                    
                                 </ul>
                             </div>
                         </div>

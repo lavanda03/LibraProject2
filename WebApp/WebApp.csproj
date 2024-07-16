@@ -225,7 +225,7 @@
     <None Include="App_Start\.editorconfig" />
     <Content Include="Views\User\Browse.cshtml" />
     <Content Include="libman.json" />
-    <Content Include="Views\User\CreateUser.cshtml" />
+    <Content Include="Views\User\_CreateUserPartialView.cshtml" />
     <Content Include="Views\Pos\BrowsePos.cshtml" />
     <Content Include="Views\Pos\CreateDPos.cshtml" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
