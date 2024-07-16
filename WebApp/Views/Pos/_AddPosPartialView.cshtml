@@ -1,17 +1,23 @@
-﻿@model BLL.DTO.PosDTO.UpdatePosDTO
+﻿@model BLL.DTO.PosDTO.AddPOSDTO
+@{
+    
+}
 
-<div class="modal fade" id="edit-pos-modal" tabindex="-1" role="dialog" aria-labelledby="editPosLabel" aria-hidden="true">
+<h2>_AddPosPartialView</h2>
+
+
+<div class="modal fade" id="add-pos-modal" tabindex="-1" role="dialog" aria-labelledby="addPosLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editPosLabel">Edit POS</h5>
+                <h5 class="modal-title" id="addPosLabel">Add POS</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
 
-                @using (Html.BeginForm("EditPos", "Pos", FormMethod.Post, new { id = "login-form", @class = "login-form" }))
+                @using (Html.BeginForm("CreatePos", "Pos", FormMethod.Post, new { id = "login-form", @class = "login-form" }))
                 {
                     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
                     <div class="left_col-" role="main">
@@ -27,17 +33,8 @@
                                         </div>
                                         <div class="x_content">
                                             <br />
-                                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
-
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                      
-                                                        <div class="col-md-6 col-sm-6 col-12">
-                                                            @Html.HiddenFor(model => model.Id)
-
-                                                        </div>
-                                                </div>
+                                            <form id="demo-form2" data-parsley-validate
+                                                  class="form-vertical form-label-left">
 
                                                 <div class="form-group">
                                                     <div class="row">
@@ -45,16 +42,18 @@
                                                         <div class="col-md-6 col-sm-6 col-12">
                                                             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
                                                         </div>
                                                     </div>
                                                 </div>
+
 
                                                 <div class="form-group">
                                                     <div class="row">
                                                         @Html.LabelFor(model => model.Telephone, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                                         <div class="col-md-6 col-sm-6 col-12">
                                                             @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control" } })
-                                                            @Html.ValidationMessageFor(model => model.Telephone)
+                                                            @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -74,7 +73,7 @@
                                                         @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                                         <div class="col-md-6 col-sm-6 col-12">
                                                             @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                                                            @Html.ValidationMessageFor(model => model.Address)
+                                                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -87,9 +86,9 @@
                                                                 <option value="">-- Select User Type --</option>
                                                                 @foreach (var city in ViewBag.City)
                                                                 {
-                                                                    <option value="@city.Id" @(Model.City_Id == city.Id ? "selected" : "")>@city.Name</option>
+                                                                    <option value="@city.Id">@city.Name</option>
                                                                 }
-                                                                @Html.ValidationMessageFor(model => model.City_Id)
+                                                                @Html.ValidationMessageFor(model => model.City_Id, "", new { @class = "text-danger" })
                                                             </select>
                                                         </div>
                                                     </div>
@@ -100,7 +99,7 @@
                                                         @Html.LabelFor(model => model.Brand, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                                         <div class="col-md-6 col-sm-6 col-12">
                                                             @Html.EditorFor(model => model.Brand, new { htmlAttributes = new { @class = "form-control" } })
-                                                            @Html.ValidationMessageFor(model => model.Brand)
+                                                            @Html.ValidationMessageFor(model => model.Brand, "", new { @class = "text-danger" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -109,10 +108,11 @@
                                                         @Html.LabelFor(model => model.Model, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                                         <div class="col-md-6 col-sm-6 col-12">
                                                             @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control" } })
-                                                            @Html.ValidationMessageFor(model => model.Model)
+                                                            @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger" })
                                                         </div>
                                                     </div>
                                                 </div>
+
 
                                                 <div class="form-group">
                                                     <div class="row">
@@ -122,19 +122,14 @@
                                                                 <option value="">-- Select User Type --</option>
                                                                 @foreach (var conType in ViewBag.ConType)
                                                                 {
-                                                                    <option value="@conType.Id" @(Model.ConnType_Id == conType.Id ? "selected" : "")>@conType.ConectionType </option>
+                                                                    <option value="@conType.Id">@conType.ConectionType</option>
                                                                 }
-                                                                @Html.ValidationMessageFor(model => model.ConnType_Id)
+                                                                @Html.ValidationMessageFor(model => model.ConnType_Id, "", new { @class = "text-danger" })
                                                             </select>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="x_title">
-                                                    <h4>
-                                                        Operating hours and holidays
-                                                    </h4>
-                                                </div>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         @Html.LabelFor(model => model.MorningOperning, new { @class = "control-label col-md-3 col-sm-3 col-12" })
@@ -175,92 +170,49 @@
                                                 <div id="hidden-fields-container"></div>
                                                 <div class="checkbox-group " style="display: flex;">
                                                     <div style="margin-right: 10px;">
-                                                        @if (Model.SelectedDays.Contains("mon"))
-                                                        {
-                                                            <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" checked />
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" />
-                                                        }
+                                                        <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" />
                                                         <label for="mon">Mon</label>
+
                                                     </div>
                                                     <div style="margin-right: 10px;">
-                                                        @if (Model.SelectedDays.Contains("tue"))
-                                                        {
-                                                            <input type="checkbox" id="tue" name="Tue" value="tue" onchange="updateSelectedDays()" checked />
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="tue" name="Tue" value="tue" onchange="updateSelectedDays()" />
-                                                        }
+                                                        <input type="checkbox" id="tue" name="Tue" value="tue" onchange="updateSelectedDays()" />
                                                         <label for="tue">Tue</label>
                                                     </div>
                                                     <div style="margin-right: 10px;">
-                                                        @if (Model.SelectedDays.Contains("wed"))
-                                                        {
-                                                            <input type="checkbox" id="wed" name="Wed" value="wed" onchange="updateSelectedDays()" checked />
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="wed" name="Wed" value="wed" onchange="updateSelectedDays()" />
-                                                        }
+                                                        <input type="checkbox" id="wed" name="Wed" value="wed" onchange="updateSelectedDays()" />
                                                         <label for="wed">Wed</label>
                                                     </div>
                                                     <div style="margin-right: 10px;">
-                                                        @if (Model.SelectedDays.Contains("thu"))
-                                                        {
-                                                            <input type="checkbox" id="thu" name="Thu" value="thu" onchange="updateSelectedDays()" checked />
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="thu" name="Thu" value="thu" onchange="updateSelectedDays()" />
-                                                        }
+                                                        <input type="checkbox" id="thu" name="Thu" value="thu" onchange="updateSelectedDays()" />
                                                         <label for="thu">Thu</label>
                                                     </div>
                                                     <div style="margin-right: 10px;">
-                                                        @if (Model.SelectedDays.Contains("fri"))
-                                                        {
-                                                            <input type="checkbox" id="fri" name="Fri" value="fri" onchange="updateSelectedDays()" checked />
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="fri" name="Fri" value="fri" onchange="updateSelectedDays()" />
-                                                        }
+                                                        <input type="checkbox" id="fri" name="Fri" value="fri" onchange="updateSelectedDays()" />
                                                         <label for="fri">Fri</label>
                                                     </div>
                                                     <div style="margin-right: 10px;">
-                                                        @if (Model.SelectedDays.Contains("sat"))
-                                                        {
-                                                            <input type="checkbox" id="sat" name="Sat" value="sat" onchange="updateSelectedDays()" checked />
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="sat" name="Sat" value="sat" onchange="updateSelectedDays()" />
-                                                        }
+                                                        <input type="checkbox" id="sat" name="Sat" value="sat" onchange="updateSelectedDays()" />
                                                         <label for="sat">Sat</label>
                                                     </div>
                                                     <div style="margin-right: 10px;">
-                                                        @if (Model.SelectedDays.Contains("sun"))
-                                                        {
-                                                            <input type="checkbox" id="sun" name="Sun" value="sun" onchange="updateSelectedDays()" checked />
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="sun" name="Sun" value="sun" onchange="updateSelectedDays()" />
-                                                        }
+                                                        <input type="checkbox" id="sun" name="Sun" value="sun" onchange="updateSelectedDays()" />
                                                         <label for="sun">Sun</label>
                                                     </div>
                                                 </div>
+                                                @Html.ValidationMessageFor(model => model.SelectedDays, "", new { @class = "text-danger" })
+
+
                                                 <div class="ln_solid"></div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-11 text-center">
-                                                            <button type="button" class="btn btn-primary" y" data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-success" data-save="modal">Save</button>
+                                                        <div class="col-md-6 col-sm-6 col-12 col-md-offset-3">
+
+                                                            <button type="submit" class="btn btn-success" data-save="modal">Create new POS</button>
                                                         </div>
+
                                                     </div>
                                                 </div>
+
                                             </form>
                                         </div>
                                     </div>
@@ -269,7 +221,27 @@
                         </div>
                     </div>
                 }
+
+
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function updateSelectedDays() {
+
+        var container = document.getElementById('hidden-fields-container');
+        container.innerHTML = '';
+
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+
+        checkboxes.forEach(function (checkbox) {
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'SelectedDays';
+            input.value = checkbox.value;
+            container.appendChild(input);
+        });
+    }
+</script>

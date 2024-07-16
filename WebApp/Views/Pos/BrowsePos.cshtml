@@ -37,6 +37,9 @@
                     <button type="button" class="btn btn-info" data-toggle="ajax-modal" data-target="#detail-pos-modal" data-url="@Url.Action("DetailsPosPartialView")">
                         Details
                     </button>
+                    <button type="button" id="addbutton" class="btn btn-success" data-toggle="ajax-modal-add" data-target="#add-pos-modal" data-url="@Url.Action("AddPosPartialView")">
+                        Add
+                    </button>
                 </div>
             </div>
 
@@ -79,6 +82,16 @@
                 var rowData = posTable.row('.selected').data();
 
                 var url = $(this).data('url') + "?posId=" + rowData.Id;
+                $.get(url).done(function (data) {
+                    modalPlaceHolderElement.html(data);
+                    modalPlaceHolderElement.find('.modal').modal('show');
+                });
+
+            });
+
+            $('button[data-toggle="ajax-modal-add"]').click(function () {
+                
+                var url = $(this).data('url');
                 $.get(url).done(function (data) {
                     modalPlaceHolderElement.html(data);
                     modalPlaceHolderElement.find('.modal').modal('show');
