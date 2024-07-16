@@ -135,11 +135,8 @@ namespace WebApp.Controllers
 		[HttpGet]
 		public ActionResult DetailsPosPartialView(int posId)
 		{
+
 			var pos = posRepository.GetPosById(posId);
-
-			ViewBag.City = posRepository.GetAllCitites();
-			ViewBag.ConType = posRepository.GetAllConnectionType();
-
 			return PartialView("_DetailsPosPartialView", pos);
 		}
 	}

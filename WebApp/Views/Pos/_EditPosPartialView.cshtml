@@ -29,16 +29,7 @@
                                             <br />
                                             <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        @Html.LabelFor(model => model.Id, new { @class = "control-label col-md-3 col-sm-3 col-12" })
-                                                        <div class="col-md-6 col-sm-6 col-12">
-                                                            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
+                                               <div class="form-group">
                                                     <div class="row">
                                                         @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                                         <div class="col-md-6 col-sm-6 col-12">
@@ -80,7 +71,7 @@
 
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        @Html.LabelFor(model => model.City_Id, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                                        @Html.LabelFor(model => model.CityName, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                                         <div class="col-md-6 col-sm-6 col-12">
                                                             <select id="City_Id" name="City_Id" class="select2_single form-control">
                                                                 <option value="">-- Select User Type --</option>
@@ -115,7 +106,7 @@
 
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        @Html.LabelFor(model => model.ConnType_Id, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                                        @Html.LabelFor(model => model.ConnectionType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                                         <div class="col-md-6 col-sm-6 col-12">
                                                             <select id="ConnType_Id" name="ConnType_Id" class="select2_single form-control">
                                                                 <option value="">-- Select User Type --</option>
@@ -173,7 +164,7 @@
 
                                                 <div id="hidden-fields-container"></div>
                                                 <div class="checkbox-group " style="display: flex;">
-                                                    <div>
+                                                    <div style="margin-right: 10px;">
                                                         @if (Model.SelectedDays.Contains("mon"))
                                                         {
                                                             <input type="checkbox" id="mon" name="Mon" value="mon" onchange="updateSelectedDays()" checked />
@@ -184,7 +175,7 @@
                                                         }
                                                         <label for="mon">Mon</label>
                                                     </div>
-                                                    <div>
+                                                    <div style="margin-right: 10px;">
                                                         @if (Model.SelectedDays.Contains("tue"))
                                                         {
                                                             <input type="checkbox" id="tue" name="Tue" value="tue" onchange="updateSelectedDays()" checked />
@@ -195,7 +186,7 @@
                                                         }
                                                         <label for="tue">Tue</label>
                                                     </div>
-                                                    <div>
+                                                    <div style="margin-right: 10px;">
                                                         @if (Model.SelectedDays.Contains("wed"))
                                                         {
                                                             <input type="checkbox" id="wed" name="Wed" value="wed" onchange="updateSelectedDays()" checked />
@@ -206,7 +197,7 @@
                                                         }
                                                         <label for="wed">Wed</label>
                                                     </div>
-                                                    <div>
+                                                    <div style="margin-right: 10px;">
                                                         @if (Model.SelectedDays.Contains("thu"))
                                                         {
                                                             <input type="checkbox" id="thu" name="Thu" value="thu" onchange="updateSelectedDays()" checked />
@@ -217,7 +208,7 @@
                                                         }
                                                         <label for="thu">Thu</label>
                                                     </div>
-                                                    <div>
+                                                    <div style="margin-right: 10px;">
                                                         @if (Model.SelectedDays.Contains("fri"))
                                                         {
                                                             <input type="checkbox" id="fri" name="Fri" value="fri" onchange="updateSelectedDays()" checked />
@@ -228,7 +219,7 @@
                                                         }
                                                         <label for="fri">Fri</label>
                                                     </div>
-                                                    <div>
+                                                    <div style="margin-right: 10px;">
                                                         @if (Model.SelectedDays.Contains("sat"))
                                                         {
                                                             <input type="checkbox" id="sat" name="Sat" value="sat" onchange="updateSelectedDays()" checked />
@@ -239,7 +230,7 @@
                                                         }
                                                         <label for="sat">Sat</label>
                                                     </div>
-                                                    <div>
+                                                    <div style="margin-right: 10px;">
                                                         @if (Model.SelectedDays.Contains("sun"))
                                                         {
                                                             <input type="checkbox" id="sun" name="Sun" value="sun" onchange="updateSelectedDays()" checked />
@@ -254,8 +245,8 @@
                                                 <div class="ln_solid"></div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-6 col-sm-6 col-12 col-md-offset-3">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <div class="col-md-11 text-center">
+                                                            <button type="button" class="btn btn-primary" y" data-dismiss="modal">Close</button>
                                                             <button type="submit" class="btn btn-success" data-save="modal">Save</button>
                                                         </div>
                                                     </div>

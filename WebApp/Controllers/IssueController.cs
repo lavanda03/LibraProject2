@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using WebApp.Helpers;
+using BLL.DTO.IssueDTO.IssueValidation;
+using FluentValidation.Results;
 
 
 namespace WebApp.Controllers
@@ -54,6 +56,9 @@ namespace WebApp.Controllers
 		[HttpPost]
 		public ActionResult CreateIssue(AddIssuesDTO issueModel)
 		{
+			IssueValidation issueValidation = new IssueValidation(issueRepository);
+			ValidationResult result = issueValidation.Validate(issueModel);
+
 			if (ModelState.IsValid)
 			{
 				HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
@@ -65,6 +70,13 @@ namespace WebApp.Controllers
 
 				issueRepository.AddIssue(issueModel);
 				return RedirectToAction("BrowseIssue");
+			}
+			else
+			{
+				foreach (var failure in result.Errors)
+				{
+					ModelState.AddModelError(failure.PropertyName, failure.ErrorMessage);
+				}
 			}
 
 

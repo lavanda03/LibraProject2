@@ -33,16 +33,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="form-group">
-                                            <div class="row">
-                                                @Html.LabelFor(model => model.Id, new { @class = "control-label col-md-3 col-sm-3 col-12" })
-                                                <div class="col-md-6 col-sm-6 col-12">
-                                                    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <div class="form-group">
                                             <div class="row">
                                                 @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3 col-sm-3 col-12" })
@@ -72,23 +62,18 @@
 
                                         <div class="form-group">
                                             <div class="row">
-                                                @Html.LabelFor(model => model.UserTypeId, new { @class = "control-label col-md-3 col-sm-3 col-12" })
+                                                @Html.LabelFor(model => model.UserType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                                 <div class="col-md-6 col-sm-6 col-12">
-                                                    <select id="UserTypeId" name="UserTypeId" class="select2_single form-control" disabled>
-                                                        <option value="">-- Select User Type --</option>
-                                                        @foreach (var userType in ViewBag.UserTypes)
-                                                        {
-                                                            <option value="@userType.Id" @(Model.UserTypeId == userType.Id ? "selected" : "")>@userType.UserType</option>
-                                                        }
-                                                    </select>
+                                                    @Html.EditorFor(model => model.UserType, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="ln_solid"></div>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6 col-12 col-md-offset-3">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
                                         </div>

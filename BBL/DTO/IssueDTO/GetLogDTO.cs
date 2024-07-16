@@ -1,4 +1,6 @@
-﻿namespace BBL.DTO.IssueDTO
+﻿using System;
+
+namespace BBL.DTO.IssueDTO
 {
 	public class GetLogDTO
 	{ 

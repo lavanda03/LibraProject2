@@ -153,6 +153,8 @@ namespace BLL.Repositories.Pos
 				Brand = posEntity.Brand,
 				Model = posEntity.Model,
 				City_Id = posEntity.City_Id,
+				CityName= posEntity.Cities.CityName,
+				ConnectionType = posEntity.ConnectionType.ConnectionType,
 				ConnType_Id = posEntity.ConnType_Id,
 				MorningClosing = posEntity.MorningClosing,
 				MorningOperning = posEntity.MorningOperning,

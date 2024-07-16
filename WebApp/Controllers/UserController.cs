@@ -117,8 +117,6 @@ namespace WebApp.Controllers
 		{
 			var getUserDTO = userRepository.GetUserById(userId);
 
-			ViewBag.UserTypes = userRepository.GetAllUsersType();
-
 			return PartialView("_DetailsUserPartialView", getUserDTO);
 		}
 	}
