@@ -82,24 +82,24 @@
                 }
             });
 
-            //$('button[data-toggle="ajax-modal"]').click(function () {
-            //    var rowData = issueTable.row('.selected').data();
-
-            //    var url = $(this).data('url') + "?issueId=" + rowData.Id;
-            //    window.location.href = url;
-               
-            //});
-
             $('button[data-toggle="ajax-modal"]').click(function () {
                 var rowData = issueTable.row('.selected').data();
 
                 var url = $(this).data('url') + "?issueId=" + rowData.Id;
-                $.get(url).done(function (data) {
-                    modalPlaceHolderElement.html(data);
-                    modalPlaceHolderElement.find('.modal').modal('show');
-                });
-
+                window.location.href = url;
+               
             });
+
+            //$('button[data-toggle="ajax-modal"]').click(function () {
+            //    var rowData = issueTable.row('.selected').data();
+
+            //    var url = $(this).data('url') + "?issueId=" + rowData.Id;
+            //    $.get(url).done(function (data) {
+            //        modalPlaceHolderElement.html(data);
+            //        modalPlaceHolderElement.find('.modal').modal('show');
+            //    });
+
+            //});
 
 
             modalPlaceHolderElement.on('click', '[data-save="modal"]', function (event) {

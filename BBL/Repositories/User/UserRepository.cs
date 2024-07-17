@@ -161,7 +161,7 @@ namespace BLL.Repositories
 
 		public void UpdateUser(UpdateUserDTO updateUser)
 		{
-			var user = _context.Users.FirstOrDefault(x => x.Id == updateUser.Id);
+			var user = GetValidUser().FirstOrDefault(x => x.Id == updateUser.Id);
 			if (user == null)
 			{
 				return;

@@ -95,6 +95,8 @@ namespace WebApp.Controllers
 
 			if (ModelState.IsValid)
 			{
+				ViewBag.City = posRepository.GetAllCitites();
+				ViewBag.ConType = posRepository.GetAllConnectionType();
 				posRepository.AddPos(posModel);
 				return PartialView("_AddPosPartialView", posModel);
             }
@@ -107,8 +109,7 @@ namespace WebApp.Controllers
 			}
 
 
-			ViewBag.City = posRepository.GetAllCitites();
-			ViewBag.ConType = posRepository.GetAllConnectionType();
+			
             return PartialView("_AddPosPartialView", posModel);
         }
 

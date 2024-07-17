@@ -27,6 +27,8 @@ namespace BLL.DTO.IssueDTO.IssueValidation
 			RuleFor(p => p.Problem).NotEmpty().WithMessage("Problem is required");
 			RuleFor(p => p.Status).NotEmpty().WithMessage("Status  is required");
 			RuleFor(p => p.Priority).NotEmpty().WithMessage("Priorityis required");
+			
+
 
 
 

@@ -162,9 +162,9 @@ namespace WebApp.Controllers
 			if (ModelState.IsValid)
 			{
 				issueRepository.UpdateIssue(updateIssues);
-				return PartialView("_EditIssuePartialView", updateIssues);
+				return RedirectToAction("BrowseIssue");
 			}
-			return PartialView("_EditIssuePartialView", updateIssues);
+			return View("_EditIssuePartialView");
 		}
 
 		[HttpGet]
@@ -200,7 +200,7 @@ namespace WebApp.Controllers
 				PosAddress = issue.PosAddress,
 			};
 
-			return PartialView("_EditIssuePartialView", updateIssueDTO);
+			return View("_EditIssuePartialView", updateIssueDTO);
 		}
 
 		[HttpGet]
@@ -216,7 +216,7 @@ namespace WebApp.Controllers
 
 			var issue = issueRepository.GetIssueById(issueId);
 
-			return PartialView("_DetailsIssuePartialView", issue);
+			return View("_DetailsIssuePartialView", issue);
 		}
 	}
 }

@@ -107,6 +107,7 @@ namespace BLL.Repositories.Pos
 				CellPhone = command.CellPhone,
 				Address = command.Address,
 				City_Id = command.City_Id,
+				
 				Brand = command.Brand,
 				Model = command.Model,
 				ConnType_Id = command.ConnType_Id,

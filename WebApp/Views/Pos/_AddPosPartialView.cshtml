@@ -87,7 +87,7 @@
                                                                 {
                                                                     <option value="@city.Id">@city.Name</option>
                                                                 }
-                                                                @Html.ValidationMessageFor(model => model.City_Id, "", new { @class = "text-danger" })
+                                                                @Html.ValidationMessageFor(model => model.CityName, "", new { @class = "text-danger" })
                                                             </select>
                                                         </div>
                                                     </div>
@@ -204,7 +204,7 @@
                                                 <div class="ln_solid"></div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-6 col-sm-6 col-12 col-md-offset-3">
+                                                        <div class="col-md-6 col-sm-6 col-12 col-md-offset-4">
 
                                                             <button type="submit" class="btn btn-success" data-save="modal">Create new POS</button>
                                                         </div>

@@ -220,6 +220,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\datatables.js" />
     <Content Include="Scripts\datatables.min.js" />
+    <Content Include="Scripts\jquery-3.6.0.min.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Views\Authorization\Login.cshtml" />
     <None Include="App_Start\.editorconfig" />

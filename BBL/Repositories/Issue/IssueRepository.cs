@@ -263,7 +263,7 @@ namespace BLL.Repositories.Issue
 				PosCellPhone = issueEntity.Pos.CellPhone,
 				PosAddress = issueEntity.Pos.Address,
 				IdUserCreated = issueEntity.IdUserCreated,
-				CreationDate = issueEntity.CreationDate,
+				CreationDate = issueEntity.CreationDate.ConvertToDateTimeOffsetToStringDate(),
 				IdType = issueEntity.IdType,
 				IdSubType = issueEntity.IdSubType,
 				IdProblem = issueEntity.IdProblem,
