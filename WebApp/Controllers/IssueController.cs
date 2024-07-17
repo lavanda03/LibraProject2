@@ -129,18 +129,19 @@ namespace WebApp.Controllers
 			return Json(jsonData, JsonRequestBehavior.AllowGet);
 		}
 
-		public JsonResult QueryLogs()
+		public JsonResult QueryLogs(int id )
 		{
 			var criteria = Request.GetPaginatingCriteria();
 
 			var log = issueRepository.QueryLogs(criteria);
 
+			var filtredData = log.Logs.Where(x => x.IssueId == id).ToList();
 			var jsonData = new
 			{
 				draw = Request.QueryString["draw"],
 				recordsTotal = log.Total,
-				recordsFiltered = log.TotalFiltered,
-				data = log.Logs
+				recordsFiltered = filtredData.Count,
+				data = filtredData
 
 
 			};

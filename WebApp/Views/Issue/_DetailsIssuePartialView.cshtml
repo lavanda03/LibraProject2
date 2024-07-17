@@ -55,6 +55,17 @@
                         </h4>
                     </div>
                     <div class="x_content">
+
+                        <div class="form-group">
+                            <div class="row">
+
+                                <div class="col-md-6 col-sm-6 col-12">
+                                    @Html.HiddenFor(model => model.Id)
+
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="row">
                                 @Html.LabelFor(model => model.IssueType, new { @class = "control-label col-md-3 col-sm-3 col-12" })
@@ -203,7 +214,7 @@
                 <table id="logsTable" class="table table-striped display" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>Id</th>
+                           
                             <th>Insert Date</th>
                             <th>Action</th>
                             <th>User</th>
@@ -224,7 +235,7 @@
 <script>
     $(document).ready(function () {
         let columns = [
-            { "data": "Id", "name": "Id", "autoWidth": true },
+           
             { "data": "InsertDate", "name": "Insert Date", "autoWidth": true },
             { "data": "Action", "name": "Action", "autoWidth": true },
             { "data": "User", "name": "User", "autoWidth": true },
@@ -232,6 +243,26 @@
 
         ];
 
-        bindDataTable("#logsTable", "/issue/QueryLogs", columns)
+        //bindDataTable("#logsTable", "/issue/QueryLogs", columns)
+
+     
+        var issueId = $('input[name="Id"]').val();
+
+        var table = $('#logsTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "/Issue/QueryLogs",
+                "type": "GET",
+                "data": function (d) {
+                    // Adaugă ID-ul la datele transmise
+                    d.id = issueId;
+                }
+            },
+            "columns": columns
+        });
+
+
+
     });
 </script>

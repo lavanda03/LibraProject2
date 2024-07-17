@@ -200,6 +200,7 @@ namespace BLL.Repositories.Issue
 					Action = x.Action,
 					User = x.User.Name,
 					Notes = x.Notes,
+					IssueId = x.IdIssue
 
 				}))
 
