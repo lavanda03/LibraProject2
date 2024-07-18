@@ -15,11 +15,10 @@
             </div>
             <div class="x_content">
 
-                <table id="issueTable" class="display">
+                <table id="issueTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Issue</th>
-                            <th>Pos.Id</th>
                             <th>Pos.Name</th>
                             <th>Created By</th>
                             <th>Date</th>
@@ -59,8 +58,7 @@
         $(document).ready(function () {
 
             let columns = [
-                { "data": "Id", "name": "Issue", "autoWidth": true },
-                { "data": "IdPos", "name": " Pos.Id", "autoWidth": true },
+                { "data": "Id", "name": "Issue", "autoWidth": true },          
                 { "data": "PosName", "name": " Pos.Name", "autoWidth": true },
                 { "data": "UserName", "name": "Created By", "autoWidth": true },
                 { "data": "CreationDate", "name": "Date", "autoWidth": true },
@@ -88,12 +86,20 @@
                 var rowData = issueTable.row('.selected').data();
 
                 var url = $(this).data('url') + "?issueId=" + rowData.Id;
-                $.get(url).done(function (data) {
-                    modalPlaceHolderElement.html(data);
-                    modalPlaceHolderElement.find('.modal').modal('show');
-                });
-
+                window.location.href = url;
+               
             });
+
+            //$('button[data-toggle="ajax-modal"]').click(function () {
+            //    var rowData = issueTable.row('.selected').data();
+
+            //    var url = $(this).data('url') + "?issueId=" + rowData.Id;
+            //    $.get(url).done(function (data) {
+            //        modalPlaceHolderElement.html(data);
+            //        modalPlaceHolderElement.find('.modal').modal('show');
+            //    });
+
+            //});
 
 
             modalPlaceHolderElement.on('click', '[data-save="modal"]', function (event) {

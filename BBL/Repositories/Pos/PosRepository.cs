@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using BBL.DTO.PosDTO;
 using BBL.Common;
 using BLL.DTO.UserDTO;
+using System.Reflection.Emit;
 
 
 namespace BLL.Repositories.Pos
@@ -106,6 +107,7 @@ namespace BLL.Repositories.Pos
 				CellPhone = command.CellPhone,
 				Address = command.Address,
 				City_Id = command.City_Id,
+				
 				Brand = command.Brand,
 				Model = command.Model,
 				ConnType_Id = command.ConnType_Id,
@@ -152,6 +154,8 @@ namespace BLL.Repositories.Pos
 				Brand = posEntity.Brand,
 				Model = posEntity.Model,
 				City_Id = posEntity.City_Id,
+				CityName= posEntity.Cities.CityName,
+				ConnectionType = posEntity.ConnectionType.ConnectionType,
 				ConnType_Id = posEntity.ConnType_Id,
 				MorningClosing = posEntity.MorningClosing,
 				MorningOperning = posEntity.MorningOperning,
@@ -274,7 +278,14 @@ namespace BLL.Repositories.Pos
 		}
 
 
+		public bool UniqueName(string name)
+		{
+			return !GetValidPos().Any(x => x.Name.ToLower() == name.ToLower());
+		}
 
-
+		public bool UniqueTelephone(string telephone)
+		{
+			return !GetValidPos().Any(x => x.Telephone.ToLower() != telephone.ToLower());
+		}
 	}
 }

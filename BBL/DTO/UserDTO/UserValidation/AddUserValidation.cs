@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using BLL.DTO.UserDTO;
 using BLL.Repositories.User;
 using FluentValidation;
@@ -11,25 +7,36 @@ namespace BBL.DTO.UserDTO.UserValidation
 {
 	public class AddUserValidation : AbstractValidator<AddUserDTO>
 	{
-		public AddUserValidation()
+		private readonly IUserRepository _userRepository;
+		public AddUserValidation(IUserRepository userRepository)
 		{
+			_userRepository = userRepository;
+
 			RuleFor(user => user.Login)
-			.NotNull ().WithMessage("Login is required.");
-	
-			RuleFor(x => x.Password).NotNull().WithMessage(" Password is required");
+			   .NotEmpty().WithMessage("Login is required.")
+			   .Must(_userRepository.ExistLogin).WithMessage("Login must be unique");
+
+			RuleFor(x => x.Password).NotEmpty().WithMessage(" Password is required");
 
 			RuleFor(x => x.Email)
-			.NotNull().WithMessage("Email is required.")
-			.EmailAddress().WithMessage("Invalid email format.");
+				.NotEmpty().WithMessage("Email is required.")
+				.EmailAddress().WithMessage("Invalid email format.")
+				.Must(_userRepository.ExistUserByEmail).WithMessage("Email must be unique");
+
 
 			RuleFor(x => x.Telephone)
-				.NotNull().WithMessage("Phone number is required.");
-				//.Matches(@"^\+[1-9]\d{1,14}$").WithMessage("Invalid phone number format.");
+				.NotEmpty().WithMessage("Phone number is required.")
+				.MinimumLength(9).WithMessage("Number is too short")
+				.Matches(@"^\d{9}$").WithMessage("Phone number must be exactly 9 digits.")
+				.Must(_userRepository.ExistTelephone).WithMessage("Telephone must be unique");
 
-			RuleFor(x => x.Name	).NotNull().WithMessage("Please specify a  name");
-			RuleFor(x => x.UserTypeId).NotNull().WithMessage("Please specify a user type");
+
+			RuleFor(x => x.Name).NotEmpty().WithMessage("Please specify a  name");
+			RuleFor(x => x.UserTypeId).NotEmpty().WithMessage("Please specify a user type");
+
+
 		}
 	}
 
-	
+
 }

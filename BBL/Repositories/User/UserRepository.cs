@@ -161,7 +161,7 @@ namespace BLL.Repositories
 
 		public void UpdateUser(UpdateUserDTO updateUser)
 		{
-			var user = _context.Users.FirstOrDefault(x => x.Id == updateUser.Id);
+			var user = GetValidUser().FirstOrDefault(x => x.Id == updateUser.Id);
 			if (user == null)
 			{
 				return;
@@ -217,12 +217,16 @@ namespace BLL.Repositories
 		}
 		public bool ExistUserByEmail(string email)
 		{
-			return GetValidUser().Any(u => u.Email.ToLower() == email.ToLower());
+			return !GetValidUser().Any(u => u.Email.ToLower() == email.ToLower());
 			
 		}
 		public bool ExistLogin(string login)
 		{
-			return GetValidUser().Any(x => x.Login == login);
+			return !GetValidUser().Any(x => x.Login == login);
+		}
+		public bool ExistTelephone(string telephone)
+		{
+			return !GetValidUser().Any(x => x.Telephone == telephone);
 		}
 		
 		public IQueryable<UserEntity> GetValidUser()

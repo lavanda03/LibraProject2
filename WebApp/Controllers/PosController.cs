@@ -2,6 +2,9 @@
 using BLL.Repositories.Pos;
 using System.Web.Mvc;
 using WebApp.Helpers;
+using FluentValidation;
+using BBL.DTO.PosDTO.PosValidation;
+using FluentValidation.Results;
 
 namespace WebApp.Controllers
 {
@@ -9,11 +12,12 @@ namespace WebApp.Controllers
 	public class PosController : Controller
 	{
 		private readonly IPosRepository posRepository;
+		private readonly PosValidation validation;
 
-
-		public PosController(IPosRepository posRepository)
+		public PosController(IPosRepository posRepository, PosValidation validation)
 		{
 			this.posRepository = posRepository;
+			this.validation = validation;	
 
 		}
 
@@ -46,31 +50,70 @@ namespace WebApp.Controllers
 
 
 		[HttpGet]
-		public ActionResult CreatePos()
+		public ActionResult AddPosPartialView()
 		{
 
 			ViewBag.City = posRepository.GetAllCitites();
 			ViewBag.ConType = posRepository.GetAllConnectionType();
-			return View();
+
+			return PartialView("_AddPosPartialView");
 		}
+
+
+		//[HttpPost]
+		//public ActionResult CreatePos(AddPOSDTO pos)
+		//{
+		//	PosValidation posValidator = new PosValidation(posRepository);
+
+		//	ValidationResult result = posValidator.Validate(pos);
+
+		//	if (ModelState.IsValid)
+		//	{
+		//              ViewBag.City = posRepository.GetAllCitites();
+		//              ViewBag.ConType = posRepository.GetAllConnectionType();
+		//              posRepository.AddPos(pos);
+		//		return PartialView("_AddPosPartialView", pos);
+		//	}
+		//	else
+		//	{
+		//		foreach (var failure in result.Errors)
+		//		{
+		//			ModelState.AddModelError(failure.PropertyName, failure.ErrorMessage);
+		//		}
+		//	}
+
+
+		//          return PartialView("_AddPosPartialView", pos);
+		//}
 
 		[HttpPost]
 		public ActionResult CreatePos(AddPOSDTO posModel)
 		{
+			PosValidation posValidator = new PosValidation(posRepository);
+
+			ValidationResult result = posValidator.Validate(posModel);
+
 			if (ModelState.IsValid)
 			{
+				ViewBag.City = posRepository.GetAllCitites();
+				ViewBag.ConType = posRepository.GetAllConnectionType();
 				posRepository.AddPos(posModel);
-				return RedirectToAction("BrowsePos");
+				return PartialView("_AddPosPartialView", posModel);
+            }
+			else
+			{
+				foreach (var failure in result.Errors)
+				{
+					ModelState.AddModelError(failure.PropertyName, failure.ErrorMessage);
+				}
 			}
 
 
-			ViewBag.City = posRepository.GetAllCitites();
-			ViewBag.ConType = posRepository.GetAllConnectionType();
+			
+            return PartialView("_AddPosPartialView", posModel);
+        }
 
-			return View();
-		}
-
-		[HttpPost]
+            [HttpPost]
 		public ActionResult EditPos(UpdatePosDTO updatePos)
 		{
 			ViewBag.City = posRepository.GetAllCitites();
@@ -121,11 +164,8 @@ namespace WebApp.Controllers
 		[HttpGet]
 		public ActionResult DetailsPosPartialView(int posId)
 		{
+
 			var pos = posRepository.GetPosById(posId);
-
-			ViewBag.City = posRepository.GetAllCitites();
-			ViewBag.ConType = posRepository.GetAllConnectionType();
-
 			return PartialView("_DetailsPosPartialView", pos);
 		}
 	}

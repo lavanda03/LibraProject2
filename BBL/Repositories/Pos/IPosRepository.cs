@@ -22,6 +22,8 @@ namespace BLL.Repositories.Pos
 		IQueryable<PosEntity> GetValidPos();
 		List<GetConnectionsTypeDTO> GetAllConnectionType();
 		List<GetCitiesDTO> GetAllCitites();
+		bool UniqueName(string name);
+		bool UniqueTelephone(string telephone);
 
 	}
 }

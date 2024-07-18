@@ -220,14 +220,15 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\datatables.js" />
     <Content Include="Scripts\datatables.min.js" />
+    <Content Include="Scripts\jquery-3.6.0.min.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Views\Authorization\Login.cshtml" />
     <None Include="App_Start\.editorconfig" />
     <Content Include="Views\User\Browse.cshtml" />
     <Content Include="libman.json" />
-    <Content Include="Views\User\CreateUser.cshtml" />
+    <Content Include="Views\User\_CreateUserPartialView.cshtml" />
     <Content Include="Views\Pos\BrowsePos.cshtml" />
-    <Content Include="Views\Pos\CreatePos.cshtml" />
+    <Content Include="Views\Pos\CreateDPos.cshtml" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -270,6 +271,7 @@
     <Content Include="Views\User\_DetailsUserPartialView.cshtml" />
     <Content Include="Views\Issue\_EditIssuePartialView.cshtml" />
     <Content Include="Views\Issue\_DetailsIssuePartialView.cshtml" />
+    <Content Include="Views\Pos\_AddPosPartialView.cshtml" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />

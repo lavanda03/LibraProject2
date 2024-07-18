@@ -7,9 +7,6 @@
 }
 
 
-
-<h2>CreateIssue</h2>
-
 <div class="left_col-" role="main">
     <div class="">
         <div class="clearfix"></div>
@@ -24,11 +21,11 @@
                             </div>
                             <div class="x_content">
 
-                                <table class="table table-striped">
+                                <table id="posTable" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>POS Id</th>
+
                                             <th>POS Name</th>
                                             <th>Telephone</th>
                                             <th>CellPhone</th>
@@ -38,7 +35,7 @@
                                     <tbody>
                                         <tr>
                                             <th scope="row">1</th>
-                                            <td>@Model.IdPos</td>
+
                                             <td>@Model.PosName</td>
                                             <td>@Model.PosTelephone</td>
                                             <td>@Model.PosCellPhone</td>
@@ -145,16 +142,16 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <div class="row">
                                             @Html.LabelFor(model => model.Description, " Problem Description", new { @class = "control-label col-md-3 col-sm-3 col-12" })
                                             <div class="col-md-6 col-sm-6 col-12">
-                                                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", style = "resize:none;" })
                                                 @Html.ValidationMessageFor(model => model.Description)
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <div class="row">
                                             @Html.LabelFor(model => model.Solution, new { @class = "control-label col-md-3 col-sm-3 col-12" })
@@ -187,7 +184,7 @@
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-md-6 col-sm-6 col-12 col-md-offset-3">
+                                            <div class="col-md-6 col-sm-6 col-12 col-md-offset-4">
                                                 <button type="submit" value="CreateIssue" class="btn btn-success" style="color: #fff;">
                                                     Create Issue
                                                 </button>

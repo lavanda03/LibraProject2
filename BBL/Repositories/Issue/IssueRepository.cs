@@ -123,7 +123,7 @@ namespace BLL.Repositories.Issue
 					IdPos = x.IdPos,
 					PosName = x.Pos.Name,
 					UserName = x.User.Name,
-					CreationDate = x.CreationDate,
+					CreationDate = x.CreationDate.ConvertToDateTimeOffsetToStringDate(),
 					IssueType = x.IssuesType.Name,
 					Status = x.Status.Status,
 					UserType = x.UserType.UserType,
@@ -200,6 +200,7 @@ namespace BLL.Repositories.Issue
 					Action = x.Action,
 					User = x.User.Name,
 					Notes = x.Notes,
+					IssueId = x.IdIssue
 
 				}))
 
@@ -263,7 +264,7 @@ namespace BLL.Repositories.Issue
 				PosCellPhone = issueEntity.Pos.CellPhone,
 				PosAddress = issueEntity.Pos.Address,
 				IdUserCreated = issueEntity.IdUserCreated,
-				CreationDate = issueEntity.CreationDate,
+				CreationDate = issueEntity.CreationDate.ConvertToDateTimeOffsetToStringDate(),
 				IdType = issueEntity.IdType,
 				IdSubType = issueEntity.IdSubType,
 				IdProblem = issueEntity.IdProblem,
@@ -459,7 +460,8 @@ namespace BLL.Repositories.Issue
 
 		public IQueryable<LogEntity> GetValidLog()
 		{
-			return _dbContext.Logs.Include(x => x.User).Where(u => u.DeleteAt == null);
+			return _dbContext.Logs.Include(x => x.User).Where(u => u.DeleteAt == null)
+								  .Include(x => x.Issues).Where(u => u.DeleteAt == null);
 
 		}
 

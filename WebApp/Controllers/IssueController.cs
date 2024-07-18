@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using WebApp.Helpers;
+using BLL.DTO.IssueDTO.IssueValidation;
+using FluentValidation.Results;
 
 
 namespace WebApp.Controllers
@@ -54,6 +56,9 @@ namespace WebApp.Controllers
 		[HttpPost]
 		public ActionResult CreateIssue(AddIssuesDTO issueModel)
 		{
+			IssueValidation issueValidation = new IssueValidation(issueRepository);
+			ValidationResult result = issueValidation.Validate(issueModel);
+
 			if (ModelState.IsValid)
 			{
 				HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
@@ -65,6 +70,13 @@ namespace WebApp.Controllers
 
 				issueRepository.AddIssue(issueModel);
 				return RedirectToAction("BrowseIssue");
+			}
+			else
+			{
+				foreach (var failure in result.Errors)
+				{
+					ModelState.AddModelError(failure.PropertyName, failure.ErrorMessage);
+				}
 			}
 
 
@@ -117,18 +129,20 @@ namespace WebApp.Controllers
 			return Json(jsonData, JsonRequestBehavior.AllowGet);
 		}
 
-		public JsonResult QueryLogs()
+		public JsonResult QueryLogs(int id )
 		{
 			var criteria = Request.GetPaginatingCriteria();
 
 			var log = issueRepository.QueryLogs(criteria);
 
+			var filtredData = log.Logs.Where(x => x.IssueId == id).ToList();
 			var jsonData = new
 			{
 				draw = Request.QueryString["draw"],
 				recordsTotal = log.Total,
-				recordsFiltered = log.TotalFiltered,
-				data = log.Logs
+				recordsFiltered = filtredData.Count,
+				data = filtredData
+
 
 			};
 
@@ -149,9 +163,9 @@ namespace WebApp.Controllers
 			if (ModelState.IsValid)
 			{
 				issueRepository.UpdateIssue(updateIssues);
-				return PartialView("_EditIssuePartialView", updateIssues);
+				return RedirectToAction("BrowseIssue");
 			}
-			return PartialView("_EditIssuePartialView", updateIssues);
+			return View("_EditIssuePartialView");
 		}
 
 		[HttpGet]
@@ -187,7 +201,7 @@ namespace WebApp.Controllers
 				PosAddress = issue.PosAddress,
 			};
 
-			return PartialView("_EditIssuePartialView", updateIssueDTO);
+			return View("_EditIssuePartialView", updateIssueDTO);
 		}
 
 		[HttpGet]
@@ -203,7 +217,7 @@ namespace WebApp.Controllers
 
 			var issue = issueRepository.GetIssueById(issueId);
 
-			return PartialView("_DetailsIssuePartialView", issue);
+			return View("_DetailsIssuePartialView", issue);
 		}
 	}
 }
