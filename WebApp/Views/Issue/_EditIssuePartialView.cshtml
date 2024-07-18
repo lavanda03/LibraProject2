@@ -213,31 +213,6 @@
 }
 
 
-<div class="clearfix"></div>
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h4>
-                    Issue Data
-                </h4>
-            </div>
-            <div class="x_content">
-                <table id="logsTable" class="table table-striped display" style="width: 100%">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Insert Date</th>
-                            <th>Action</th>
-                            <th>User</th>
-                            <th>Notes</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
@@ -247,16 +222,7 @@
     $(document).ready(function () {
 
 
-        let columns = [
-            { "data": "Id", "name": "Id", "autoWidth": true },
-            { "data": "InsertDate", "name": "Insert Date", "autoWidth": true },
-            { "data": "Action", "name": "Action", "autoWidth": true },
-            { "data": "User", "name": "User", "autoWidth": true },
-            { "data": "Notes", "name": "Notes", "autoWidth": true },
-
-        ];
-
-        bindDataTable("#logsTable", "/issue/QueryLogs", columns)
+       
 
         var issueTypes = @Html.Raw(Json.Encode(ViewBag.IssueType));
         var subTypes = @Html.Raw(Json.Encode(ViewBag.SubType));
@@ -266,13 +232,12 @@
         var subTypeSelect = document.getElementById("SubType");
         var problemSelect = document.getElementById("Problem");
 
-        // Event listener for IssueType change
+      
         issueTypeSelect.onchange = function () {
             var selectedIssueTypeId = parseInt(this.value);
 
             console.log("change main issue triggered");
 
-            // Clear and populate SubType dropdown
             subTypeSelect.options.length = 0;
             subTypeSelect.options[0] = new Option('-- Select SubType --', '');
             for (var i = 0; i < subTypes.length; i++) {
@@ -281,16 +246,16 @@
                 }
             }
 
-            // Clear Problem dropdown
+           
             problemSelect.options.length = 0;
             problemSelect.options[0] = new Option('-- Select Problem --', '');
         };
 
-        // Event listener for SubType change
+        
         subTypeSelect.onchange = function () {
             var selectedSubTypeId = parseInt(this.value);
 
-            // Clear and populate Problem dropdown
+  
             problemSelect.options.length = 0;
             problemSelect.options[0] = new Option('-- Select Problem --', '');
             for (var i = 0; i < problemTypes.length; i++) {
